@@ -17,7 +17,7 @@ rep = d / maxx;
 pres = repmat(yd, 1, rep);
 
 filt = load('data/filter_male_a');
-vow = filter(1, filt.alpha, pres);
+vow = myfilt(filt.alpha, pres);
 
 p = 4;
 plotx = linspace(0, p * maxx, p * len);
