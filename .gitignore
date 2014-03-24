@@ -5,3 +5,7 @@
 # big files
 matlab/data/A.mat
 matlab/data/AT.mat
+
+# recordings
+recordings
+
