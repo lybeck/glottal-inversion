@@ -3,9 +3,9 @@ clear
 
 const = load('data/constants');
 
-f = 100;
+f = 120;
 Q = .4;
-noise_lvl = 50;
+noise_lvl = .005;
 
 %[xx, yy] = glottal_triangle(f, Q);
 %yd = [diff(yy), 0];
@@ -29,7 +29,8 @@ filt2 = load('data/filter_female_a');
 vow = myfilt(filt.alpha, pres);
 %vow = filter(1, filt2.alpha, pres);
 
-noisevow = vow + noise_lvl * randn(size(vow));
+noise = noise_lvl * max(vow);
+noisevow = vow + noise * randn(size(vow));
 
 
 

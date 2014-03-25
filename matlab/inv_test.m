@@ -34,15 +34,15 @@ d = 1;
 rep = round(d / x(end));
 
 recyd = repmat(rec, rep, 1);
-yd = repmat(yd, rep, 1);
+syd = repmat(yd, rep, 1);
 recvow = filter(1, filt.alpha, recyd);
-vow = filter(1, filt.alpha, yd);
+vow = filter(1, filt.alpha, syd);
 recyd = recyd / max(recyd);
 recvow = recvow / max(recvow);
-yd = yd / max(yd);
+syd = syd / max(syd);
 vow = vow / max(vow);
 
-sound(yd, const.fs)
+sound(syd, const.fs)
 pause(2)
 sound(recyd, const.fs)
 pause(3)
