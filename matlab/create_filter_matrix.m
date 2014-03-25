@@ -1,16 +1,19 @@
-function A = create_filter_matrix(a, n)
+function A = create_filter_matrix(alpha, n)
 
-A = eye(n);
+% length of the filter vector
+Na = length(alpha);
 
-Na = length(a);
-f = zeros(1, n);
-f(1) = 1;
+% make sure alpha is a row vector
+alpha = alpha(:)';
+
+% initialize filter matrix
+A = zeros(n);
+A(1, 1) = alpha(1);
+
 for ii = 2:n
+    A(ii, 2:ii) = A(ii-1, 1:ii-1);
     N = min(ii - 1, Na - 1);
-    for k = 1:N
-        f(ii) = f(ii) - a(k+1) * f(ii-k);
-    end
-    A = A + diag(repmat(f(ii), 1, n-ii+1), 1-ii);
+    A(ii, 1) = -sum(alpha(2:N+1) .* A(ii, 2:N+1));
 end
 
 end
