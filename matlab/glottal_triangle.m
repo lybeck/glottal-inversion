@@ -6,9 +6,9 @@ const = load('data/constants');
 T = 1 / f;
 T0 = Q * T;
 
-xx = linspace(0, T, const.fs * T);
+xx = linspace(0, T, const.fs * T)';
 yy = tria(xx, T0);
-yd = [diff(yy), 0];
+yd = [diff(yy); 0];
 
 end
 
