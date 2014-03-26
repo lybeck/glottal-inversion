@@ -16,6 +16,14 @@ p_len = n / periods;
 q = round(Q * p_len);
 v = ones(p_len, 1) * .1;
 v(q:end) = 10;
+
+% smoothen
+c_len = round(length(v)/20);
+c = ones(c_len, 1) / c_len;
+v = conv(v, c);
+v = v(c_len:end);
+
+
 v = repmat(v, periods, 1);
 Lmult = @(x) x .* v;
 LTmult = @(x) x .* v;
