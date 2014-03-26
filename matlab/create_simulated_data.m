@@ -6,6 +6,9 @@ const = load('data/constants');
 % should the created data be played?
 play_sound = 0;
 
+% plot data?
+show_plot = 0;
+
 % which filter should be used?
 % 0: female
 % 1: male
@@ -18,8 +21,8 @@ klatt_model = 1;
 
 % parameters for the data
 f = 100;
-Q = .6;
-Q_rand = .1;
+Q = .5;
+Q_rand = 0;
 noise_lvl = .005;
 periods = 10;
 Q1 = Q + 2*Q_rand*rand()-Q_rand;
@@ -68,32 +71,36 @@ save data/data m x y yd periods Q
 
 
 
-
-figure(1)
-clf
-plot(x, y)
-xlim([0, periods * maxx])
-
-figure(2)
-clf
-plot(x, yd)
-xlim([0, periods * maxx])
-
-figure(3)
-clf
-plot(x, plotvow)
-xlim([0, periods * maxx])
-
-
-pres = pres / max(pres);
-maxvow = max(vow);
-vow = vow / maxvow;
-noisevow = noisevow / maxvow;
+if show_plot
+    
+    figure(1)
+    clf
+    plot(x, y)
+    xlim([0, periods * maxx])
+    
+    figure(2)
+    clf
+    plot(x, yd)
+    xlim([0, periods * maxx])
+    
+    figure(3)
+    clf
+    plot(x, plotvow)
+    xlim([0, periods * maxx])
+    
+end
 
 if play_sound
+    
+    pres = pres / max(pres);
+    maxvow = max(vow);
+    vow = vow / maxvow;
+    noisevow = noisevow / maxvow;
+    
     sound(pres, const.fs)
     pause(1.5)
     sound(vow, const.fs)
     pause(1.5)
     sound(noisevow, const.fs)
+    
 end
