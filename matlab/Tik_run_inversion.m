@@ -4,7 +4,7 @@ clear
 % play sound from reconstruction?
 play_sound = 0;
 
-load data/data m x y yd
+load data/data m x y yd periods Q
 filt = load('data/filter_male_a');
 const = load('data/constants');
 
@@ -17,7 +17,7 @@ x0 = zeros(length(m), 1);
 alpha = 500;
 
 % rec = myconjgrad(m, alpha, x0);
-rec = Tik_a_inv(m, alpha, x0, male_filter);
+rec = Tik_a_inv(m, alpha, x0, periods, Q, male_filter);
 
 % relative error
 relerr = 100 * norm(rec - yd) / norm(rec);

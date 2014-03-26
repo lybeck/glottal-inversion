@@ -18,14 +18,16 @@ klatt_model = 1;
 
 % parameters for the data
 f = 120;
-Q = .4;
+Q = .5;
+Q_rand = .1;
 noise_lvl = .005;
 periods = 10;
+Q1 = Q + 2*Q_rand*rand()-Q_rand;
 
 if klatt_model
-    [xx, yy, yyd] = klatt(f, Q);
+    [xx, yy, yyd] = klatt(f, Q1);
 else
-    [xx, yy, yyd] = glottal_triangle(f, Q);
+    [xx, yy, yyd] = glottal_triangle(f, Q1);
 end
 
 if male_filter
@@ -62,7 +64,7 @@ y = repmat(yy, periods, 1);
 yd = repmat(yyd, periods, 1);
 plotvow = vow(start * len : periods * len + start * len - 1);
 
-save data/data m x y yd periods
+save data/data m x y yd periods Q
 
 
 

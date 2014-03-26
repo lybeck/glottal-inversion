@@ -2,9 +2,8 @@
 # temp files
 *~
 
-# big files
-matlab/data/A.mat
-matlab/data/AT.mat
+# measurement data
+matlab/data/data.mat
 
 # recordings
 recordings
