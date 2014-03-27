@@ -14,13 +14,17 @@ const = load('data/constants');
 male_filter = 1;
 
 x0 = zeros(length(m), 1);
-alpha = 0.1;
+alpha = 100;
 
 rec = TV_a_inv(m, alpha, x0, male_filter);
 
 % relative error
 relerr = 100 * norm(rec - yd) / norm(rec);
-fprintf('\nRelative error: %g %%\n\n', relerr)
+recv = filter(1, filt.alpha, rec);
+v = filter(1, filt.alpha, yd);
+relerrv = 100 * norm(recv - v) / norm(v);
+fprintf('\nRelative error on glottal impulse : %g %%\n', relerr)
+fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
 
 
 % plots

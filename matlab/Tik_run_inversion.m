@@ -2,7 +2,7 @@
 clear
 
 % play sound from reconstruction?
-play_sound = 1;
+play_sound = 0;
 
 load data/data m x y yd periods Q
 filt = load('data/filter_male_a');
@@ -32,7 +32,6 @@ fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
 figure(1)
 plot(x, rec, x, yd)
 xlim([0, x(end)])
-
 
 
 % sound

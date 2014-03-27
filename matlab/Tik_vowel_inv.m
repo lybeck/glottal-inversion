@@ -22,10 +22,10 @@ v1 = -ones(p_len, 1) * v_factor;
 v1(q:end) = 0;
 
 % smoothen
-% c_len = round(length(v)/20);
-% c = ones(c_len, 1) / c_len;
-% v = conv(v, c);
-% v = v(c_len:end);
+c_len = round(length(v)/7);
+c = ones(c_len, 1) / c_len;
+v = conv(v, c);
+v = v(c_len:end);
 
 % v = repmat(v, periods, 1);
 % Lmult = @(x) x .* v;
