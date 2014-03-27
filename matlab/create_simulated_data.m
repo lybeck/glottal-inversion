@@ -22,7 +22,7 @@ klatt_model = 1;
 % parameters for the data
 f = 80;
 Q = .3;
-Q_rand = 0.2;
+Q_rand = 0.1;
 noise_lvl = .005;
 periods = 10;
 Q1 = Q + 2*Q_rand*rand()-Q_rand;

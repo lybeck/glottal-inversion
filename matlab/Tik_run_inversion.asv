@@ -65,7 +65,7 @@ if play_sound
     sound(recvow, const.fs)
     
     if save_sound
-       
+       % save 
        wavwrite(syd, const.fs, 'glottal_impulse_data');
        wavwrite(recyd, const.fs, 'glottal_impulse_rec');
        wavwrite(vow, const.fs, 'vowel_data');
