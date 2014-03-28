@@ -2,9 +2,12 @@
 clear
 
 % play sound from reconstruction?
-play_sound = 0;
+play_sound = 1;
 
-load data/data m x y yd
+% save sound file from reconstruction?
+save_sound = 1;
+
+load data/data_lasse-a1 m x y yd periods Q
 filt = load('data/filter_male_a');
 const = load('data/constants');
 
@@ -14,9 +17,19 @@ const = load('data/constants');
 male_filter = 1;
 
 x0 = zeros(length(m), 1);
-alpha = 100;
+alpha = 1200;
 
 rec = TV_a_inv(m, alpha, x0, male_filter);
+
+% dampen the constant parts
+p_len = length(rec) / periods;
+q = round(Q * p_len);
+damp = ones(p_len, 1);
+smoother = conv(damp(q:end), ones(10,1)*10).^-1;
+damp(q:end) = smoother(10:end);
+L = diag(repmat(damp, periods, 1));
+rec = L * rec;
+
 
 % relative error
 relerr = 100 * norm(rec - yd) / norm(rec);
@@ -61,4 +74,12 @@ if play_sound
     pause(2)
     sound(recvow, const.fs)
     
+    if save_sound
+       
+       wavwrite(syd, const.fs, 'glottal_impulse_data');
+       wavwrite(recyd, const.fs, 'glottal_impulse_rec');
+       wavwrite(vow, const.fs, 'vowel_data');
+       wavwrite(recvow, const.fs, 'vowel_rec');
+    
+    end
 end

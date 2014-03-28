@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.2.13)  27 MAR 2014 11:03
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.2.13)  28 MAR 2014 09:18
 entering extended mode
 **glottal_inversion_report.tex
 
@@ -399,26 +399,22 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 
 {C:/Users/Easysimulation/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
 (C:\Users\Easysimulation\Desktop\T00ls\glottal_inversion\glottal-inversion\repo
-rt\glottal_inversion_report.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+rt\glottal_inversion_report.aux) ) 
 Here is how much of TeX's memory you used:
- 2229 strings out of 493921
- 26966 string characters out of 3144849
- 77756 words of memory out of 3000000
- 5517 multiletter control sequences out of 15000+200000
+ 2209 strings out of 493921
+ 26736 string characters out of 3144849
+ 77602 words of memory out of 3000000
+ 5497 multiletter control sequences out of 15000+200000
  11070 words of font info for 32 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  27i,6n,22p,241b,201s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Easysimulation\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\e
-c\dpi600\ecti1200.pk> <C:\Users\Easysimulation\AppData\Local\MiKTeX\2.9\fonts\p
-k\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\Easysimulation\AppData\Local
-\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1728.pk> <C:\Users\Easysimul
-ation\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1440.pk> 
-<C:\Users\Easysimulation\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\d
-pi600\ecrm2074.pk>
+ <C:\Users\Easysimulation\AppData\Local\MiKTe
+X\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1200.pk> <C:\Users\Easysimulation\
+AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Us
+ers\Easysimulation\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\
+ecbx1728.pk> <C:\Users\Easysimulation\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\
+jknappen\ec\dpi600\ecrm1440.pk> <C:\Users\Easysimulation\AppData\Local\MiKTeX\2
+.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm2074.pk>
 Output written on glottal_inversion_report.pdf (1 page, 45660 bytes).
 PDF statistics:
  143 PDF objects out of 1000 (max. 8388607)

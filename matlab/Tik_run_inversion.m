@@ -7,7 +7,7 @@ play_sound = 1;
 % save sound file from reconstruction?
 save_sound = 1;
 
-load data/data m x y yd periods Q
+load data/data_lasse-a1 m x y yd periods Q
 filt = load('data/filter_male_a');
 const = load('data/constants');
 

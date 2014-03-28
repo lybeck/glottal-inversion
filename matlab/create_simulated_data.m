@@ -20,7 +20,7 @@ male_filter = 0;
 klatt_model = 1;
 
 % parameters for the data
-f = 80;
+f = 160;
 Q = .3;
 Q_rand = 0.1;
 noise_lvl = .005;
