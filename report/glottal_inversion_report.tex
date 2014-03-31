@@ -90,6 +90,7 @@ where $y \in \R^n$ is the filtered data. We denote $y = \varphi_a (x)$.
 
 Consider now the filter defined by $a \in \R^{N_a}$ and the data $x \in \R_n$ which we want to filter. Now the filter defined by \eqref{eq:filter-diffeq} can be expressed by the the matrix $A \in \R^{n \times n}$, where
 \begin{equation}
+\label{eq:filter-matrix}
 \left\{
 \begin{alignedat}{3}
    &A_{1,1}     = a_1 \\
@@ -105,12 +106,14 @@ Now $\varphi_a (x) = Ax$.
 \subsection{The matrix model}
 \label{sec:matrixModel}
 
-A vowel sound can be simulated by applying a digital filter $A\in\R^{n \times n}$ to a sample of a glottal excitation signal $f \in \R^n$ as
+A vowel sound can be simulated by applying a digital filter $A \in \R^{n \times n}$, defined as in \eqref{eq:filter-matrix}, to a sample of a glottal excitation signal $f \in \R^n$ as
 \begin{equation}
 \label{eq:vow}
-v = A f,
+v = A f .
 \end{equation}
-where $v \in \R^n$ is the simulated vowel. In this study we will assume an approximation of the filter $A$ to be known. Given the measurement $m \in \R^n$ of a vowel corresponding approximately to the filter $A$, equation \eqref{eq:vow} can be expressed as
+Here $v \in \R^n$ is the simulated vowel.
+
+In this study we will assume an approximation of the filter $A$ to be known. Given the measurement $m \in \R^n$ of a vowel corresponding approximately to the filter $A$, equation \eqref{eq:vow} can be expressed as
 \begin{equation}
 \label{eq:vowModel}
 m = A f + \eps,
