@@ -212,10 +212,29 @@ The problem of finding the optimal regularization parameter is, in general, cons
 
 Assume that we know the size of the noise in our model defined by \eqref{eq:vowModel} to be $\delta > 0$. Now $T_\alpha(m)$ is an acceptable reconstruction if 
 \begin{equation}
-\lnorm AT_\alpha(m)-m\rnorm \leq \delta
+\lnorm AT_\alpha(m)-m\rnorm \leq \delta \quad \left( A \in R^{k \times n}\right).
 \end{equation}
+If we assume that 
+\begin{equation}
+\eps = \left(\eps_1, \ldots, \eps_n\right)\in\R^n, \quad \eps_k \sim N\left(0,1\right) \text{ for all } k\in\left\{1, \ldots, n\right\},
+\end{equation}
+we can choose $\delta = \sqrt{k}$ since $E\left(\lnorm \eps \rnorm\right) = \sqrt{k}.$
+
+The idea of the Morozov's discrepancy principle is to choose $\alpha > 0$ such that
+\begin{equation}
+\lnorm AT_\alpha(m) - m \rnorm = \delta
+\end{equation}
+It can be proven (see \cite{samu}) the $\alpha$ resulting the above expression is attained by solving
+\begin{equation}
+\sum_{k=1}^{\min\left\{k,n\right\}}\left(\frac{\alpha}{d_k^2+\alpha}\right)^2 \left(m'_k\right)^2 + \sum_{\min\left\{k,n\right\} + 1}^k \left(m'_k\right)^2 - \delta^2 = 0,
+\end{equation}
+where $d_k$ are the singular values of $A$ and $m' = U^Tm$ where $U$ is an orthogonal matrix acquired from the singular value decomposition of $A$, that is \\$A=UDV^T$.
+
 
 \subsection{The basis and materials}\label{sec:basis}
+
+
+
 %-----------------------Results-----------------------
 \section{Results}\label{sec:results}
 
