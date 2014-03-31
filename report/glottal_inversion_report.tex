@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amsfonts}
+\usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage{enumerate}
 \DeclareMathOperator*{\argmin}{\arg\!\min}
@@ -105,15 +106,15 @@ Now $\varphi_a (x) = Ax$.
 \subsection{The matrix model}
 \label{sec:matrixModel}
 
-A vowel sound can be simulated by applying a digital filter $A\in\R^{n \times n}$ to a sample of a glottal excitation signal $f \in \R^n$ as
+A vowel sound can be simulated by applying a digital filter $A\in\R^{n \times n}$ to a sample of a glottal excitation signal $g \in \R^n$ as
 \begin{equation}
 \label{eq:vow}
-v = A f,
+v = A g,
 \end{equation}
 where $v \in \R^n$ is the simulated vowel. In this study we will assume an approximation of the filter $A$ to be known. Given the measurement $m \in \R^n$ of a vowel corresponding approximately to the filter $A$, equation \eqref{eq:vow} can be expressed as
 \begin{equation}
 \label{eq:vowModel}
-m = A f + \eps,
+m = A g + \eps,
 \end{equation}
 where $\eps \in \R^n$ denotes the measurement noise.
 
@@ -160,7 +161,7 @@ If we assume that
 \begin{equation}
 \eps = \left(\eps_1, \ldots, \eps_n\right)\in\R^n, \quad \eps_k \sim N\left(0,1\right) \text{ for all } k\in\left\{1, \ldots, n\right\},
 \end{equation}
-we can choose $\delta = \sqrt{k}$ since $E\left(\lnorm \eps \rnorm\right) = \sqrt{k}.$
+we can choose $\delta = \sqrt{n}$ since $E\left(\lnorm \eps \rnorm\right) = \sqrt{n}.$
 
 The idea of the Morozov's discrepancy principle is to choose $\alpha > 0$ such that
 \begin{equation}
@@ -174,7 +175,32 @@ where $d_k$ are the singular values of $A$ and $m' = U^Tm$ where $U$ is an ortho
 
 
 \subsection{The basis and materials}\label{sec:basis}
+In our study we will use synthetic data as our basis; we first create data using the airflow function defined in \eqref{eq:RK-model}. We then apply an approximate
+filter to this data in order to avoid inverse crime,  and finally add some normally distributed noise. Different data is created by varying the sound frequency, the value of $Q$ (which we assume to be known a priori) and the noise-level.
 
+We then attempt to solve the inverse problem by using general Tikhonov regularization with a customized penalty matrix; as explained in section \ref{sec:rk} we know the pressure function to be zero in the interval $]QT, T]$. This will be incorporated in the model by assigning large values to the diagonal entries $l_i \in L$ for $i$ values that correspond to the previously mentioned interval, namely $i\in\left\{Qn, Qn + 1 , \ldots, n \right\}$ where $n$ is the length of our data (note that the product $Qn$ is rounded to the nea                                                                                                                                                                                  rest integer). We also know the pressure function to be smooth in the interval $[0, Q]$. This can be incorporated by adding differential operator properties to the penalty matrix; we assign 
+\begin{equation*}
+\begin{cases}
+ l_{i,i} = 1 \\
+ l_{i,i+1} = -1 
+\end{cases}
+\text{ when } i \in \left\{0,1,\ldots,Qn\right\},
+\end{equation*}
+resulting in for example
+\begin{equation}
+L=
+\begin{pmatrix*}[c]
+ 1      & -1     &  0     & 0       &    &    &\cdots   &       & 0 \\
+ 0      & 1      & -1     & 0       &    &    &\cdots   &       & 0 \\
+ \vdots &        & \ddots & \ddots  &    &    &         &       & \vdots  \\
+ 0      & \cdots &  0     & 1       & -1 & 0  & 0       &\cdots & 0  \\
+ 0      & \cdots &  0     & 0       & 10 & 0  & 0       &\cdots & 0 \\
+ 0      & \cdots &  0     & 0       & 0  & 10 & 0       &\cdots & 0 \\
+ \vdots &        &        &         &    &    & \ddots  &       & \vdots  \\
+ 0      &        &        & \cdots  &    &    &  0      & 10    & 0 \\
+ 0      &        &        & \cdots  &    &    &  0      & 0     & 10 
+\end{pmatrix*}.
+\end{equation}
 
 
 %-----------------------Results-----------------------
