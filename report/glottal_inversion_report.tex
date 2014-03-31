@@ -121,10 +121,10 @@ m = A f + \eps,
 where $\eps \in \R^n$ denotes the measurement noise.
 
 
-\subsection{The inversion method}\label{subsec:invMethod}
+\subsection{The inversion method}\label{sec:invMethod}
 
-\subsubsection{Tikhonov reguralization}\label{subsubsec:tikh}
-The classical Tikhonov regularized solution for $m = Af + \varepsilon$ defined in (ref here) is usually denoted by the vector $T_\alpha(m)\in\R^n$ that minimizes
+\subsubsection{Tikhonov reguralization}\label{sec:tikh}
+The classical Tikhonov regularized solution for $m = Ag + \varepsilon$, defined in section \ref{sec:matrixModel}, is usually denoted by the vector $T_\alpha(m)\in\R^n$ that minimizes
 \begin{equation*}
 \lnorm AT_\alpha(m) - m \rnorm^2 + \alpha \lnorm T_\alpha(m) \rnorm^2 \Leftrightarrow
 \end{equation*}
@@ -139,16 +139,28 @@ where $\alpha > 0$ is called a regularization parameter. The resulting $T_\alpha
 \end{enumerate}
 The $\alpha$ parameter is used in order to tune to balance between the two conditions above.
 
-In generalized Tikhonov regularization some prior knowledge is assumed to be known. In some cases $f$ might be known to be smooth. This information can be incorporated into the regularization by choosing
+In generalized Tikhonov regularization some prior knowledge is assumed to be known. In some cases $g$ might be known to be smooth. This information can be incorporated into the regularization by choosing
 \begin{equation}
 T_\alpha(m) = \underset{z\in\R^n}{\argmin}
 \left\{ \lnorm Az - m \rnorm^2 + \alpha \lnorm Lz \rnorm^2 \right\},
 \end{equation}  
-where $L$ is a discretized differential operator. In our model proposed in \citeneeded we know the glottal impulse to be zero in an interval [mera kama hit när modellen är skriven]
+where $L$ is a discretized differential operator.
+ 
+In our model proposed in section \ref{sec:rk} we know the airflow of the excitation signal to be smooth in the interval $[0, QT]$ and to be zero in the interval $]QT, T]$. This can be incorporated in our model by customizing the discrete differential operator matrix, described in more detail in section \ref{sec:basis}
 
 
-\subsubsection{The conjugate gradient method}\label{subsubsec:conjgrad}
+\subsubsection{The conjugate gradient method}\label{sec:conjgrad}
 
+
+\subsubsection{Morozov's discrepancy principle}
+The problem of finding the optimal regularization parameter is, in general, considered to be unsolved. There are, however, methods that attempt to find an optimal choice of the regularization parameter, including the Mozorov discrepancy principle, which is based on the noise level in the data.
+
+Assume that we know the size of the noise in our model defined by \eqref{eq:vowModel} to be $\delta > 0$. Now $T_\alpha(m)$ is an acceptable reconstruction if 
+\begin{equation}
+\lnorm AT_\alpha(m)-m\rnorm \leq \delta
+\end{equation}
+
+\subsection{The basis and materials}\label{sec:basis}
 %-----------------------Results-----------------------
 \section{Results}\label{sec:results}
 
