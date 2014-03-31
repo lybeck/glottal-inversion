@@ -107,17 +107,24 @@ Now $\varphi_a (x) = Ax$.
 \subsection{The matrix model}
 \label{sec:matrixModel}
 
+<<<<<<< HEAD
+A vowel sound can be simulated by applying a digital filter $A\in\R^{n \times n}$ to a sample of a glottal excitation signal $g \in \R^n$ as
+\begin{equation}
+\label{eq:vow}
+v = A g,
+=======
 A vowel sound can be simulated by applying a digital filter $A \in \R^{n \times n}$, defined as in \eqref{eq:filter-matrix}, to a sample of a glottal excitation signal $f \in \R^n$ as
 \begin{equation}
 \label{eq:vow}
 v = A f .
+>>>>>>> master
 \end{equation}
 Here $v \in \R^n$ is the simulated vowel.
 
 In this study we will assume an approximation of the filter $A$ to be known. Given the measurement $m \in \R^n$ of a vowel corresponding approximately to the filter $A$, equation \eqref{eq:vow} can be expressed as
 \begin{equation}
 \label{eq:vowModel}
-m = A f + \eps,
+m = A g + \eps,
 \end{equation}
 where $\eps \in \R^n$ denotes the measurement noise.
 
