@@ -32,7 +32,7 @@
 %---------------------Introduction--------------------
 \section{Introduction}\label{sec:intro}
 
-A synthetic human vowel sound consists of a periodic signal to simulate the glottal excitation signal at the glottis and a filter to simulate the vocal tract, which the glottal signal is filtered through.\citeneeded With a given vocal tract filter the direct problem is \emph{given a glottal excitation signal, create the vowel sound}. The inverse problem is \emph{given a (recorded) vowel sound, find the glottal excitation signal}. In this study we will be concentrating on the inverse problem, starting with both a simulated vowel and a real recording.
+A synthetic human vowel sound consists of a periodic signal to simulate the glottal excitation signal at the glottis and a filter to simulate the vocal tract, which the glottal signal is filtered through.\cite{touda} With a given vocal tract filter the direct problem is \emph{given a glottal excitation signal, create the vowel sound}. The inverse problem is \emph{given a (recorded) vowel sound, find the glottal excitation signal}. In this study we will be concentrating on the inverse problem, starting with both a simulated vowel and a real recording.
 
 The inversion from a vowel sound to the glottal signal is an important part of creating synthetic human voices and speech generators. To create a synthetic vowel both the glottal signal and the vocal tract filter are needed. However, the glottal signal cannot be directly measured, but it can be approximated with inversion of a recorded vowel. With this data models for simulating the glottal excitation signal can be created.
 
@@ -233,9 +233,12 @@ where $d_j$ are the singular values of $A$ and $m' = U^Tm$ where $U$ is an ortho
 
 
 \subsection{The basis and materials}\label{sec:basis}
-In our study we will use synthetic data as our basis. We first create data using the airflow function defined in \eqref{eq:RK-model}, and then apply an approximate filter to this data in order to avoid inverse crime. Finally we add some normally distributed noise to the data. Different data is created by varying the sound frequency, the value of $Q$ (which we assume to be known a priori) and the noise-level.
 
-We then attempt to solve the inverse problem by using the generalized Tikhonov regularization with a customized penalty matrix; as explained in section \ref{sec:rk} we know the pressure function to be zero in the interval $]QT, T]$. This will be incorporated in the model by assigning large values to the diagonal entries $l_i \in L$ for $i$ values that correspond to the previously mentioned interval, namely $i \in \left\{ j \in \N : Qn < j \leq n \right\}$ where $n$ is the length of our data. We also know the pressure function to be smooth in the interval $[0, Q]$. This can be incorporated by adding differential operator properties to the penalty matrix.
+In this work we will use synthetic data as our basis. We first create a synthetic glottal excitation signal using the airflow function defined in \eqref{eq:RK-model}. To this signal we apply a previously calculated vocal tract filter, as described in section \ref{sec:filter} to create a simulated vowel sound. Finally we add some normally distributed noise to the data to simulate measurement noise. Different data is created by varying the sound frequency, the value of the Klatt-parameter $Q$ and the noise-level.
+
+The inversion of the vowel sound is done using another filter similar to the one used in creating the synthetic data. For example we might have created the data with a filter for a male vowel /a/, and use a filter for a female vowel /a/ for the inversion. This way we avoid inverse crime. The idea is that we can assume two different filters for the same vowel to be approximately the same. That is, given two different filters $A_1$ and $A_2$ for the same vowel and a glottal excitation signal $g$, we assume that $A_1 g \approx A_2 g$. This is based on the fact that a vowel is defined by its two or three first \emph{formant frequencies}, which can be assumed to be about the same for two different vowel sounds.\cite{digitalmodels}
+
+We then attempt to solve the inverse problem by using the generalized Tikhonov regularization with a customized penalty matrix. We will assume the Klatt-parameter $Q$ of the glottal excitation signal to be known (at least approximately), and as explained in section \ref{sec:rk} we know the pressure function to be zero in the interval $]QT, T]$. This will be incorporated in the model by assigning large values to the diagonal entries $l_i \in L$ for the values of $i$ that correspond to the previously mentioned interval, namely $i \in \left\{ j \in \N : Qn < j \leq n \right\}$ where $n$ is the length of our data. We also know the pressure function to be smooth in the interval $[0, Q]$. This can be incorporated by adding differential operator properties to the penalty matrix.
 
 We can thus assign the differential operator properties
 \begin{equation*}
@@ -249,7 +252,7 @@ and further, we can for example assign the larger values described above as
 \begin{equation*}
  l_{i,i} = 10, \quad \text{when } i \in \left\{ j \in \N : Qn < j \leq n \right\}
 \end{equation*}
-resulting in
+resulting in the penalty matrix
 \begin{equation}
 L=
 \begin{pmatrix*}[c]
@@ -262,8 +265,10 @@ L=
  \vdots &        &        &         &    &    & \ddots  &        & \vdots  \\
  0      &        &        & \cdots  &    &    &  0      &  10    & 0       \\
  0      &        &        & \cdots  &    &    &  0      &  0     & 10 
-\end{pmatrix*}.
+\end{pmatrix*}
 \end{equation}
+for a single period of the excitation signal. This procedure must of course be repeated as many times as we have periods in our measurement data.
+
 
 
 %-----------------------Results-----------------------
@@ -279,22 +284,33 @@ L=
 \bibitem{fant}
     Fant, G., Liljencrants, J., Lin, Q., (1985).
     \emph{A four-parameter model of glottal flow}.
-    STL-QPSR 26 (4), 1-13
+    STL-QPSR 26 (4), p. 1-13
     
 \bibitem{fujisaki}
     Fujisaki, H., Ljungqvist, M., 1986.
     Proposal and evaluation of models for the glottal source waveform.
-    In: Proc. IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP). Vol. 11. pp. 1605–1608.
+    In: Proc. IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP). Vol. 11. p. 1605–1608.
     
 \bibitem{samu}
 	Mueller, Jennifer L. \& Siltanen Samuli, (2012).
 	\emph{Linear and Nonlinear Inverse Problems with Practical Applications}.
-	SIAM, 1:st edition
+	SIAM, 1:st edition.
+	
+\bibitem{touda}
+    Touda, K., (2007)
+    \emph{Study on numerical method for voice generation problem}.
+    PhD thesis.
+    The University of Electro-Communications.
+    
+\bibitem{digitalmodels}
+    Rabiner, L. R., Schafer, R. W., (1987).
+    \emph{Digital processing of speech signals}.
+    Englewood Cliffs: Prentice-Hall, p. 38-107.
 
 \bibitem{rosenberg}
     Rosenberg, A., (1971).
     \emph{Effect of glottal pulse shape on the quality of natural vowels}.
-    Journal of the Acoustical Society of America 49 (2B), 583–590.
+    Journal of the Acoustical Society of America 49 (2B), p. 583–590.
 
 \end{thebibliography}
 
