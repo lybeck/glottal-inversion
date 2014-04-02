@@ -168,7 +168,7 @@ where $Q \in \R^{n \times n}$ is a symmetric positive definite matrix. We will n
 Let $b \in \R^n$ fixed, $Q \in \R^{n \times n}$ a symmetric positive definite matrix, $x_0 \in \R^n$ the initial guess and define $d_0 = -g_0 = b - Q x_0$. Now for $k \geq 0$ let
 \begin{equation}
 \begin{alignedat}{1}
-\alpha_k &= \frac{g_k^T d_k}{d_k^T Q d_k} \\
+\alpha_k &= -\frac{g_k^T d_k}{d_k^T Q d_k} \\
 x_{k+1}  &= x_k + \alpha_k d_k \\
 g_{k+1}  &= Q x_{k+1} - b \\
 \beta_k  &= \frac{g_{k+1}^T Q d_k}{d_k^T Q d_k} \\
@@ -209,7 +209,7 @@ and thus we can use the conjugate gradient method for the optimization.
 
 
 \subsubsection{Morozov's discrepancy principle}
-The problem of finding the optimal regularization parameter is, in general, considered to be unsolved. There are, however, methods that attempt to find an optimal choice of the regularization parameter, including the Mozorov discrepancy principle, which is based on the noise level in the data.
+The problem of finding the optimal regularization parameter is, in general, considered to be unsolved. There are, however, methods that attempt to find an optimal choice of the regularization parameter, including the Morozov discrepancy principle, which is based on the noise level in the data.
 
 Assume that we know the size of the noise in our model defined by \eqref{eq:vowModel} to be $\delta > 0$. Now $T_\alpha(m)$ is an acceptable reconstruction if 
 \begin{equation}
