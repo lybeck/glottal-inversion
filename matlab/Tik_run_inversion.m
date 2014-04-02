@@ -2,12 +2,12 @@
 clear
 
 % play sound from reconstruction?
-play_sound = 1;
+play_sound = 0;
 
 % save sound file from reconstruction?
-save_sound = 1;
+save_sound = 0;
 
-load data/data_lasse-a1 m x y yd periods Q
+load data/data m x y yd periods Q
 filt = load('data/filter_male_a');
 const = load('data/constants');
 
@@ -17,7 +17,7 @@ const = load('data/constants');
 male_filter = 1;
 
 x0 = zeros(length(m), 1);
-alpha = 100;
+alpha = morozov(create_filter_matrix(filt.alpha, length(m))', m, sqrt(length(m)), 1);
 
 % rec = myconjgrad(m, alpha, x0);
 rec = Tik_a_inv(m, alpha, x0, periods, Q, male_filter);
