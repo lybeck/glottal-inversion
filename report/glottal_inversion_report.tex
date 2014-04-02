@@ -50,8 +50,8 @@ The \emph{airflow} for the glottal excitation signal created by the RK-model is 
 \label{eq:RK-model}
 g(t) =
   \begin{cases}
-   at^2 + bt^3  & \text{jos } 0 \leq t \leq Q T \\
-   0            & \text{jos } Q T < t \leq T,
+   at^2 + bt^3  & \text{if } 0 \leq t \leq Q T \\
+   0            & \text{if } Q T < t \leq T,
   \end{cases}
 \end{equation}
 where $t$ is a time variable, $T = 1/f$ is the period of the pitch, $Q \in \left[ 0,1 \right]$ is the Klatt-parameter and $a$ and $b$ are variables defined in terms of $T_0 := QT$ as
