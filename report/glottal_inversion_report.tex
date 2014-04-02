@@ -6,6 +6,7 @@
 \usepackage{mathtools}
 \usepackage{graphicx}
 \usepackage{enumerate}
+\usepackage{bm}
 \DeclareMathOperator*{\argmin}{\arg\!\min}
 
 \newcommand{\R}{{\mathbb R}}
@@ -19,6 +20,7 @@
 
 \newcommand{\citeneeded}{\ensuremath{\vphantom{1}^{\text{[citation needed]}}\,}}
 \newcommand{\eps}{\ensuremath{\varepsilon}}
+\newcommand{\vc}[1]{\ensuremath{\bm{#1}}}
 
 
 \title{Glottal inversion with an approximate vocal tract filter}
@@ -77,7 +79,7 @@ Another, more widely used, model for the glottal excitation signal worth mention
 \subsection{Vocal tract filter}
 \label{sec:filter}
 
-In this study we will assume an approximate vocal tract filter to be known for the recorded vowel we want to invert. The digital filter, defined by a vector $a \in \R^{N_a}$, filters the data $x \in \R^n$ as defined by the difference equation
+In this study we will assume an approximate vocal tract filter to be known for the recorded vowel we want to invert. The digital filter, defined by a vector $\vc{a} = \left( a_1, a_2, \ldots , a_{N_a} \right)^T \in \R^{N_a}$, filters the data $\vc{x} = \left( x_1, x_2, \ldots , x_n \right)^T \in \R^n$ as defined by the difference equation
 \begin{equation}
 \left\{
 \begin{alignedat}{1}
@@ -87,9 +89,9 @@ a_1 y_j &= -\sum_{k=2}^{\min\{j-1, N_a\}} a_{k} y_{j-k} ,
 \end{alignedat}
 \right.
 \end{equation}
-where $y \in \R^n$ is the filtered data. We denote $y = \varphi_a (x)$.
+where $\vc{y} = \left( y_1, y_2, \ldots , y_n \right) \in \R^n$ is the filtered data. We denote $\vc{y} = \varphi_{\vc{a}} (\vc{x})$.
 
-Consider now the filter defined by $a \in \R^{N_a}$ and the data $x \in \R_n$ which we want to filter. Now the filter defined by \eqref{eq:filter-diffeq} can be expressed by the the matrix $A \in \R^{n \times n}$, where
+Consider now the filter defined by $\vc{a} \in \R^{N_a}$ and the data $\vc{x} \in \R^n$ which we want to filter. Now the filter defined by \eqref{eq:filter-diffeq} can be expressed by the the matrix $A \in \R^{n \times n}$, where
 \begin{equation}
 \label{eq:filter-matrix}
 \left\{
@@ -101,54 +103,54 @@ Consider now the filter defined by $a \in \R^{N_a}$ and the data $x \in \R_n$ wh
 \end{alignedat}
 \right.
 \end{equation}
-Now $\varphi_a (x) = Ax$.
+Now $\varphi_{\vc{a}} (\vc{x}) = A \vc{x}$.
 
 
 \subsection{The matrix model}
 \label{sec:matrixModel}
 
-A vowel sound can be simulated by applying a digital filter $A \in \R^{n \times n}$, defined as in \eqref{eq:filter-matrix}, to a sample of a glottal excitation signal $g \in \R^n$ as
+A vowel sound can be simulated by applying a digital filter $A \in \R^{n \times n}$, defined as in \eqref{eq:filter-matrix}, to a sample of a glottal excitation signal $\vc{g} \in \R^n$ as
 \begin{equation}
 \label{eq:vow}
-v = A g .
+\vc{v} = A \vc{g} .
 \end{equation}
-Here $v \in \R^n$ is the simulated vowel.
+Here $\vc{v} \in \R^n$ is the simulated vowel.
 
-In this study we will assume an approximation of the filter $A$ to be known. Given the measurement $m \in \R^n$ of a vowel corresponding approximately to the filter $A$, equation \eqref{eq:vow} can be expressed as
+In this study we will assume an approximation of the filter $A$ to be known. Given the measurements $\vc{m} \in \R^n$ of a vowel corresponding approximately to the filter $A$, equation \eqref{eq:vow} can be expressed as
 \begin{equation}
 \label{eq:vowModel}
-m = A g + \eps,
+\vc{m} = A \vc{g} + \vc{\eps},
 \end{equation}
-where $\eps \in \R^n$ denotes the measurement noise.
+where $\vc{\eps} \in \R^n$ denotes the measurement noise.
 
 
 \subsection{The inversion method}\label{sec:invMethod}
 
 \subsubsection{Tikhonov reguralization}\label{sec:tikh}
-The classical Tikhonov regularized solution for $m = Ag + \varepsilon$, defined in section \ref{sec:matrixModel}, is usually denoted by the vector $T_\alpha(m)\in\R^n$ that minimizes
+The classical Tikhonov regularized solution for $\vc{m} = A \vc{g} + \vc{\eps}$, defined in section \ref{sec:matrixModel}, is usually denoted by the vector $T_\alpha( \vc{m} ) \in \R^n$ that minimizes
 \begin{equation*}
-\lnorm AT_\alpha(m) - m \rnorm^2 + \alpha \lnorm T_\alpha(m) \rnorm^2 \Leftrightarrow
+\lnorm AT_\alpha( \vc{m} ) - \vc{m} \rnorm^2 + \alpha \lnorm T_\alpha( \vc{m} ) \rnorm^2 \Leftrightarrow
 \end{equation*}
 \begin{equation*}
-T_\alpha(m) = \underset{z\in\R^n}{\argmin}
-\left\{ \lnorm Az - m \rnorm^2 + \alpha \lnorm z \rnorm^2 \right\},
+T_\alpha( \vc{m} ) = \underset{ \vc{z} \in \R^n}{\argmin}
+\left\{ \lnorm A \vc{z} - \vc{m} \rnorm^2 + \alpha \lnorm \vc{z} \rnorm^2 \right\},
 \end{equation*}
-where $\alpha > 0$ is called a regularization parameter. The resulting $T_\alpha(m)$ can be understood as a compromise between two conditions, namely
+where $\alpha > 0$ is called a regularization parameter. The resulting $T_\alpha( \vc{m} )$ can be understood as a compromise between two conditions, namely
 \begin{enumerate}[I.]
- \item $T_\alpha(m)$ should give a small residual $AT_\alpha(m) - m$.
- \item $\lnorm T_\alpha(m) \rnorm_2$ should be small.
+ \item $T_\alpha( \vc{m} )$ should give a small residual $AT_\alpha( \vc{m} ) - \vc{m}$.
+ \item $\lnorm T_\alpha( \vc{m} ) \rnorm_2$ should be small.
 \end{enumerate}
 The $\alpha$ parameter is used in order to tune to balance between the two conditions above.
 
 In generalized Tikhonov regularization some prior knowledge is assumed to be known. For example, in some cases $g$ might be known to be smooth. This information can be incorporated into the regularization by choosing
 \begin{equation}
-T_\alpha(m) = \underset{z\in\R^n}{\argmin}
-\left\{ \lnorm Az - m \rnorm^2 + \alpha \lnorm Lz \rnorm^2 \right\},
+T_\alpha( \vc{m} ) = \underset{\vc{z} \in \R^n}{\argmin}
+\left\{ \lnorm A \vc{z} - m \rnorm^2 + \alpha \lnorm L \vc{z} \rnorm^2 \right\},
 \end{equation}  
 where $L$ is a discretized differential operator. As shown in \cite{samu}, the regularized solution satisfies
 \begin{equation}
 \label{eq:tik-normal}
-\left( A^T A + \alpha L^T L \right) T_{\alpha}(m) = A^T m ,
+\left( A^T A + \alpha L^T L \right) T_{\alpha}( \vc{m} ) = A^T \vc{m} ,
 \end{equation}
 which can be used to calculate the solution numerically.
  
@@ -161,48 +163,48 @@ In our model proposed in section \ref{sec:rk} we know the airflow of the excitat
 The conjugate gradient method is an iterative method for the quadratic optimization problem
 \begin{equation}
 \label{eq:quad-optim}
-\text{minimize } \frac{1}{2} x^T Q x - b^T x ,
+\text{minimize } \frac{1}{2} \vc{x}^T Q \vc{x} - \vc{b}^T \vc{x} ,
 \end{equation}
 where $Q \in \R^{n \times n}$ is a symmetric positive definite matrix. We will now briefly explain the algorithm and its use to our particular problem. For a more detailed explanation, see \cite{samu}.
 
-Let $b \in \R^n$ fixed, $Q \in \R^{n \times n}$ a symmetric positive definite matrix, $x_0 \in \R^n$ the initial guess and define $d_0 = -g_0 = b - Q x_0$. Now for $k \geq 0$ let
+Let $\vc{b} \in \R^n$ fixed, $Q \in \R^{n \times n}$ a symmetric positive definite matrix, $\vc{x_0} \in \R^n$ the initial guess and define $\vc{d_0} = -\vc{g_0} = \vc{b} - Q \vc{x_0}$. Now for $k \geq 0$ let
 \begin{equation}
-\begin{alignedat}{1}
-\alpha_k &= -\frac{g_k^T d_k}{d_k^T Q d_k} \\
-x_{k+1}  &= x_k + \alpha_k d_k \\
-g_{k+1}  &= Q x_{k+1} - b \\
-\beta_k  &= \frac{g_{k+1}^T Q d_k}{d_k^T Q d_k} \\
-d_{k+1}  &= -g_{k+1} + \beta_k d_k .
+\begin{alignedat}{3}
+&\alpha_k      &&= -\frac{\vc{g_k}^T \vc{d_k}}{\vc{d_k}^T Q \vc{d_k}} \\
+&\vc{x_{k+1}}  &&= \vc{x_k} + \alpha_k \vc{d_k} \\
+&\vc{g_{k+1}}  &&= Q \vc{x_{k+1}} - \vc{b} \\
+&\beta_k       &&= \frac{\vc{g_{k+1}}^T Q \vc{d_k}}{\vc{d_k}^T Q \vc{d_k}} \\
+&\vc{d_{k+1}}  &&= -\vc{g_{k+1}} + \beta_k \vc{d_k} .
 \end{alignedat}
 \end{equation}
-Now $x_k$ converges toward the solution of \eqref{eq:quad-optim}. We now want to apply the conjugate gradient algorithm in the case of the optimization problem defined in \eqref{eq:tik-normal} for the Tikhonov regularization.
+Now $\vc{x_k}$ converges toward the solution of \eqref{eq:quad-optim}. We now want to apply the conjugate gradient algorithm in the case of the optimization problem defined in \eqref{eq:tik-normal} for the Tikhonov regularization.
 
-Let $A \in \R^{n \times n}$, $L \in R^{n \times n}$ invertible and $\alpha > 0$. Now the square matrix $B := A^T A + \alpha L^T L$ is invertible. If we denote $f := T_\alpha (m)$ in \eqref{eq:tik-normal}, the problem becomes to minimize the expression
+Let $A \in \R^{n \times n}$, $L \in R^{n \times n}$ invertible and $\alpha > 0$. Now the square matrix $B := A^T A + \alpha L^T L$ is invertible. If we denote $\vc{f} := T_\alpha ( \vc{m} )$ in \eqref{eq:tik-normal}, the problem becomes to minimize the expression
 \begin{equation}
 \label{eq:conjgrad-basis}
-\lnorm B f - A^T m \rnorm^2 .
+\lnorm B \vc{f} - A^T \vc{m} \rnorm^2 .
 \end{equation}
 
 We see that
 \begin{equation}
 \label{eq:conjgrad-calc}
 \begin{alignedat}{1}
-\lnorm B f - A^T m \rnorm^2
-  &= \left< Bf, Bf \right> - 2 \left< Bf, A^T m \right> + \left< A^T m, A^T m \right> \\
-  &= f^T B^T B f - 2 m^T A B f + \lnorm A^T m \rnorm^2 .
+\lnorm B \vc{f} - A^T \vc{m} \rnorm^2
+  &= \left< B \vc{f}, B \vc{f} \right> - 2 \left< B \vc{f}, A^T \vc{m} \right> + \left< A^T \vc{m}, A^T \vc{m} \right> \\
+  &= \vc{f}^T B^T B \vc{f} - 2 \vc{m}^T A B \vc{f} + \lnorm A^T \vc{m} \rnorm^2 .
 \end{alignedat}
 \end{equation}
 Further, we notice that $B^T B$ is a positive definite symmetric matrix, since
 \begin{equation*}
-v^T (B^T B) v = (B v)^T B v = \lnorm B v \rnorm^2 > 0
+\vc{v}^T (B^T B) \vc{v} = (B \vc{v})^T B \vc{v} = \lnorm B \vc{v} \rnorm^2 > 0
 \end{equation*}
-for any $v \in R^n$, $v \neq 0$, due to the fact that $B$ is invertible. Now we define
+for any $\vc{v} \in R^n$, $\vc{v} \neq 0$, due to the fact that $B$ is invertible. Now we define
 \begin{equation*}
-Q := 2 B^T B \quad \text{and} \quad b^T := 2 m^T A B .
+Q := 2 B^T B \quad \text{and} \quad \vc{b}^T := 2 \vc{m}^T A B .
 \end{equation*}
 As can be seen from \eqref{eq:conjgrad-calc}, minimizing \eqref{eq:conjgrad-basis} is equivalent to minimizing the expression
 \begin{equation}
-\frac{1}{2} f^T Q f - b^T f ,
+\frac{1}{2} \vc{f}^T Q \vc{f} - \vc{b}^T \vc{f} ,
 \end{equation}
 and thus we can use the conjugate gradient method for the optimization.
 
@@ -211,32 +213,32 @@ and thus we can use the conjugate gradient method for the optimization.
 \subsubsection{Morozov's discrepancy principle}
 The problem of finding the optimal regularization parameter is, in general, considered to be unsolved. There are, however, methods that attempt to find an optimal choice of the regularization parameter, including the Morozov discrepancy principle, which is based on the noise level in the data.
 
-Assume that we know the size of the noise in our model defined by \eqref{eq:vowModel} to be $\delta > 0$. Now $T_\alpha(m)$ is an acceptable reconstruction if 
+Assume that we know the size of the noise in our model defined by \eqref{eq:vowModel} to be $\delta > 0$. Now $T_\alpha( \vc{m} )$ is an acceptable reconstruction if 
 \begin{equation}
-\lnorm AT_\alpha(m)-m\rnorm \leq \delta \quad \left( A \in R^{k \times n}\right).
+\lnorm AT_\alpha( \vc{m} )- \vc{m} \rnorm \leq \delta \quad \left( A \in R^{k \times n}\right).
 \end{equation}
 If we assume that 
 \begin{equation}
-\eps = \left(\eps_1, \ldots, \eps_n\right)\in\R^n, \quad \eps_k \sim N\left(0,1\right) \text{ for all } k\in\left\{1, \ldots, n\right\},
+\vc{\eps} = \left( \eps_1, \eps_2, \ldots, \eps_n \right)^T \in \R^n, \quad \eps_k \sim N\left(0,1\right) \text{ for all } k\in\left\{1, \ldots, n\right\},
 \end{equation}
-we can choose $\delta = \sqrt{n}$ since $E\left(\lnorm \eps \rnorm\right) = \sqrt{n}.$
+we can choose $\delta = \sqrt{n}$ since $E \left( \lnorm \vc{\eps} \rnorm \right) = \sqrt{n}.$
 
 The idea of the Morozov's discrepancy principle is to choose $\alpha > 0$ such that
 \begin{equation}
-\lnorm AT_\alpha(m) - m \rnorm = \delta
+\lnorm AT_\alpha( \vc{m} ) - \vc{m} \rnorm = \delta
 \end{equation}
 It can be proven (see \cite{samu}) that the $\alpha$ that satisfies the above expression is attained by solving
 \begin{equation}
 \sum_{j=1}^{\min\left\{ k,n \right\}} \left( \frac{\alpha}{d_j^2 + \alpha} \right)^2 \left( m'_j \right)^2 + \sum_{j = \min\left\{k,n\right\} + 1}^k \left( m'_j \right)^2 - \delta^2 = 0,
 \end{equation}
-where $d_j$ are the singular values of $A$ and $m' = U^Tm$ where $U$ is an orthogonal matrix acquired from the singular value decomposition $A=UDV^T$.
+where $d_j$ are the singular values of $A$ and $\vc{m'} = U^T \vc{m}$ where $U$ is an orthogonal matrix acquired from the singular value decomposition $A = U D V^T$.
 
 
 \subsection{The basis and materials}\label{sec:basis}
 
 In this work we will use synthetic data as our basis. We first create a synthetic glottal excitation signal using the airflow function defined in \eqref{eq:RK-model}. To this signal we apply a previously calculated vocal tract filter, as described in section \ref{sec:filter} to create a simulated vowel sound. Finally we add some normally distributed noise to the data to simulate measurement noise. Different data is created by varying the sound frequency, the value of the Klatt-parameter $Q$ and the noise-level.
 
-The inversion of the vowel sound is done using another filter similar to the one used in creating the synthetic data. For example we might have created the data with a filter for a male vowel /a/, and use a filter for a female vowel /a/ for the inversion. This way we avoid inverse crime. The idea is that we can assume two different filters for the same vowel to be approximately the same. That is, given two different filters $A_1$ and $A_2$ for the same vowel and a glottal excitation signal $g$, we assume that $A_1 g \approx A_2 g$. This is based on the fact that a vowel is defined by its two or three first \emph{formant frequencies}, which can be assumed to be about the same for two different vowel sounds.\cite{digitalmodels}
+The inversion of the vowel sound is done using another filter similar to the one used in creating the synthetic data. For example we might have created the data with a filter for a male vowel /a/, and use a filter for a female vowel /a/ for the inversion. This way we avoid inverse crime. The idea is that we can assume two different filters for the same vowel to be approximately the same. That is, given two different filters $A_1$ and $A_2$ for the same vowel and a glottal excitation signal $\vc{g}$, we assume that $A_1 \vc{g} \approx A_2 \vc{g}$. This is based on the fact that a vowel is defined by its two or three first \emph{formant frequencies}, which can be assumed to be about the same for two different vowel sounds.\cite{digitalmodels}
 
 We then attempt to solve the inverse problem by using the generalized Tikhonov regularization with a customized penalty matrix. We will assume the Klatt-parameter $Q$ of the glottal excitation signal to be known (at least approximately), and as explained in section \ref{sec:rk} we know the pressure function to be zero in the interval $]QT, T]$. This will be incorporated in the model by assigning large values to the diagonal entries $l_i \in L$ for the values of $i$ that correspond to the previously mentioned interval, namely $i \in \left\{ j \in \N : Qn < j \leq n \right\}$ where $n$ is the length of our data. We also know the pressure function to be smooth in the interval $[0, Q]$. This can be incorporated by adding differential operator properties to the penalty matrix.
 
