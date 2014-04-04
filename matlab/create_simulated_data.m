@@ -12,7 +12,7 @@ show_plot = 0;
 % which filter should be used?
 % 0: female
 % 1: male
-male_filter = 1;
+data_male_filter = 0;
 
 % which glottal model?
 % 0: triangle wave
@@ -22,7 +22,7 @@ klatt_model = 1;
 % parameters for the data
 f = 120;
 Q = .4;
-Q_rand = 0.05;
+Q_rand = 0;
 noise_lvl = .005;
 periods = 10;
 Q1 = Q + 2*Q_rand*rand()-Q_rand;
@@ -33,7 +33,7 @@ else
     [xx, yy, yyd] = glottal_triangle(f, Q1);
 end
 
-if male_filter
+if data_male_filter
     filt = load('data/filter_male_a');
 else
     filt = load('data/filter_female_a');
@@ -67,7 +67,7 @@ y = repmat(yy, periods, 1);
 yd = repmat(yyd, periods, 1);
 plotvow = vow(start * len : periods * len + start * len - 1);
 
-save data/data m x y yd periods Q
+save data/data m x y yd periods Q Q_rand noise_lvl f data_male_filter
 
 
 

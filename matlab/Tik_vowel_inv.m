@@ -17,7 +17,7 @@ v_factor = .6;
 p_len = n / periods;
 q = round(Q * p_len);
 v = ones(p_len, 1) * v_factor;
-v(q:end) = 10;
+v(q:end) = 40;
 v1 = -ones(p_len, 1) * v_factor;
 v1(q:end) = 0;
 
