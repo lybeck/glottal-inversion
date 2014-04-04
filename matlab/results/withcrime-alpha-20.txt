@@ -1,0 +1,10 @@
+File = withcrime-alpha-20
+
+Relative error of glottal impulse = 56.81     % 
+Relative error of generated vowel = 27.30     % 
+Alpha value                       = 20.00000000 
+Klatt parameter                   = 0.40000 
+Random factor of Klatt parameter  = 0.00000 
+Level of noise in data            = 0.00500 
+Frequency of the vowel sound      = 120.00  
+Inverse crime? (0 = no, 1 = yes)  : 1
