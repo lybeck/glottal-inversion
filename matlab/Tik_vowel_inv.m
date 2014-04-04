@@ -1,6 +1,6 @@
 function x = Tik_vowel_inv(filt, m, alpha, x0, periods, Q)
 
-max_iter = 1000;
+max_iter = 5000;
 tol = sqrt(eps);
 
 n = length(x0);
@@ -17,7 +17,7 @@ v_factor = .6;
 p_len = n / periods;
 q = round(Q * p_len);
 v = ones(p_len, 1) * v_factor;
-v(q:end) = 40;
+v(q:end) = 50;
 v1 = -ones(p_len, 1) * v_factor;
 v1(q:end) = 0;
 

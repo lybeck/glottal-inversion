@@ -8,7 +8,7 @@ play_sound = 0;
 save_sound = 0;
 
 % save plot to results?
-save_plot = 0;
+save_plot = 1;
 
 load data/data m x y yd periods Q Q_rand noise_lvl f data_male_filter
 filt = load('data/filter_male_a');
@@ -21,8 +21,9 @@ male_filter = 1;
 
 x0 = zeros(length(m), 1);
 
-delta = length(m) * 10;
+delta = length(m);
 alpha = morozov(create_filter_matrix(filt.alpha, length(m))', m, delta, 1);
+% alpha = 20;
 
 % rec = myconjgrad(m, alpha, x0);
 rec = Tik_a_inv(m, alpha, x0, periods, Q, male_filter);
@@ -38,8 +39,8 @@ fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
 
 % plots
 if save_plot
-    filename = 'test';
-    plot_and_save(filename, x, rec, yd, relerr, relerrv, Q, Q_rand, noise_lvl, f, data_male_filter);
+    filename = 'withcrime-morozov-len(m)[V2]';
+    plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_rand, noise_lvl, f, data_male_filter);
 else
     figure(1)
     plot(x, rec, x, yd)
