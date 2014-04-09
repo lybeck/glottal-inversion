@@ -20,6 +20,3 @@ report/*.synctex.gz
 # recordings
 recordings
 
-# alpha loop temp save
-matlab/data/tik_alpha_errs.dat
-

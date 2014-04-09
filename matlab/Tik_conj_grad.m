@@ -20,10 +20,10 @@ for k=1:max_iter
     diffvec = Qmult(x) - b;
     diffnorm = norm(diffvec);
     
-    if ~mod(k, 20)
-        fprintf('Iteration %d / %d\n', k, max_iter)
-        fprintf('Diff norm = %e\n\n', diffnorm)
-    end
+%     if ~mod(k, 20)
+%         fprintf('Iteration %d / %d\n', k, max_iter)
+%         fprintf('Diff norm = %e\n\n', diffnorm)
+%     end
     
     if diffnorm < tol
         return;

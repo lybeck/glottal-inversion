@@ -8,9 +8,14 @@ play_sound = 0;
 save_sound = 0;
 
 % save plot to results?
-save_plot = 0;
+save_data = 1;
 
-load data/data m x y yd periods Q Q_rand noise_lvl f data_male_filter
+% save parameters
+directory = 'results/tik_alpha_nocrime1';
+filename = 'tik_inv_errs.mat';
+filepath = [directory, '/', filename];
+
+load data/data m x y yd periods Q Q_rand noise_lvl noise f data_male_filter
 filt = load('data/filter_male_a');
 const = load('data/constants');
 
@@ -19,11 +24,37 @@ const = load('data/constants');
 % 1: male filter
 male_filter = 1;
 
+if save_data
+    if ~exist(directory, 'dir')
+        mkdir(directory)
+    end
+    param_path = [directory, '/parameters.txt'];
+    param_file = fopen(param_path, 'w');
+    fprintf(param_file, [ ...
+        'data_male_filter: %d\n' ...
+        'f: %d\n' ...
+        'Q: %f\n' ...
+        'Q_rand: %f\n' ...
+        'noise_lvl: %f\n' ...
+        'noise: %f\n' ...
+        'periods: %d\n' ...
+        ], data_male_filter, f, Q, Q_rand, noise_lvl, noise, periods);
+    fclose(param_file);
+end
+
 x0 = zeros(length(m), 1);
 
-alphavec = 0:.1:10;
+start = 0;
+stop = 100;
+step = .2;
+
+alphavec = start + step : step : stop;
 n = length(alphavec);
+
 errs = zeros(n, 2);
+errs(:,1) = alphavec(:);
+errs(:,2) = nan * errs(:,2);
+
 best_err = inf;
 
 for ii=1:n
@@ -36,6 +67,15 @@ for ii=1:n
         best_alpha = alpha;
         best_rec = rec;
     end
+    
+    
+    if save_data
+        save(filepath, 'errs')
+    end
+    
+    plot(errs(:,1), errs(:,2))
+    xlim([start + step, stop])
+    pause(.1)
 end
 
 alpha = best_alpha;
@@ -48,13 +88,6 @@ v = filter(1, filt.alpha, yd);
 relerrv = 100 * norm(recv - v) / norm(v);
 fprintf('\nRelative error on glottal impulse : %g %%\n', relerr)
 fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
-
-
-% save?
-if save_plot
-    filename = 'Tik_inv_errs.dat';
-    save(filename, 'errs')
-end
 
 figure(1)
 plot(x, rec, x, yd)
@@ -88,11 +121,11 @@ if play_sound
     sound(recvow, const.fs)
     
     if save_sound
-       
-       wavwrite(syd, const.fs, 'glottal_impulse_data');
-       wavwrite(recyd, const.fs, 'glottal_impulse_rec');
-       wavwrite(vow, const.fs, 'vowel_data');
-       wavwrite(recvow, const.fs, 'vowel_rec');
-    
+        
+        wavwrite(syd, const.fs, 'glottal_impulse_data');
+        wavwrite(recyd, const.fs, 'glottal_impulse_rec');
+        wavwrite(vow, const.fs, 'vowel_data');
+        wavwrite(recvow, const.fs, 'vowel_rec');
+        
     end
 end
