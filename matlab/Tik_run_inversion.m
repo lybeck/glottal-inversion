@@ -4,13 +4,13 @@ clear
 % play sound from reconstruction?
 play_sound = 0;
 
-% save sound file from reconstruction?
-save_sound = 0;
+% save sound file from reconstruction (need to play the sound to do this)?
+save_sound = 1;
 
 % save plot to results?
 save_plot = 1;
 
-load data/data m x y yd periods Q Q_rand noise_lvl f data_male_filter
+load data/data m x y yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
 filt = load('data/filter_male_a');
 const = load('data/constants');
 
@@ -21,7 +21,7 @@ male_filter = 1;
 
 x0 = zeros(length(m), 1);
 
-delta = length(m);
+delta = length(m) * noise_lvl * noise_factor;
 alpha = morozov(create_filter_matrix(filt.alpha, length(m))', m, delta, 1);
 % alpha = 20;
 
@@ -39,8 +39,8 @@ fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
 
 % plots
 if save_plot
-    filename = 'withcrime-morozov-len(m)[V2]';
-    plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_rand, noise_lvl, f, data_male_filter);
+    filename = 'test';
+    plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_rand, noise_lvl, noise_factor, f, data_male_filter);
 else
     figure(1)
     plot(x, rec, x, yd)
