@@ -39,7 +39,7 @@ fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
 
 % plots
 if save_plot
-    filename = 'morozov_with-crime_error-005_Qrand-0[V3]';
+    filename = 'morozov_with-crime_error-005_Qrand-01';
     plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_rand, noise_lvl, noise_factor, f, data_male_filter);
 else
     figure(1)
