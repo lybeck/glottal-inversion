@@ -20,9 +20,15 @@ data_male_filter = 0;
 klatt_model = 1;
 
 % parameters for the data
+<<<<<<< HEAD
+f = 100;
+Q = .5;
+Q_rand = 0;
+=======
 f = 120;
 Q = .6;
 Q_rand = 0.0;
+>>>>>>> master
 noise_lvl = .005;
 periods = 10;
 Q1 = Q + 2*Q_rand*rand()-Q_rand;
@@ -67,7 +73,11 @@ y = repmat(yy, periods, 1);
 yd = repmat(yyd, periods, 1);
 plotvow = vow(start * len : periods * len + start * len - 1);
 
+<<<<<<< HEAD
+save data/data m x y yd periods Q Q_rand noise_lvl noise f data_male_filter
+=======
 save data/data m x y yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
+>>>>>>> master
 
 
 

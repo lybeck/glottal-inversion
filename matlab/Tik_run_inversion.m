@@ -10,7 +10,7 @@ save_sound = 0;
 % save plot to results?
 save_plot = 1;
 
-load data/data m x y yd periods Q Q_rand noise_lvl f data_male_filter
+load data/data m x y yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
 filt = load('data/filter_male_a');
 const = load('data/constants');
 
@@ -21,7 +21,7 @@ male_filter = 1;
 
 x0 = zeros(length(m), 1);
 
-delta = length(m);
+delta = length(m) * noise_lvl * noise_factor;
 alpha = morozov(create_filter_matrix(filt.alpha, length(m))', m, delta, 1);
 % alpha = 20;
 
@@ -39,8 +39,8 @@ fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
 
 % plots
 if save_plot
-    filename = 'withcrime-morozov-len(m)[V2]';
-    plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_rand, noise_lvl, f, data_male_filter);
+    filename = 'morozov_no-crime_error-005_Qrand-0[V2]';
+    plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_rand, noise_lvl, noise_factor, f, data_male_filter);
 else
     figure(1)
     plot(x, rec, x, yd)
@@ -48,7 +48,7 @@ else
 end
 
 % sound
-if play_sound
+if play_sound || save_sound
     
     % sound duration in seconds
     d = 1;
@@ -65,14 +65,18 @@ if play_sound
     syd = syd / max(syd);
     vow = vow / max(vow);
     
-    sound(syd, const.fs)
-    pause(2)
-    sound(recyd, const.fs)
-    pause(3)
+    if play_sound
+        
+        sound(syd, const.fs)
+        pause(2)
+        sound(recyd, const.fs)
+        pause(3)
+        
+        sound(vow, const.fs)
+        pause(2)
+        sound(recvow, const.fs)
     
-    sound(vow, const.fs)
-    pause(2)
-    sound(recvow, const.fs)
+    end
     
     if save_sound
        
