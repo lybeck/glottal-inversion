@@ -4,8 +4,8 @@ clear
 % play sound from reconstruction?
 play_sound = 0;
 
-% save sound file from reconstruction (need to play the sound to do this)?
-save_sound = 1;
+% save sound file from reconstruction?
+save_sound = 0;
 
 % save plot to results?
 save_plot = 1;
@@ -39,7 +39,7 @@ fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
 
 % plots
 if save_plot
-    filename = 'morozov_with-crime_error-005_Qrand-01';
+    filename = 'morozov_no-crime_error-005_Qrand-0[V2]';
     plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_rand, noise_lvl, noise_factor, f, data_male_filter);
 else
     figure(1)
@@ -48,7 +48,7 @@ else
 end
 
 % sound
-if play_sound
+if play_sound || save_sound
     
     % sound duration in seconds
     d = 1;
@@ -65,14 +65,18 @@ if play_sound
     syd = syd / max(syd);
     vow = vow / max(vow);
     
-    sound(syd, const.fs)
-    pause(2)
-    sound(recyd, const.fs)
-    pause(3)
+    if play_sound
+        
+        sound(syd, const.fs)
+        pause(2)
+        sound(recyd, const.fs)
+        pause(3)
+        
+        sound(vow, const.fs)
+        pause(2)
+        sound(recvow, const.fs)
     
-    sound(vow, const.fs)
-    pause(2)
-    sound(recvow, const.fs)
+    end
     
     if save_sound
        

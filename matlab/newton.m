@@ -13,7 +13,7 @@ function x = newton(f, df, init_guess, max_iter, tol)
             return;
         end
         old_x = new_x;
-        abs(f(new_x))
+        fprintf('alpha = %-2.4e\n', abs(f(new_x)));
     end
     error('Iteration did not converge with given maximum iterations!');
 
