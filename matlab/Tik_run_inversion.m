@@ -2,10 +2,10 @@
 clear
 
 % play sound from reconstruction?
-play_sound = 0;
+play_sound = 1;
 
 % save sound file from reconstruction?
-save_sound = 0;
+save_sound = 1;
 
 % save plot to results?
 save_plot = 1;
@@ -39,7 +39,7 @@ fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
 
 % plots
 if save_plot
-    filename = 'morozov_no-crime_error-005_Qrand-0[V2]';
+    filename = 'morozov_no-crime_error-005_Qrand-0[Pres]';
     plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_rand, noise_lvl, noise_factor, f, data_male_filter);
 else
     figure(1)
@@ -79,11 +79,17 @@ if play_sound || save_sound
     end
     
     if save_sound
-       
-       wavwrite(syd, const.fs, 'glottal_impulse_data');
-       wavwrite(recyd, const.fs, 'glottal_impulse_rec');
-       wavwrite(vow, const.fs, 'vowel_data');
-       wavwrite(recvow, const.fs, 'vowel_rec');
+        
+        prefix = '';
+        
+        if save_plot
+            prefix = ['results/', filename];
+        end
+        
+        wavwrite(syd, const.fs, [prefix, 'glottal_impulse_data']);
+        wavwrite(recyd, const.fs, [prefix, 'glottal_impulse_rec']);
+        wavwrite(vow, const.fs, [prefix, 'vowel_data']);
+        wavwrite(recvow, const.fs, [prefix, 'vowel_rec']);
     
     end
 end
