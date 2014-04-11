@@ -1,3 +1,14 @@
+% MOROZOV(A, M, DELTA, INIT_GUESS)
+% Calculates the alpha parameter using Morozov's discrepancy principle.
+% Parameters:
+% - A = the filter matrix from the matrix model
+% - M = measurement data
+% - DELTA = approximation of the level of noise in measurement data
+% - INIT_GUESS = initial guess of the alpha parameter
+%
+% Returns:
+% - The computed alpha parameter value.
+
 function alpha = morozov(A, m, delta, init_guess)
 
     [U, D, ~] = svd(A);

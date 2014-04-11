@@ -5,10 +5,10 @@ clear
 play_sound = 0;
 
 % save sound file from reconstruction?
-save_sound = 1;
+save_sound = 0;
 
 % save plot to results?
-save_plot = 1;
+save_plot = 0;
 
 load data/data m x y yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
 filt = load('data/filter_male_a');
