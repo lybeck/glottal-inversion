@@ -1,0 +1,11 @@
+File = naive_test_morozov
+
+Relative error of glottal impulse = 48.77% 
+Relative error of generated vowel = 26.15% 
+Alpha value                       = 32.2035  
+Klatt parameter                   = 0.60000 
+Random factor of Klatt parameter  = 0.00000 
+Level of noise in data            = 0.05000 
+Factor of the noise of the data   = 5190.52640 
+Frequency of the vowel sound      = 120.00  
+Inverse crime? (0 = no, 1 = yes)  : 1

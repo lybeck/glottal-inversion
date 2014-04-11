@@ -1,11 +1,11 @@
 File = morozov_no-crime_error-005_Qrand-0[V2]
 
-Relative error of glottal impulse = 145.19% 
-Relative error of generated vowel = 70.18% 
-Alpha value                       = 42.3996  
-Klatt parameter                   = 0.60000 
+Relative error of glottal impulse = 124.23% 
+Relative error of generated vowel = 65.49% 
+Alpha value                       = 17.4062  
+Klatt parameter                   = 0.50000 
 Random factor of Klatt parameter  = 0.00000 
 Level of noise in data            = 0.00500 
-Factor of the noise of the data   = 4449.53519 
-Frequency of the vowel sound      = 120.00  
+Factor of the noise of the data   = 8112.77076 
+Frequency of the vowel sound      = 180.00  
 Inverse crime? (0 = no, 1 = yes)  : 0
