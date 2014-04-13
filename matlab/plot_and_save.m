@@ -7,13 +7,14 @@ set(gcf,'Position',scrsize);
 set(gcf, 'PaperPositionMode','auto');
 
 path_to_file = ['results/', filename];
-if exist([path_to_file, '.png'], 'file') == 2
+if exist([path_to_file, '.eps'], 'file') == 2
     want_to_overwrite = input('File exists. Want to overwrite? (0 = no, 1 = yes) ');
     if ~want_to_overwrite
         return;
     end
 end
 
+saveas(gcf, [path_to_file, '.eps'], 'epsc');
 saveas(gcf, [path_to_file, '.png'], 'png');
 
 fileID = fopen([path_to_file, '.txt'],'w');

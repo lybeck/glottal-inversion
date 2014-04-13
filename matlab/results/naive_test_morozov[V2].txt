@@ -1,8 +1,8 @@
 File = naive_test_morozov[V2]
 
-Relative error of glottal impulse = 145.75% 
-Relative error of generated vowel = 70.12% 
-Alpha value                       = 36.3084  
+Relative error of glottal impulse = 140.87% 
+Relative error of generated vowel = 70.23% 
+Alpha value                       = 34.8692  
 Klatt parameter                   = 0.60000 
 Random factor of Klatt parameter  = 0.00000 
 Level of noise in data            = 0.05000 

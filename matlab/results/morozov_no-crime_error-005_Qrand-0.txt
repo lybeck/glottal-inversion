@@ -1,8 +1,8 @@
 File = morozov_no-crime_error-005_Qrand-0
 
-Relative error of glottal impulse = 152.27% 
-Relative error of generated vowel = 71.46% 
-Alpha value                       = 64.6540  
+Relative error of glottal impulse = 152.26% 
+Relative error of generated vowel = 71.49% 
+Alpha value                       = 65.0519  
 Klatt parameter                   = 0.40000 
 Random factor of Klatt parameter  = 0.00000 
 Level of noise in data            = 0.00500 

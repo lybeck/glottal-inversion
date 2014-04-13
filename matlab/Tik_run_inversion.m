@@ -8,7 +8,7 @@ play_sound = 0;
 save_sound = 0;
 
 % save plot to results?
-save_plot = 0;
+save_plot = 1;
 
 load data/data m x y yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
 filt = load('data/filter_male_a');
@@ -39,7 +39,7 @@ fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
 
 % plots
 if save_plot
-    filename = 'morozov_no-crime_error-005_Qrand-0[Pres-V4]';
+    filename = 'morozov_with-crime_error-005_Qrand-0[V3]';
     plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_rand, noise_lvl, noise_factor, f, data_male_filter);
 else
     figure(1)
