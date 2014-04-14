@@ -8,7 +8,7 @@ play_sound = 0;
 save_sound = 0;
 
 % save plot to results?
-save_plot = 1;
+save_plot = 0;
 
 load data/data m x y yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
 filt = load('data/filter_male_a');
@@ -20,19 +20,17 @@ const = load('data/constants');
 male_filter = 1;
 
 x0 = zeros(length(m), 1);
-
 delta = length(m) * noise_lvl * noise_factor;
 alpha = morozov(create_filter_matrix(filt.alpha, length(m))', m, delta, 1);
-% alpha = 20;
 
-% rec = myconjgrad(m, alpha, x0);
+
 rec = Tik_a_inv(m, alpha, x0, periods, Q, male_filter);
 
 % relative error
-relerr = 100 * norm(rec - yd) / norm(rec);
+relerr = compute_relerr(rec, yd);
 recv = filter(1, filt.alpha, rec);
 v = filter(1, filt.alpha, yd);
-relerrv = 100 * norm(recv - v) / norm(v);
+relerrv = compute_relerr(recv, v);
 fprintf('\nRelative error on glottal impulse : %g %%\n', relerr)
 fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
 
