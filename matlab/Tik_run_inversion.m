@@ -19,9 +19,13 @@ const = load('data/constants');
 % 1: male filter
 male_filter = 1;
 
+% noise multiplier due to error in filter
+% TODO: with nocrime data gives too big value, morozov doesn't converge...
+noise_mult = estimate_noise(m, f, Q, periods, noise_lvl);
+
 x0 = zeros(length(m), 1);
-%delta = length(m) * noise_lvl * noise_factor;
-delta = delta_fun(length(m), noise_factor, noise_lvl);
+delta = delta_fun(length(m), noise_factor, noise_lvl) * noise_mult;
+% TODO: why transpose of filter matrix?
 alpha = morozov(create_filter_matrix(filt.alpha, length(m))', m, delta, 1);
 
 
@@ -32,11 +36,13 @@ relerr = compute_relerr(rec, yd);
 recv = filter(1, filt.alpha, rec);
 v = filter(1, filt.alpha, yd);
 relerrv = compute_relerr(recv, v);
-fprintf('\nRelative error on glottal impulse : %g %%\n', relerr)
-fprintf('\nRelative error on vowel           : %g %%\n', relerrv)
-
 [shape_err, shape_err_fac] = compute_shape_error(rec, yd);
-fprintf('\nRelative error after scaling is applied on the glottal impulse : %g %%\n\n', shape_err)
+
+fprintf('\n')
+fprintf('Alpha used in calculations        : %.2f %%\n', alpha)
+fprintf('Relative error on glottal impulse : %g %%\n', relerr)
+fprintf('Shape error on glottal impulse    : %g %%\n', shape_err)
+fprintf('Relative error on vowel           : %g %%\n\n', relerrv)
 
 % plots
 if save_plot
