@@ -12,7 +12,7 @@ show_plot = 0;
 % which filter should be used?
 % 0: female
 % 1: male
-data_male_filter = 1;
+data_male_filter = 0;
 
 % which glottal model?
 % 0: triangle wave
@@ -20,8 +20,8 @@ data_male_filter = 1;
 klatt_model = 1;
 
 % parameters for the data
-f = 140;
-Q = .6;
+f = 120;
+Q = .4;
 Q_rand = .0;
 noise_lvl = .005;
 periods = 10;
