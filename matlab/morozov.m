@@ -19,6 +19,7 @@ function alpha = morozov(A, m, delta, init_guess)
     max_iter = 5000;
     conv = 0;
     
+    % TODO: is this needed?
 %     if norm(mm(r+1:end))>delta || delta>norm(mm)
 %         error('Morozov condition is not satisfied; cannot continue computation')
 %     end
@@ -38,5 +39,9 @@ function alpha = morozov(A, m, delta, init_guess)
            return; 
         end
     end
+    
+    % TODO: possible alternative for newton?
+%     f = @(a) sum((a ./ (d(1:r).^2 + a)).^2 .* mm(1:r).^2) + sum(mm(r+1:length(m)).^2) - delta.^2;
+%     alpha = fminsearch(@(a) abs(f(a)), 1);
 
 end 
