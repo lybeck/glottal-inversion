@@ -20,7 +20,8 @@ const = load('data/constants');
 male_filter = 1;
 
 x0 = zeros(length(m), 1);
-delta = length(m) * noise_lvl * noise_factor;
+%delta = length(m) * noise_lvl * noise_factor;
+delta = delta_fun(length(m), noise_factor, noise_lvl);
 alpha = morozov(create_filter_matrix(filt.alpha, length(m))', m, delta, 1);
 
 

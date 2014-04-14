@@ -15,7 +15,7 @@ directory = 'results/tik_alpha_nocrime1';
 filename = 'tik_inv_errs.mat';
 filepath = [directory, '/', filename];
 
-load data/data m x y yd periods Q Q_rand noise_lvl noise f data_male_filter
+load data/data m x y yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
 filt = load('data/filter_male_a');
 const = load('data/constants');
 
@@ -36,36 +36,48 @@ if save_data
         'Q: %f\n' ...
         'Q_rand: %f\n' ...
         'noise_lvl: %f\n' ...
-        'noise: %f\n' ...
+        'noise_factor: %f\n' ...
+        'noise_factor * noise_lvl: %f\n' ...
         'periods: %d\n' ...
-        ], data_male_filter, f, Q, Q_rand, noise_lvl, noise, periods);
+        ], data_male_filter, f, Q, Q_rand, noise_lvl, noise_factor, noise_lvl*noise_factor, periods);
     fclose(param_file);
 end
 
 x0 = zeros(length(m), 1);
 
-start = 0;
-stop = 100;
-step = .2;
+start = 301;
+stop = 600;
+step = 1;
 
-alphavec = start + step : step : stop;
+alphavec = start : step : stop;
 n = length(alphavec);
 
-errs = zeros(n, 2);
+errs = zeros(n, 3);
 errs(:,1) = alphavec(:);
 errs(:,2) = nan * errs(:,2);
+errs(:,3) = nan * errs(:,3);
 
 best_err = inf;
+best_shape_err = inf;
 
 for ii=1:n
-    alpha = alphavec(ii)
+    alpha = alphavec(ii);
+    
     rec = Tik_a_inv(m, alpha, x0, periods, Q, male_filter);
-    relerr = 100 * norm(rec - yd) / norm(rec)
-    errs(ii, :) = [alpha, relerr];
+    
+    relerr = compute_relerr(rec, yd);
+    shape_err = compute_shape_error(rec, yd);
+    fprintf('Alpha: %-8.2f Relative error: %-8.2f Shape error: %-8.2f\n', alpha, relerr, shape_err)
+    errs(ii, :) = [alpha, relerr, shape_err];
     if relerr < best_err
         best_err = relerr;
         best_alpha = alpha;
         best_rec = rec;
+    end
+    if shape_err < best_shape_err
+        best_shape_err = shape_err;
+        best_shape_alpha = alpha;
+        best_shape_rec = rec;
     end
     
     
@@ -73,25 +85,33 @@ for ii=1:n
         save(filepath, 'errs')
     end
     
-    plot(errs(:,1), errs(:,2))
-    xlim([start + step, stop])
+    plot(errs(:,1), errs(:,2), 'b-', errs(:,1), errs(:,3), 'g-')
+    xlim([start, stop])
     pause(.1)
 end
 
-alpha = best_alpha;
-rec = best_rec;
+plot(errs(:,1), errs(:,2), 'b-', errs(:,1), errs(:,3), 'g-')
+hold on
+plot(best_alpha, best_err, 'b.', 'markersize', 20)
+plot(best_shape_alpha, best_shape_err, 'g.', 'markersize', 20)
+hold off
+xlim([start, stop])
 
-% relative error
-relerr = 100 * norm(rec - yd) / norm(rec);
-recv = filter(1, filt.alpha, rec);
-v = filter(1, filt.alpha, yd);
-relerrv = 100 * norm(recv - v) / norm(v);
-fprintf('\nRelative error on glottal impulse : %g %%\n', relerr)
-fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
+disp('')
+fprintf('Least relative error: %-8.2f Alpha: %-8.2f\n', best_err, best_alpha)
+fprintf('Least shape error:    %-8.2f Alpha: %-8.2f\n', best_shape_err, best_shape_alpha)
 
-figure(1)
-plot(x, rec, x, yd)
+rec1 = Tik_a_inv(m, best_alpha, x0, periods, Q, male_filter);
+figure(2)
+plot(x, rec1, x, yd)
 xlim([0, x(end)])
+title('Least relative error')
+
+rec2 = Tik_a_inv(m, best_shape_alpha, x0, periods, Q, male_filter);
+figure(3)
+plot(x, rec2, x, yd)
+xlim([0, x(end)])
+title('Least shape error')
 
 % sound
 if play_sound
