@@ -19,13 +19,17 @@ function alpha = morozov(A, m, delta, init_guess)
     max_iter = 5000;
     conv = 0;
     
+%     if norm(mm(r+1:end))>delta || delta>norm(mm)
+%         error('Morozov condition is not satisfied; cannot continue computation')
+%     end
+    
     while ~conv
-        f = @(a) sum((a ./ (d(1:r).^2 + a)).^2 .* mm(1:r).^2) + sum(mm(r:length(m)).^2 - delta.^2);
+        f = @(a) sum((a ./ (d(1:r).^2 + a)).^2 .* mm(1:r).^2) + sum(mm(r+1:length(m)).^2) - delta.^2;
         df = @(a) 2.* sum((a ./ (d(1:r).^2 + a)) .* (d(1:r).^2 ./ (d(1:r).^2 + a).^2) .* mm(1:r).^2);
         
         [alpha, conv]= newton(f, df, init_guess, max_iter, tol);
         if ~conv
-            delta = delta * 0.1;
+            delta = delta / 2;
             alpha = 0;
         end
         if delta < 1e-8
