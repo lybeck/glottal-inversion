@@ -32,8 +32,10 @@ recv = filter(1, filt.alpha, rec);
 v = filter(1, filt.alpha, yd);
 relerrv = compute_relerr(recv, v);
 fprintf('\nRelative error on glottal impulse : %g %%\n', relerr)
-fprintf('\nRelative error on vowel           : %g %%\n\n', relerrv)
+fprintf('\nRelative error on vowel           : %g %%\n', relerrv)
 
+[shape_err, shape_err_fac] = compute_shape_error(rec, yd);
+fprintf('\nRelative error after scaling is applied on the glottal impulse : %g %%\n\n', shape_err)
 
 % plots
 if save_plot
