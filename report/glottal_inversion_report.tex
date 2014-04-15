@@ -1,3 +1,4 @@
+
 \documentclass[12pt,a4]{article}
 
 \usepackage[utf8]{inputenc}
@@ -276,7 +277,7 @@ then our assumed noise vector $\eps$ has the form
 \begin{equation}
 \eps = c\eps' = \left(cZ_1, \ldots, cZ_n \right), \quad c > 0.
 \end{equation}
-The scaling is done to make the error relative to the data, which again is preferrable in order to generate consistent data. We want to estimate the magnitude of the noise. Let $X \sim \chi_n^2$ and $Y \sim \chi_n$. We now see that
+The scaling is done to make the error relative to the data, which again is preferrable in order to generate consistent data. We want to estimate the magnitude of the noise. Let $X \sim \chi_n^2$ and $Y \sim \chi_n$. We now see (\cite{chi} \& \cite{handbook}) that
 \begin{align*}
 E\left(\lnorm \eps \rnorm \right)   &= E\left(\lnorm c\eps' \rnorm \right)   =
 E\left(c \lnorm \eps' \rnorm \right) = c E\left(\lnorm \eps' \rnorm \right) \\
@@ -295,7 +296,7 @@ This is numerically impossible to compute in a straightforward manner due to fas
 \end{equation}
 where the $\log\Gamma$ function is, in our case, more numerically stable. Note that expressions \eqref{eq:delta_choice} and \eqref{eq:alt_delta_choice} are equivalent.
  
-The solution of equation \eqref{eq:morozov_root} is then approximated with Newton's algorithm \citeneeded.
+The solution of equation \eqref{eq:morozov_root} is then approximated with Newton's method \cite{NR}.
 
 
 
@@ -322,7 +323,7 @@ The solution of equation \eqref{eq:morozov_root} is then approximated with Newto
 \bibitem{samu}
 	Mueller, Jennifer L. \& Siltanen Samuli, (2012).
 	\emph{Linear and Nonlinear Inverse Problems with Practical Applications}.
-	SIAM, 1:st edition.
+	SIAM, 1st edition.
 	
 \bibitem{touda}
     Touda, K., (2007)
@@ -339,6 +340,21 @@ The solution of equation \eqref{eq:morozov_root} is then approximated with Newto
     Rosenberg, A., (1971).
     \emph{Effect of glottal pulse shape on the quality of natural vowels}.
     Journal of the Acoustical Society of America 49 (2B), p. 583–590.
+    
+\bibitem{chi}
+    Evans, M., Hastings, N. \& Peacock, B. (2000)
+    \emph{Statistical distributions}.
+    New York: Wiley, p. 57
+    
+\bibitem{NR}
+    Press, W.H., Teukolsky, S.A., Vetterling, W.T. \& Flannery, B.P. (2007)
+    \emph{Numerical Recipes: The Art of Scientific Computing}.
+    New York: Cambridge University Press, 3rd edition, p.362
+    
+\bibitem{handbook}
+    Abramowitz, M \& Stegun, I.A. (1965)
+    \emph{Handbook of mathematical functions with formulas, graphs and mathenatical tables}
+    New York, NY: Dover, p.940
 
 \end{thebibliography}
 
