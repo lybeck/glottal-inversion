@@ -1,4 +1,7 @@
-function noise_est = estimate_noise(m, f, Q, periods, noise_lvl)
+function noise_est = estimate_noise(m, f, Q, periods)
+
+% number of tests
+tests = 100;
 
 filt = load('data/filter_male_a');
 [~, ~, yyd] = klatt(f, Q);
@@ -14,12 +17,22 @@ start = 4;
 
 vow = vow(start * len : periods * len + start * len - 1);
 
-noise_factor =  max(vow);
-norm_noise = randn(size(vow));
+maxv = max(abs(vow));
+maxm = max(abs(m));
 
-err = norm(vow - m);
-diff_fun = @(c) norm(c * noise_factor * noise_lvl * norm_noise);
+% the normalized difference between vowels
+err = norm(vow/maxv - m/maxm) * maxv;
 
-noise_est = fminsearch(@(c) abs(diff_fun(c) - err), 1);
+% sum of estimations to calculate mean error
+estsum = 0;
+
+for ii=1:tests
+    norm_noise = randn(size(vow));
+    diff_fun = @(c) norm(c * norm_noise);
+    estsum = estsum + fminsearch(@(c) abs(diff_fun(c) - err), 1);
+end
+
+mean_err = estsum / tests;
+noise_est = mean_err / 2;
 
 end

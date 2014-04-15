@@ -29,7 +29,7 @@ function [x, conv] = newton(f, df, init_guess, max_iter, tol)
             return;
         end
         old_x = new_x;
-        fprintf('alpha = %-2.4e\n', abs(f(new_x)));
+%         fprintf('alpha = %-2.4e\n', abs(f(new_x)));
         
         if(isinf(old_x) || isnan(old_x))
            x = 0;

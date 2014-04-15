@@ -20,14 +20,11 @@ const = load('data/constants');
 male_filter = 1;
 
 % noise multiplier due to error in filter
-% TODO: with nocrime data gives too big value, morozov doesn't converge...
-noise_mult = estimate_noise(m, f, Q, periods, noise_lvl);
+noise_est = estimate_noise(m, f, Q, periods);
 
 x0 = zeros(length(m), 1);
-delta = delta_fun(length(m), noise_factor, noise_lvl) * noise_mult;
-% TODO: why transpose of filter matrix?
-alpha = morozov(create_filter_matrix(filt.alpha, length(m))', m, delta, 1);
-
+delta = delta_fun(length(m), noise_est);
+alpha = morozov(create_filter_matrix(filt.alpha, length(m)), m, delta, 1);
 
 rec = Tik_a_inv(m, alpha, x0, periods, Q, male_filter);
 
@@ -39,7 +36,7 @@ relerrv = compute_relerr(recv, v);
 [shape_err, shape_err_fac] = compute_shape_error(rec, yd);
 
 fprintf('\n')
-fprintf('Alpha used in calculations        : %.2f %%\n', alpha)
+fprintf('Alpha used in calculations        : %.2f\n', alpha)
 fprintf('Relative error on glottal impulse : %g %%\n', relerr)
 fprintf('Shape error on glottal impulse    : %g %%\n', shape_err)
 fprintf('Relative error on vowel           : %g %%\n\n', relerrv)
