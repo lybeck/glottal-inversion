@@ -11,7 +11,7 @@ save_sound = 0;
 save_data = 1;
 
 % save parameters
-directory = 'results/tik_alpha_nocrime1';
+directory = 'results/tik_alpha_nocrime2';
 filename = 'tik_inv_errs.mat';
 filepath = [directory, '/', filename];
 
@@ -45,8 +45,8 @@ end
 
 x0 = zeros(length(m), 1);
 
-start = 301;
-stop = 600;
+start = 1;
+stop = 400;
 step = 1;
 
 alphavec = start : step : stop;

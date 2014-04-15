@@ -1,0 +1,8 @@
+data_male_filter: 1
+f: 120
+Q: 0.400000
+Q_rand: 0.000000
+noise_lvl: 0.005000
+noise_factor: 7880.013292
+noise_factor * noise_lvl: 39.400066
+periods: 10
