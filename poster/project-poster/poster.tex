@@ -146,53 +146,64 @@
 %	RESULTS
 %----------------------------------------------------------------------------------------
 
-\begin{block}{Results: Table}
 
-\begin{itemize}
-\item Ased Aliquet Luctus Lectus
-\end{itemize}
+\begin{block}{Results: Figures}
 
-\begin{table}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\midrule
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\bottomrule
-\end{tabular}
-\caption{Table caption}
-\end{table}
 
-\begin{itemize}
-\item Sollicitudin Vel Orci
-\item Maecenas Ultricies Feugiat Velit Non Mattis.
-\end{itemize}
+% inverse crime comparison
+\begin{columns}
 
-\begin{table}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\midrule
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\bottomrule
-\end{tabular}
-\caption{Table caption}
-\end{table}
-     
-\end{block}
-
-%------------------------------------------------
-
-\begin{block}{Results: Figure}
-
+\begin{column}{.5\textwidth}
+\begin{center}
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{placeholder.jpg}
-\caption{Figure caption}
+\includegraphics[width=.95\linewidth]{naive_test_nocrime.eps}
+\caption{Naïve inversion}
+\label{fig:naive}
 \end{figure}
+\end{center}
+\end{column}
+
+\begin{column}{.5\textwidth}
+\begin{center}
+\begin{figure}
+\includegraphics[width=.9\linewidth]{naive_test_nocrime_morozov.eps}
+\caption{Tikhonov regularized solution}
+\label{fig:naive-tik}
+\end{figure}
+\end{center}
+\end{column}
+
+\end{columns}
+% inverse crime comparison END
+
+\vspace{1cm}
+
+% Morozov comparison
+\begin{columns}
+
+\begin{column}{.5\textwidth}
+\begin{center}
+\begin{figure}
+\includegraphics[width=.95\linewidth]{alpha_errs_iter.eps}
+\caption{Relative error by $\alpha$-value}
+\label{fig:alpha-iter}
+\end{figure}
+\end{center}
+\end{column}
+
+\begin{column}{.5\textwidth}
+\begin{center}
+\begin{figure}
+\includegraphics[width=.95\linewidth]{alpha_errs_morozov.eps}
+\caption{Tikhonov regularized solution}
+\label{fig:iter-tik}
+\end{figure}
+\end{center}
+\end{column}
+
+\end{columns}
+% Morozov comparison END
+
 
 \end{block}
 
