@@ -38,9 +38,16 @@
 
 \usepackage{booktabs} % Top and bottom rules for tables
 
+\usepackage{epstopdf}
+
 \graphicspath{{figures/}} % Location of the graphics files
 
 \usecaptiontemplate{\small\structure{\insertcaptionname~\insertcaptionnumber: }\insertcaption} % A fix for figure numbering
+
+\newcommand{\R}{{\mathbb R}}
+\newcommand{\C}{{\mathbb C}}
+\newcommand{\N}{{\mathbb N}}
+\newcommand{\eps}{\ensuremath{\varepsilon}}
 
 %----------------------------------------------------------------------------------------
 %	TITLE SECTION 
@@ -90,23 +97,23 @@
 \end{block}
 
 %----------------------------------------------------------------------------------------
-%	METHODS
+%	MATERIALS AND METHODS
 %----------------------------------------------------------------------------------------
 
-\begin{block}{Methods}
+\begin{block}{Materials and methods}
 
 \begin{columns} % Subdivide the first main column
-\begin{column}{.54\textwidth} % The first subdivided column within the first main column
+\begin{column}{.6\textwidth} % The first subdivided column within the first main column
 
 \begin{itemize}
 
-\item The Rosenberg-Klatt model (\emph{RK-model)} \cite{rosenberg} was used to simulate the glottal excitation signal. An example of the resulting airflow and pressure can be seen in figure \ref{fig:klatt}.
+\item The \emph{Rosenberg-Klatt model} (\emph{RK-model)} \cite{rosenberg} was used to simulate the \emph{glottal excitation signal}. The parameters used by the model are the sound frequency $f$ and the \emph{klatt-parameter} $Q$. An example of the resulting airflow and pressure can be seen in figure \ref{fig:klatt}.
 
 \end{itemize}
 
 \end{column}
 
-\begin{column}{.43\textwidth} % The second subdivided column within the first main column
+\begin{column}{.38\textwidth} % The second subdivided column within the first main column
 
 \begin{figure}[t]
 \begin{center}
@@ -119,108 +126,126 @@
 \end{column}
 \end{columns} % End of the subdivision
 
-\end{block}
-
-%----------------------------------------------------------------------------------------
-%	MATERIALS
-%----------------------------------------------------------------------------------------
-
-\begin{block}{Materials}
-
-\begin{columns} % Subdivide the first main column
-\begin{column}{.54\textwidth} % The first subdivided column within the first main column
 \begin{itemize}
-\item Vestibulum nisl, quis euismod velit eros in ligula.
-\begin{itemize}
-\item Cras rhoncus quam et augue convallis in elementum urna tincidunt.
-\end{itemize}
-\item Proin ut vestibulum augue.
-\begin{itemize}
-\item Donec dapibus sagittis neque eu ultrices.
-\end{itemize}
-\end{itemize}
-\end{column}
 
-\begin{column}{.43\textwidth} % The second subdivided column within the first main column
-\centering
-\begin{figure}
-\includegraphics[width=0.8\linewidth]{placeholder.jpg}
-\caption{Figure caption}
-\end{figure}
-\end{column}
-\end{columns} % End of the subdivision
+\item The measurement data for the inversion was created synthetically using the RK-model and a digital filter for a (female) vowel /a/. Some random errors were added to the data to simulate measurement noise.
 
-\begin{itemize}
-\item Curabitur sapien ligula, faucibus in feugiat quis, vestibulum a turpis.
-\begin{itemize}
-\item Phasellus quis nunc neque. Suspendisse mauris diam, suscipit non gravida in, placerat id enim. Ut nec ipsum in lectus ultrices sagittis.
-\item Ut nec ipsum in lectus ultrices sagittis.
-\item Phasellus quis nunc neque.
-\end{itemize}
+\item The vocal tract filter used in the inversion is a digital filter simulating the (male) vowel /a/. A matrix corresponding to the filter was constructed to arrive at a matrix model $m = A g + \eps$ for the vowel simulation.
+
+\item Even though the filter used in the inversion is not the same as the one used in simulating the data, they were assumed to simulate roughly the same sound when applied on the glottal impulse (the vowel /a/). Therefore the inversion could be done without the fear of inverse crime, while still expecting good results.
+
+\item The inverse problem was solved using the \emph{Tikhonov regularization} with a customized penalty matrix. The regularization parameter was chosen using \emph{Morozov's discrepancy principle}.
+
 \end{itemize}
 
 \end{block}
 
 
-%----------------------------------------------------------------------------------------
-
-\end{column} % End of the first column
-
-\begin{column}{.03\textwidth}\end{column} % Empty spacer column
- 
-\begin{column}{.465\textwidth} % The second column
 
 %----------------------------------------------------------------------------------------
 %	RESULTS
 %----------------------------------------------------------------------------------------
 
-\begin{block}{Results: Table}
+\begin{block}{Results}
 
 \begin{itemize}
-\item Ased Aliquet Luctus Lectus
+
+\item Figure \ref{fig:naive} shows a naïve reconstruction attempt of the glottal excitation signal. In figure \ref{fig:naive-tik} the same inverse problem is solved with Tikhonov regularization using the regularization parameter $\alpha = 75.4$ attained with Morozov's discrepancy principle. The relative error for the naïve reconstruction was $\delta_{\text{rel}} \approx 238 \%$, and for the regularized solution $\delta_{\text{rel}} \approx 66.3 \%$. The measurement data was created with the parameter values $f = 120 \text{Hz}$ and $Q = 0.6$.
+
+\item The relative error of the reconstruction with different values of the regularization parameter $\alpha$ is shown in figure \ref{fig:alpha-iter}. The least error $\delta_{\text{rel}} \approx 64.6 \%$ was attained with the value $\alpha = 201$. Figure \ref{fig:iter-tik} shows the reconstruction of the same data done with Tikhonov regularization. The value of the regularization parameter $\alpha = 104.5$ was chosen with Morozov's discrepancy principle, and resulted in a relative error $\delta_{\text{rel}} \approx 65.0 \%$. The measurement data was created with the parameter values $f = 120 \text{Hz}$ and $Q = 0.5$.
+
+\item The relative error is calculated with the formula
+\begin{equation*}
+\delta_{rel} = \frac{\left\| g - T_{\alpha}(m) \right\|_2}{\left\| g \right\|_2} \cdot 100 \%,
+\end{equation*}
+where $g \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(m)$ is the reconstruction calculated from the noisy data $m$ with the regularization parameter $\alpha$.
+
+\item In the figures \ref{fig:naive}, \ref{fig:naive-tik} and \ref{fig:iter-tik} the green line shows the original glottal signal and the blue line shows the reconstruction.
+
 \end{itemize}
 
-\begin{table}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\midrule
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\bottomrule
-\end{tabular}
-\caption{Table caption}
-\end{table}
-
-\begin{itemize}
-\item Sollicitudin Vel Orci
-\item Maecenas Ultricies Feugiat Velit Non Mattis.
-\end{itemize}
-
-\begin{table}
-\begin{tabular}{l l l}
-\toprule
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\midrule
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\bottomrule
-\end{tabular}
-\caption{Table caption}
-\end{table}
-     
 \end{block}
 
-%------------------------------------------------
 
-\begin{block}{Results: Figure}
 
+%----------------------------------------------------------------------------------------
+%	COLUMN BREAK
+%----------------------------------------------------------------------------------------
+
+\end{column} % End of the first column
+
+\begin{column}{.03\textwidth}\end{column} % Empty spacer column
+
+%----------------------------------------------------------------------------------------
+%	SECOND COLUMN
+%----------------------------------------------------------------------------------------
+
+\begin{column}{.465\textwidth} % The second column
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	RESULT FIGURES
+%----------------------------------------------------------------------------------------
+
+\begin{block}{Results: Figures}
+
+
+% inverse crime comparison
+\begin{columns}
+
+\begin{column}{.5\textwidth}
+\begin{center}
 \begin{figure}
-\includegraphics[width=0.8\linewidth]{placeholder.jpg}
-\caption{Figure caption}
+\includegraphics[width=.95\linewidth]{naive_test_nocrime.eps}
+\caption{Naïve inversion}
+\label{fig:naive}
 \end{figure}
+\end{center}
+\end{column}
+
+\begin{column}{.5\textwidth}
+\begin{center}
+\begin{figure}
+\includegraphics[width=.9\linewidth]{naive_test_nocrime_morozov.eps}
+\caption{Tikhonov regularized solution}
+\label{fig:naive-tik}
+\end{figure}
+\end{center}
+\end{column}
+
+\end{columns}
+% inverse crime comparison END
+
+\vspace{1cm}
+
+% Morozov comparison
+\begin{columns}
+
+\begin{column}{.5\textwidth}
+\begin{center}
+\begin{figure}
+\includegraphics[width=.95\linewidth]{alpha_errs_iter.eps}
+\caption{Relative error (\%) by $\alpha$-value}
+\label{fig:alpha-iter}
+\end{figure}
+\end{center}
+\end{column}
+
+\begin{column}{.5\textwidth}
+\begin{center}
+\begin{figure}
+\includegraphics[width=.95\linewidth]{alpha_errs_morozov.eps}
+\caption{Tikhonov regularized solution}
+\label{fig:iter-tik}
+\end{figure}
+\end{center}
+\end{column}
+
+\end{columns}
+% Morozov comparison END
+
 
 \end{block}
 
