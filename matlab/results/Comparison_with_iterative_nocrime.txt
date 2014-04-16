@@ -1,8 +1,8 @@
 File = Comparison_with_iterative_nocrime
 
-Relative error of glottal impulse = 65.05% 
-Relative error of generated vowel = 70.08% 
-Alpha value                       = 104.5367 
+Relative error of glottal impulse = 65.13% 
+Relative error of generated vowel = 70.11% 
+Alpha value                       = 101.9027 
 Klatt parameter                   = 0.50000 
 Random factor of Klatt parameter  = 0.00000 
 Level of noise in data            = 0.00500 
