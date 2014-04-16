@@ -11,7 +11,7 @@ plot(x, yd, 'g-', 'linewidth', 2);
 xlim([0, x(end)])
 scrsize=get(0,'Screensize');
 set(gcf,'Position',scrsize);
-
+relerr = compute_relerr(rec, yd)
 
 d = 1;
 
@@ -27,7 +27,7 @@ recvow = recvow / max(recvow);
 syd = syd / max(syd);
 vow = vow / max(vow);
 
-prefix = 'naive_test[V2]_'
+prefix = 'naive_test[V3]_';
 
 wavwrite(syd, const.fs, [prefix, 'glottal_impulse_data']);
 wavwrite(recyd, const.fs, [prefix, 'glottal_impulse_rec']);
