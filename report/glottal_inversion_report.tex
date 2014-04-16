@@ -1,3 +1,4 @@
+
 \documentclass[12pt,a4]{article}
 
 \usepackage[utf8]{inputenc}
@@ -217,21 +218,17 @@ Assume that we know the size of the noise in our model defined by \eqref{eq:vowM
 \begin{equation}
 \lnorm AT_\alpha( \vc{m} )- \vc{m} \rnorm \leq \delta \quad \left( A \in R^{k \times n}\right).
 \end{equation}
-If we assume that 
-\begin{equation}
-\vc{\eps} = \left( \eps_1, \eps_2, \ldots, \eps_n \right)^T \in \R^n, \quad \eps_k \sim N\left(0,1\right) \text{ for all } k\in\left\{1, \ldots, n\right\},
-\end{equation}
-we can choose $\delta = \sqrt{n}$ since $E \left( \lnorm \vc{\eps} \rnorm \right) = \sqrt{n}.$
-
 The idea of the Morozov's discrepancy principle is to choose $\alpha > 0$ such that
 \begin{equation}
 \lnorm AT_\alpha( \vc{m} ) - \vc{m} \rnorm = \delta
 \end{equation}
 It can be proven (see \cite{samu}) that the $\alpha$ that satisfies the above expression is attained by solving
-\begin{equation}
+\begin{equation}\label{eq:morozov_root}
 \sum_{j=1}^{\min\left\{ k,n \right\}} \left( \frac{\alpha}{d_j^2 + \alpha} \right)^2 \left( m'_j \right)^2 + \sum_{j = \min\left\{k,n\right\} + 1}^k \left( m'_j \right)^2 - \delta^2 = 0,
 \end{equation}
 where $d_j$ are the singular values of $A$ and $\vc{m'} = U^T \vc{m}$ where $U$ is an orthogonal matrix acquired from the singular value decomposition $A = U D V^T$.
+
+As previously mentioned, we will use Morozov's discrepancy principle to choose the optimal regularization parameter.
 
 
 \subsection{The basis and materials}\label{sec:basis}
@@ -271,6 +268,36 @@ L=
 \end{equation}
 for a single period of the excitation signal. This procedure must of course be repeated as many times as we have periods in our measurement data.
 
+As previously mentioned, we will use Morozov's discrepancy principle for optimization of the regularization parameter $\alpha$. We assume the noise to originate from a scaled standard multivariate normal distribution, i.e. if
+\begin{equation}
+\eps' = \left(Z_1, \ldots, Z_n \right), \quad Z_i \sim N(0,1) \text{ for all }
+i \in \left\{1, \ldots, n\right\}
+\end{equation}
+then our assumed noise vector $\eps$ has the form
+\begin{equation}
+\eps = c\eps' = \left(cZ_1, \ldots, cZ_n \right), \quad c > 0.
+\end{equation}
+The scaling is done to make the error relative to the data, which again is preferrable in order to generate consistent data. We want to estimate the magnitude of the noise. Let $X \sim \chi_n^2$ and $Y \sim \chi_n$. We now see (\cite{chi} \& \cite{handbook}) that
+\begin{align*}
+E\left(\lnorm \eps \rnorm \right)   &= E\left(\lnorm c\eps' \rnorm \right)   =
+E\left(c \lnorm \eps' \rnorm \right) = c E\left(\lnorm \eps' \rnorm \right) \\
+&= c E\left(\sqrt{Z_1^2 + \ldots + Z_n^2} \right) = c E\left(\sqrt{X} \right) \\
+&= c E\left( Y \right) = 
+c \sqrt{2}\frac{\Gamma\left(\frac{n+1}{2}\right)}{\Gamma\left(\frac{n}{2}\right)},  
+\end{align*}
+so the natural choice of $\delta$ is
+\begin{equation}\label{eq:delta_choice}
+\delta = c \sqrt{2}\frac{\Gamma\left(\frac{n+1}{2}\right)}{\Gamma\left(\frac{n}{2}\right)}.
+\end{equation}
+This is numerically impossible to compute in a straightforward manner due to fast growth of the gamma function, so in practice we will use 
+\begin{equation}\label{eq:alt_delta_choice}
+\delta = c\sqrt{2} \exp\left[
+\log\Gamma\left(\frac{n+1}{2}\right) -  \log\Gamma\left(\frac{n}{2}\right) \right]  
+\end{equation}
+where the $\log\Gamma$ function is, in our case, more numerically stable. Note that expressions \eqref{eq:delta_choice} and \eqref{eq:alt_delta_choice} are equivalent.
+ 
+The solution of equation \eqref{eq:morozov_root} is then approximated with Newton's method \cite{NR}.
+
 
 
 %-----------------------Results-----------------------
@@ -296,7 +323,7 @@ for a single period of the excitation signal. This procedure must of course be r
 \bibitem{samu}
 	Mueller, Jennifer L. \& Siltanen Samuli, (2012).
 	\emph{Linear and Nonlinear Inverse Problems with Practical Applications}.
-	SIAM, 1:st edition.
+	SIAM, 1st edition.
 	
 \bibitem{touda}
     Touda, K., (2007)
@@ -313,6 +340,21 @@ for a single period of the excitation signal. This procedure must of course be r
     Rosenberg, A., (1971).
     \emph{Effect of glottal pulse shape on the quality of natural vowels}.
     Journal of the Acoustical Society of America 49 (2B), p. 583–590.
+    
+\bibitem{chi}
+    Evans, M., Hastings, N. \& Peacock, B. (2000)
+    \emph{Statistical distributions}.
+    New York: Wiley, p. 57
+    
+\bibitem{NR}
+    Press, W.H., Teukolsky, S.A., Vetterling, W.T. \& Flannery, B.P. (2007)
+    \emph{Numerical Recipes: The Art of Scientific Computing}.
+    New York: Cambridge University Press, 3rd edition, p.362
+    
+\bibitem{handbook}
+    Abramowitz, M \& Stegun, I.A. (1965)
+    \emph{Handbook of mathematical functions with formulas, graphs and mathenatical tables}
+    New York, NY: Dover, p.940
 
 \end{thebibliography}
 

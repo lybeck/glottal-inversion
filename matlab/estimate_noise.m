@@ -1,4 +1,10 @@
-function noise_est = estimate_noise(m, f, Q, periods)
+function noise_est = estimate_noise(m, f, Q, periods, noise_lvl, noise_factor)
+
+if nargin == 6
+    noise_est = noise_lvl * noise_factor;
+else
+    noise_est = 1;
+end
 
 % number of tests
 tests = 100;
@@ -33,6 +39,6 @@ for ii=1:tests
 end
 
 mean_err = estsum / tests;
-noise_est = mean_err / 2;
+noise_est = noise_est * mean_err / 2;
 
 end
