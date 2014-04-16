@@ -20,6 +20,8 @@ poster/project-poster/*.aux
 poster/project-poster/*.log
 poster/project-poster/*.pdf
 poster/project-poster/*.synctex.gz
+poster/project-poster/figures/*.pdf
+
 
 # recordings
 recordings
