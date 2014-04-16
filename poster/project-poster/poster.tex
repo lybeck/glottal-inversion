@@ -42,6 +42,8 @@
 
 \usecaptiontemplate{\small\structure{\insertcaptionname~\insertcaptionnumber: }\insertcaption} % A fix for figure numbering
 
+\newcommand{\eps}{\ensuremath{\varepsilon}}
+
 %----------------------------------------------------------------------------------------
 %	TITLE SECTION 
 %----------------------------------------------------------------------------------------
@@ -90,17 +92,17 @@
 \end{block}
 
 %----------------------------------------------------------------------------------------
-%	METHODS
+%	MATERIALS AND METHODS
 %----------------------------------------------------------------------------------------
 
-\begin{block}{Methods}
+\begin{block}{Materials and methods}
 
 \begin{columns} % Subdivide the first main column
 \begin{column}{.54\textwidth} % The first subdivided column within the first main column
 
 \begin{itemize}
 
-\item The Rosenberg-Klatt model (\emph{RK-model)} \cite{rosenberg} was used to simulate the glottal excitation signal. An example of the resulting airflow and pressure can be seen in figure \ref{fig:klatt}.
+\item The \emph{Rosenberg-Klatt model} (\emph{RK-model)} \cite{rosenberg} was used to simulate the \emph{glottal excitation signal} (the sound generated at the glottis). An example of the resulting airflow and pressure can be seen in figure \ref{fig:klatt}.
 
 \end{itemize}
 
@@ -119,50 +121,20 @@
 \end{column}
 \end{columns} % End of the subdivision
 
-\end{block}
-
-%----------------------------------------------------------------------------------------
-%	MATERIALS
-%----------------------------------------------------------------------------------------
-
-\begin{block}{Materials}
-
-\begin{columns} % Subdivide the first main column
-\begin{column}{.54\textwidth} % The first subdivided column within the first main column
 \begin{itemize}
-\item Vestibulum nisl, quis euismod velit eros in ligula.
-\begin{itemize}
-\item Cras rhoncus quam et augue convallis in elementum urna tincidunt.
-\end{itemize}
-\item Proin ut vestibulum augue.
-\begin{itemize}
-\item Donec dapibus sagittis neque eu ultrices.
-\end{itemize}
-\end{itemize}
-\end{column}
 
-\begin{column}{.43\textwidth} % The second subdivided column within the first main column
-\centering
-\begin{figure}
-\includegraphics[width=0.8\linewidth]{placeholder.jpg}
-\caption{Figure caption}
-\end{figure}
-\end{column}
-\end{columns} % End of the subdivision
+\item The measurement data for the inversion was created synthetically using the RK-model and a digital filter for a (female) vowel /a/. Some random errors were added to the data to simulate measurement noise.
 
-\begin{itemize}
-\item Curabitur sapien ligula, faucibus in feugiat quis, vestibulum a turpis.
-\begin{itemize}
-\item Phasellus quis nunc neque. Suspendisse mauris diam, suscipit non gravida in, placerat id enim. Ut nec ipsum in lectus ultrices sagittis.
-\item Ut nec ipsum in lectus ultrices sagittis.
-\item Phasellus quis nunc neque.
-\end{itemize}
+\item The vocal tract filter used in the inversion is a digital filter simulating the (male) vowel /a/. A matrix corresponding to the filter was constructed to arrive at a matrix model $m = A g + \eps$ for the vowel simulation.
+
+\item Even though the filter used in the inversion is not the same as the one used in simulating the data, they were assumed to simulate roughly the same sound when applied on the glottal impulse (the vowel /a/). Therefore the inversion could be done without the fear of inverse crime, while still expecting good results.
+
+\item The inverse problem was solved using the \emph{Tikhonov regularization} with a customized penalty matrix. The regularization parameter was chosen using \emph{Morozov's discrepancy principle}.
+
 \end{itemize}
 
 \end{block}
 
-
-%----------------------------------------------------------------------------------------
 
 \end{column} % End of the first column
 
