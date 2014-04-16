@@ -63,9 +63,12 @@
 %	FOOTER TEXT
 %----------------------------------------------------------------------------------------
 
-\newcommand{\leftfoot}{} % Left footer text
+% Left footer text
+\newcommand{\leftfoot}{May 8, 2014} % The day of the poster session
+%\newcommand{\leftfoot}{\today}
 
-\newcommand{\rightfoot}{lasse.lybeck@helsinki.fi, robert.sirvio@helsinki.fi} % Right footer text
+% Right footer text
+\newcommand{\rightfoot}{lasse.lybeck@helsinki.fi, robert.sirvio@helsinki.fi}
 
 %----------------------------------------------------------------------------------------
 
@@ -150,7 +153,7 @@
 
 \begin{itemize}
 
-\item Figure \ref{fig:naive} shows a naïve reconstruction attempt of the glottal excitation signal. In figure \ref{fig:naive-tik} the same inverse problem is solved with Tikhonov regularization using the regularization parameter $\alpha = 75.4$ attained with Morozov's discrepancy principle. The relative error for the naïve reconstruction was $\delta_{\text{rel}} \approx 238 \%$, and for the regularized solution $\delta_{\text{rel}} \approx 66.3 \%$. The measurement data was created with the parameter values $f = 120 \text{Hz}$ and $Q = 0.6$.
+\item Figure \ref{fig:naive} shows a naïve reconstruction attempt of the glottal excitation signal. In figure \ref{fig:naive-tik} the same inverse problem is solved with Tikhonov regularization using the regularization parameter $\alpha = 63.2$ attained with Morozov's discrepancy principle. The relative error for the naïve reconstruction was $\delta_{\text{rel}} \approx 219 \%$, and for the regularized solution $\delta_{\text{rel}} \approx 63.1 \%$. The measurement data was created with the parameter values $f = 90 \text{Hz}$ and $Q = 0.7$.
 
 \item The relative error of the reconstruction with different values of the regularization parameter $\alpha$ is shown in figure \ref{fig:alpha-iter}. The least error $\delta_{\text{rel}} \approx 64.6 \%$ was attained with the value $\alpha = 201$. Figure \ref{fig:iter-tik} shows the reconstruction of the same data done with Tikhonov regularization. The value of the regularization parameter $\alpha = 104.5$ was chosen with Morozov's discrepancy principle, and resulted in a relative error $\delta_{\text{rel}} \approx 65.0 \%$. The measurement data was created with the parameter values $f = 120 \text{Hz}$ and $Q = 0.5$.
 
@@ -260,15 +263,20 @@ where $g \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(m)$
 \end{block}
 
 %----------------------------------------------------------------------------------------
-%	REFERENCES
+%	BIBLIOGRAPHY
 %----------------------------------------------------------------------------------------
 
-\begin{block}{References}
+\begin{block}{Bibliography}
 
 \begin{scriptsize}
 
 
 \begin{thebibliography}{9}
+
+\bibitem{handbook}
+    Abramowitz, M \& Stegun, I.A. (1965)
+    \emph{Handbook of mathematical functions with formulas, graphs and mathenatical tables}
+    New York, NY: Dover, p.940
 
 \bibitem{fant}
     Fant, G., Liljencrants, J., Lin, Q., (1985).
@@ -283,7 +291,12 @@ where $g \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(m)$
 \bibitem{samu}
 	Mueller, Jennifer L. \& Siltanen Samuli, (2012).
 	\emph{Linear and Nonlinear Inverse Problems with Practical Applications}.
-	SIAM, 1:st edition.
+	SIAM, 1st edition.
+    
+\bibitem{NR}
+    Press, W.H., Teukolsky, S.A., Vetterling, W.T. \& Flannery, B.P. (2007)
+    \emph{Numerical Recipes: The Art of Scientific Computing}.
+    New York: Cambridge University Press, 3rd edition, p.362
 	
 \bibitem{touda}
     Touda, K., (2007)
@@ -300,6 +313,11 @@ where $g \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(m)$
     Rosenberg, A., (1971).
     \emph{Effect of glottal pulse shape on the quality of natural vowels}.
     Journal of the Acoustical Society of America 49 (2B), p. 583–590.
+    
+\bibitem{chi}
+    Evans, M., Hastings, N. \& Peacock, B. (2000)
+    \emph{Statistical distributions}.
+    New York: Wiley, p. 57
 
 \end{thebibliography}
 
