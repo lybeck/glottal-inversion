@@ -5,7 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amsfonts}
 \usepackage{mathtools}
-\usepackage{graphicx}
+\usepackage{graphicx, float}
 \usepackage{enumerate}
 \usepackage{bm}
 \DeclareMathOperator*{\argmin}{\arg\!\min}
@@ -312,42 +312,77 @@ When we have acquired an estimation for the measurement noise the solution of eq
 
 %-----------------------Results-----------------------
 \section{Results}\label{sec:results}
-In this section we will present some of the results of our study. For obvious reasons we will not include sound data from our results in this paper. Note that in all the following graphs of the target glottal pressure function and the reconstructed glottal pressure function the color of the respective will be green and blue. We will also denote the Klatt-parameter with $Q$. The relative errors of the reconstructions are calculated with the formula
+In this section we will present some of the results of our study. For obvious reasons we will not include sound data from our results in this paper. Note that in all the following graphs of the target glottal pressure and the reconstructed glottal pressure are represented by the colors green and blue, respectively. We will also denote the Klatt-parameter with $Q$. The relative errors of the reconstructions are calculated with the formula
 \begin{equation}
-\delta_{rel} = \frac{\left\| g - T_{\alpha}(m) \right\|_2}{\left\| g \right\|_2} \cdot 100 \%,
+\delta_{rel} = \frac{\left\| \vc{g} - T_{\alpha}(\vc{m}) \right\|_2}{\left\| \vc{g} \right\|_2} \cdot 100 \%,
 \end{equation}
-where $g \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(m)$ is the reconstruction calculated from the noisy data $m$ with the regularization parameter $\alpha$.
+where $\vc{g} \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(\vc{m})$ is the reconstruction calculated from the noisy data $m$ with the regularization parameter $\alpha$.
 
 The inversion was done, in addition to the Tikhonov regularization strategy, also with the naïve inversion method in order to illustrate the ill-posedness of the inverse problem.
 A comparison of the methods is presented below in figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime}.
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
-\includegraphics[scale=.35]{img/naive_test_naive.eps}
-\includegraphics[scale=.35]{img/naive_test_morozov.eps}
+\includegraphics[scale=.3]{img/naive_test_naive.eps}
+\includegraphics[scale=.3]{img/naive_test_morozov.eps}
 \end{center}
 \caption{Comparison between the naïve inversion method and the Tikhonov regularization strategy with inverse crime. Sound frequency = 90 Hz, Q = 0.7, relative error of the reconstruction $\approx$ 43.9\%, $\alpha \approx 63.7$.}
 \label{fig:naive-comparison_crime}
 \end{figure}
-\begin{figure}[h]
 
+\begin{figure}[H]
 \begin{center}
-\includegraphics[scale=.35]{img/naive_test_naive[V3].eps}
-\includegraphics[scale=.35]{img/naive_test_morozov[V3].eps}
+\includegraphics[scale=.3]{img/naive_test_naive[V3].eps}
+\includegraphics[scale=.3]{img/naive_test_morozov[V3].eps}
 \end{center}
 \caption{Comparison between the naïve inversion method and the Tikhonov regularization strategy without inverse crime. Sound frequency = 90 Hz, Q = 0.7, relative error of the reconstruction $\approx$ 63.1\%, $\alpha \approx 63.2$.}
 \label{fig:naive-comparison_nocrime}
 \end{figure}
-In order to somehow evaluate the accuracy and the correctness (in the sense of the relative error of the glottal impulse) of the $\alpha$-value chosen according to Morozov's discrepancy principle we ran an iterative script that calculated the reconstruction with different $\alpha$-values and stored the relative error-values. This was then compared with corresponding reconstruction with an $\alpha$-value chosen according to Morozov's discrepancy principle. the results can be seen in figure \ref{fig:iter_comparison}.
-\begin{figure}[h]
+In order to evaluate the accuracy and correctness (in the sense of the relative error of the glottal impulse) of the $\alpha$-value chosen according to Morozov's discrepancy principle the relative errors were calculated with different values of the parameters $\alpha$. This was then compared with corresponding reconstruction with an $\alpha$-value chosen according to Morozov's discrepancy principle. The results can be seen in figure \ref{fig:iter_comparison}.
+\begin{figure}[H]
 \begin{center}
-\includegraphics[scale=.35]{img/alpha_errs_iter.eps}
-\includegraphics[scale=.35]{img/Comparison_with_iterative_nocrime.eps}
-\includegraphics[scale=.35]{img/Comparison-201.eps}
+\includegraphics[scale=.3]{img/alpha_errs_iter.eps}
+\includegraphics[scale=.3]{img/Comparison_with_iterative_nocrime.eps}
+\includegraphics[scale=.3]{img/Comparison-201.eps}
 \end{center}
 \caption{The uppermost picture plots the relative error values vs. $\alpha$-values of the iterative calculation of the inversion. The red dot denotes the $\alpha$-value acquired from Morozov's discrepancy principle and the black dot denotes the $\alpha$-value corresponding to the least relative error in the reconstruction (from the iterative calculation). The middle picture graphs the reconstruction with the $\alpha$-value acquired from Morozov's discrepancy principle and the bottom picture graphs the reconstruction $\alpha$-value corresponding to the least relative error in the reconstruction.}
 \label{fig:iter_comparison}
 \end{figure}
-
+Since the number of (a priori known) variables is quite high a large amount of data needed to be harvested in order to properly analyze the inversion method. The following figures demonstrate some of the data that was collected.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=.3]{img/morozov_no-crime_error-005_Qrand-0.eps}
+\end{center}
+\caption{Sound frequency = 120 Hz, Q = 0.4, relative error of the reconstruction $\approx$ 69.1\%, $\alpha \approx 123.9$.}
+\label{fig:tik-1}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=.3]{img/morozov_no-crime_error-005_Qrand-0[V2].eps}
+\end{center}
+\caption{Sound frequency = 150 Hz, Q = 0.5, relative error of the reconstruction $\approx$ 70.1\%, $\alpha \approx 86.0$.}
+\label{fig:tik-2}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=.3]{img/morozov_no-crime_error-005_Qrand-0[Pres].eps}
+\end{center}
+\caption{Sound frequency = 100 Hz, Q = 0.6, relative error of the reconstruction $\approx$ 64.1\%, $\alpha \approx 66.6$.}
+\label{fig:tik-3}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=.3]{img/morozov_no-crime_error-005_Qrand-0[Pres-V4].eps}
+\end{center}
+\caption{Sound frequency = 80 Hz, Q = 0.3, relative error of the reconstruction $\approx$ 64.6\%, $\alpha \approx 84.5$.}
+\label{fig:tik-4}
+\end{figure}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=.3]{img/morozov_no-crime_error-005_Qrand-0[Pres-V2].eps}
+\end{center}
+\caption{Sound frequency = 150 Hz, Q = 0.4, relative error of the reconstruction $\approx$ 74.0\%, $\alpha \approx 48.5$.}
+\label{fig:tik-5}
+\end{figure}
 
 
 %----------------------Discussion---------------------
