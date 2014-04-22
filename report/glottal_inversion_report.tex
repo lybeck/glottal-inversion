@@ -268,19 +268,21 @@ L=
 \end{equation}
 for a single period of the excitation signal. This procedure must of course be repeated as many times as we have periods in our measurement data.
 
+\subsubsection{Noise estimation}
+
 As previously mentioned, we will use Morozov's discrepancy principle for optimization of the regularization parameter $\alpha$. We assume the noise to originate from a scaled standard multivariate normal distribution, i.e. if
 \begin{equation}
-\eps' = \left(Z_1, \ldots, Z_n \right), \quad Z_i \sim N(0,1) \text{ for all }
+\vc{\eps'} = \left(Z_1, \ldots, Z_n \right), \quad Z_i \sim N(0,1) \text{ for all }
 i \in \left\{1, \ldots, n\right\}
 \end{equation}
-then our assumed noise vector $\eps$ has the form
+then our assumed noise vector $\vc{\eps}$ has the form
 \begin{equation}
-\eps = c\eps' = \left(cZ_1, \ldots, cZ_n \right), \quad c > 0.
+\vc{\eps} = c \vc{\eps'} = \left(cZ_1, \ldots, cZ_n \right), \quad c > 0.
 \end{equation}
-The scaling is done to make the error relative to the data, which again is preferable in order to generate consistent data. We want to estimate the magnitude of the noise. Let $X \sim \chi_n^2$ and $Y \sim \chi_n$. We now see (\cite{chi} \& \cite{handbook}) that
+The scaling is done to make the error relative to the data, which again is preferable in order to generate consistent data. We want to estimate the magnitude of the noise. Let $X \sim \chi_n^2$ and $Y \sim \chi_n$. We now see (\cite{handbook}, \cite{chi}) that
 \begin{align*}
-E\left(\lnorm \eps \rnorm \right)   &= E\left(\lnorm c\eps' \rnorm \right)   =
-E\left(c \lnorm \eps' \rnorm \right) = c E\left(\lnorm \eps' \rnorm \right) \\
+E\left(\lnorm \vc{\eps} \rnorm \right)   &= E\left(\lnorm c \vc{\eps'} \rnorm \right)   =
+E\left(c \lnorm \vc{\eps'} \rnorm \right) = c E\left(\lnorm \vc{\eps'} \rnorm \right) \\
 &= c E\left(\sqrt{Z_1^2 + \ldots + Z_n^2} \right) = c E\left(\sqrt{X} \right) \\
 &= c E\left( Y \right) = 
 c \sqrt{2}\frac{\Gamma\left(\frac{n+1}{2}\right)}{\Gamma\left(\frac{n}{2}\right)},  
@@ -295,8 +297,16 @@ This is numerically impossible to compute in a straightforward manner due to fas
 \log\Gamma\left(\frac{n+1}{2}\right) -  \log\Gamma\left(\frac{n}{2}\right) \right]  
 \end{equation}
 where the $\log\Gamma$ function is, in our case, more numerically stable. Note that expressions \eqref{eq:delta_choice} and \eqref{eq:alt_delta_choice} are equivalent.
+
+In our case we know our approximated vocal tract filter to be at least to some extent erroneous. Therefore the measurement noise must be estimated somewhat differently to take the errors attained from the differences between the filters into account.
+
+Let $\vc{m} \in \R^n$ be the given measurement data. As we know the sound frequency and the value of the Klatt-parameter we can generate a glottal excitation signal, and filter it with the approximated filter used in the inversion to create a similar vowel sound as our measurements. Let us denote it with $\vc{v} \in \R^n$. Now we can calculate an upper bound for the measurement noise as
+\begin{equation}
+\delta_{\text{max}} = \lnorm \vc{v} - \vc{m} \rnorm .
+\end{equation}
+However, we know our filter to be only an approximation of the filter used in generating the measurement data, not the exact same filter. Therefore it is reasonable to assume that the approximations done in the selection of the filter give rise to some differences in the vowel sound that cannot be regarded as measurement errors, but rather systematic errors attained by the approximations. Therefore we will use the estimation $\delta = \delta_{\text{max}} / 2$ for the noise level of the measurement data. This estimation of the measurement noise is not at all a trivial task, and should require more careful examination. This is however beyond the scope of this study.
  
-The solution of equation \eqref{eq:morozov_root} is then approximated with Newton's method \cite{NR}.
+When we have acquired an estimation for the measurement noise the solution of equation \eqref{eq:morozov_root} is approximated with Newton's method \cite{NR}.
 
 
 
