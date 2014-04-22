@@ -2,7 +2,7 @@
 clear
 
 % play sound from reconstruction?
-play_sound = 1;
+play_sound = 0;
 
 % save sound file from reconstruction?
 save_sound = 1;
@@ -43,7 +43,7 @@ fprintf('Relative error on vowel           : %g %%\n\n', relerrv)
 
 % plots
 if save_plot
-    filename = 'Comparison_with_iterative_nocrime';
+    filename = 'naive_test_morozov[V3]';
     plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_rand, noise_lvl, noise_factor, f, data_male_filter);
 else
     figure(1)

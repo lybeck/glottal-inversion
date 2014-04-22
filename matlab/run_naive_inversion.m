@@ -11,3 +11,25 @@ plot(x, yd, 'g-', 'linewidth', 2);
 xlim([0, x(end)])
 scrsize=get(0,'Screensize');
 set(gcf,'Position',scrsize);
+relerr = compute_relerr(rec, yd)
+
+d = 1;
+
+% repetitions
+rep = round(d / x(end));
+
+recyd = repmat(rec, rep, 1);
+syd = repmat(yd, rep, 1);
+recvow = filter(1, filt.alpha, recyd);
+vow = filter(1, filt.alpha, syd);
+recyd = recyd / max(recyd);
+recvow = recvow / max(recvow);
+syd = syd / max(syd);
+vow = vow / max(vow);
+
+prefix = 'naive_test[V3]_';
+
+wavwrite(syd, const.fs, [prefix, 'glottal_impulse_data']);
+wavwrite(recyd, const.fs, [prefix, 'glottal_impulse_rec']);
+wavwrite(vow, const.fs, [prefix, 'vowel_data']);
+wavwrite(recvow, const.fs, [prefix, 'vowel_rec']);

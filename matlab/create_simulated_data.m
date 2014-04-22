@@ -20,10 +20,10 @@ data_male_filter = 0;
 klatt_model = 1;
 
 % parameters for the data
-f = 120;
-Q = .5;
+f = 90;
+Q = .7;
 Q_rand = .0;
-noise_lvl = .005;
+noise_lvl = .05;
 periods = 10;
 Q1 = Q + 2*Q_rand*rand()-Q_rand;
 
