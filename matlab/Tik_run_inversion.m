@@ -25,6 +25,7 @@ noise_est = estimate_noise(m, f, Q, periods);
 x0 = zeros(length(m), 1);
 delta = delta_fun(length(m), noise_est);
 alpha = morozov(create_filter_matrix(filt.alpha, length(m)), m, delta, 1);
+alpha = 201
 
 rec = Tik_a_inv(m, alpha, x0, periods, Q, male_filter);
 
@@ -43,7 +44,7 @@ fprintf('Relative error on vowel           : %g %%\n\n', relerrv)
 
 % plots
 if save_plot
-    filename = 'naive_test_morozov[V3]';
+    filename = 'Comparison-201';
     plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_rand, noise_lvl, noise_factor, f, data_male_filter);
 else
     figure(1)
