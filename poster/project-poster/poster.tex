@@ -153,14 +153,15 @@
 
 \begin{itemize}
 
-\item Figure \ref{fig:naive} shows a naïve reconstruction attempt of the glottal excitation signal. In figure \ref{fig:naive-tik} the same inverse problem is solved with Tikhonov regularization using the regularization parameter $\alpha = 63.2$ attained with Morozov's discrepancy principle. The relative error for the naïve reconstruction was $\delta_{\text{rel}} \approx 219 \%$, and for the regularized solution $\delta_{\text{rel}} \approx 63.1 \%$. The measurement data was created with the parameter values $f = 90 \text{Hz}$ and $Q = 0.7$.
+\item Figure \ref{fig:naive} shows a naïve reconstruction attempt of the glottal excitation signal. In figure \ref{fig:naive-tik} the same inverse problem is solved with Tikhonov regularization using the regularization parameter $\alpha = 63.2$ attained with Morozov's discrepancy principle. The relative error for the naïve reconstruction was $\delta_{\text{rel}} \approx 219 \%$, and for the regularized solution $\delta_{\text{rel}} \approx 63.1 \%$. The measurement data was created with the parameter values $f = 90 \text{ Hz}$ and $Q = 0.7$.
 
-\item The relative error of the reconstruction with different values of the regularization parameter $\alpha$ is shown in figure \ref{fig:alpha-iter}. The least error $\delta_{\text{rel}} \approx 64.6 \%$ was attained with the value $\alpha = 201$. Figure \ref{fig:iter-tik} shows the reconstruction of the same data done with Tikhonov regularization. The value of the regularization parameter $\alpha = 104.5$ was chosen with Morozov's discrepancy principle, and resulted in a relative error $\delta_{\text{rel}} \approx 65.0 \%$. The measurement data was created with the parameter values $f = 120 \text{Hz}$ and $Q = 0.5$.
+\item The relative error of the reconstruction with different values of the regularization parameter $\alpha$ is shown in figure \ref{fig:alpha-iter}. The least error $\delta_{\text{rel}} \approx 64.6 \%$ was attained with the value $\alpha = 201$. Figure \ref{fig:iter-tik} shows the reconstruction of the same data done with Tikhonov regularization. The value of the regularization parameter $\alpha = 104.5$ was chosen with Morozov's discrepancy principle, and resulted in a relative error $\delta_{\text{rel}} \approx 65.0 \%$. The measurement data was created with the parameter values $f = 120 \text{ Hz}$ and $Q = 0.5$.
 
 \item The relative error is calculated with the formula
-\begin{equation*}
+\begin{equation}
+\label{eq:relerr}
 \delta_{rel} = \frac{\left\| g - T_{\alpha}(m) \right\|_2}{\left\| g \right\|_2} \cdot 100 \%,
-\end{equation*}
+\end{equation}
 where $g \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(m)$ is the reconstruction calculated from the noisy data $m$ with the regularization parameter $\alpha$.
 
 \item In the figures \ref{fig:naive}, \ref{fig:naive-tik} and \ref{fig:iter-tik} the green line shows the original glottal signal and the blue line shows the reconstruction.
@@ -258,7 +259,17 @@ where $g \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(m)$
 
 \begin{block}{Discussion}
 
+\begin{itemize}
 
+\item As can be seen from figure \ref{fig:naive}, the inverse problem cannot be solved only by naïve inversion, as it fails to achieve any proper results. The problem is clearly \emph{ill-posed}.
+
+\item The results acquired with the Tikhonov regularization strategy were good; the shape of the reconstruction is clearly the same as the original data, although the reconstruction is somewhat flattened. This can be seen from figures \ref{fig:naive-tik} and \ref{fig:iter-tik}. Although the reconstructions were flattened, it does not affect much the generated \emph{sound}, only its amplitude, as long as the shape of the pulse is correct. Therefore the relative error described in \eqref{eq:relerr} might not be the correct number to show the quality of the reconstruction, but it could rather be displayed by a number comparing the shapes. However, it turned out that these two ways of comparing the reconstruction with the original data yielded closely similar results.
+
+\item The regularization parameters acquired with Morozov's discrepancy principle yielded good results. As can be seen from figure \ref{fig:alpha-iter}, the reconstruction with a regularization parameter acquired with Morozov's discrepancy principle gave almost as good a reconstruction as with the best possible value of the parameter, when using the relative error of the reconstructions as a reference point. Considering that the selection of the regularization parameter with Morozov's discrepancy principle works completely without the need of human interaction, the method selection can be regarded as a success for this particular problem.
+
+\item 
+
+\end{itemize}
 
 \end{block}
 
