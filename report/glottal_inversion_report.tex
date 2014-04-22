@@ -306,7 +306,6 @@ In this section we will present some of the results of our study. For obvious re
 
 The inversion was done, in addition to the Tikhonov regularization strategy, also with the naïve inversion method in order to illustrate the ill-posedness of the inverse problem.
 A comparison of the methods is presented below in figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime}.
-
 \begin{figure}[h]
 \begin{center}
 \includegraphics[scale=.35]{img/naive_test_naive.eps}
@@ -315,8 +314,8 @@ A comparison of the methods is presented below in figures \ref{fig:naive-compari
 \caption{Comparison between the naïve inversion method and the Tikhonov regularization strategy with inverse crime. Sound frequency = 90 Hz, Q = 0.7, relative error of the reconstruction $\approx$ 43.9\%, $\alpha \approx 63.7\%$.}
 \label{fig:naive-comparison_crime}
 \end{figure}
-
 \begin{figure}[h]
+
 \begin{center}
 \includegraphics[scale=.35]{img/naive_test_naive[V3].eps}
 \includegraphics[scale=.35]{img/naive_test_morozov[V3].eps}
@@ -324,7 +323,15 @@ A comparison of the methods is presented below in figures \ref{fig:naive-compari
 \caption{Comparison between the naïve inversion method and the Tikhonov regularization strategy without inverse crime. Sound frequency = 90 Hz, Q = 0.7, relative error of the reconstruction $\approx$ 63.1\%, $\alpha \approx 63.2\%$.}
 \label{fig:naive-comparison_nocrime}
 \end{figure}
-
+In order to somehow evaluate the accuracy and the correctness (in the sense of the relative error of the glottal impulse) of the $\alpha$-value chosen according to Morozov's discrepancy principle we ran an iterative script that calculated the reconstruction with different $\alpha$-values and stored the relative error-values. This was then compared with corresponding reconstruction with an $\alpha$-value chosen according to Morozov's discrepancy principle. the results can be seen in figure.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=.35]{img/alpha_errs_iter.eps}
+\includegraphics[scale=.35]{img/Comparison_with_iterative_nocrime.eps}
+\end{center}
+\caption{asd}
+\label{fig:iter_comparison}
+\end{figure}
 
 
 
