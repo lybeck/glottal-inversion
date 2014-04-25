@@ -20,12 +20,17 @@ const = load('data/constants');
 male_filter = 1;
 
 % noise multiplier due to error in filter
-noise_est = estimate_noise(m, f, Q, periods);
+% if the data is created with inverse crime, noise_level and
+% noise_factor need to be sent to the funtion
+if data_male_filter
+    noise_est = estimate_noise(m, f, Q, periods);
+else
+    noise_est = estimate_noise(m, f, Q, periods, noise_lvl, noise_factor);
+end
 
 x0 = zeros(length(m), 1);
 delta = delta_fun(length(m), noise_est);
 alpha = morozov(create_filter_matrix(filt.alpha, length(m)), m, delta, 1);
-alpha = 201
 
 rec = Tik_a_inv(m, alpha, x0, periods, Q, male_filter);
 
