@@ -202,7 +202,7 @@ where $g \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(m)$
 \begin{column}{.5\textwidth}
 \begin{center}
 \begin{figure}
-\includegraphics[width=.95\linewidth]{naive_test_nocrime.eps}
+\includegraphics[width=.98\linewidth]{naive_test_nocrime.eps}
 \caption{Naïve inversion}
 \label{fig:naive}
 \end{figure}
@@ -212,7 +212,7 @@ where $g \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(m)$
 \begin{column}{.5\textwidth}
 \begin{center}
 \begin{figure}
-\includegraphics[width=.9\linewidth]{naive_test_nocrime_morozov.eps}
+\includegraphics[width=.94\linewidth]{naive_test_nocrime_morozov.eps}
 \caption{Tikhonov regularized solution}
 \label{fig:naive-tik}
 \end{figure}
@@ -230,7 +230,7 @@ where $g \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(m)$
 \begin{column}{.5\textwidth}
 \begin{center}
 \begin{figure}
-\includegraphics[width=.95\linewidth]{alpha_errs_iter.eps}
+\includegraphics[width=.98\linewidth]{alpha_errs_iter.eps}
 \caption{Relative error (\%) by $\alpha$-value}
 \label{fig:alpha-iter}
 \end{figure}
@@ -240,7 +240,7 @@ where $g \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(m)$
 \begin{column}{.5\textwidth}
 \begin{center}
 \begin{figure}
-\includegraphics[width=.95\linewidth]{alpha_errs_morozov.eps}
+\includegraphics[width=.98\linewidth]{alpha_errs_morozov.eps}
 \caption{Tikhonov regularized solution}
 \label{fig:iter-tik}
 \end{figure}
@@ -261,13 +261,13 @@ where $g \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(m)$
 
 \begin{itemize}
 
-\item As can be seen from figure \ref{fig:naive}, the inverse problem cannot be solved only by naïve inversion, as it fails to achieve any proper results. The problem is clearly \emph{ill-posed}.
+\item As can be seen from figure \ref{fig:naive}, the inverse problem cannot be solved with naïve inversion, as it fails to achieve any proper results. The problem is clearly \emph{ill-posed}, and requires some regularization method to achieve reasonable results.
 
-\item The results acquired with the Tikhonov regularization strategy were good; the shape of the reconstruction is clearly the same as the original data, although the reconstruction is somewhat flattened. This can be seen from figures \ref{fig:naive-tik} and \ref{fig:iter-tik}. Although the reconstructions were flattened, it does not affect much the generated \emph{sound}, only its amplitude, as long as the shape of the pulse is correct. Therefore the relative error described in \eqref{eq:relerr} might not be the correct number to show the quality of the reconstruction, but it could rather be displayed by a number comparing the shapes. However, it turned out that these two ways of comparing the reconstruction with the original data yielded closely similar results.
+\item The results acquired with the Tikhonov regularization strategy were good; the shape of the reconstruction is clearly the same as the original data, although the reconstruction is somewhat flattened. This can be seen from figures \ref{fig:naive-tik} and \ref{fig:iter-tik}. Although the reconstructions were flattened, it does not affect much the generated \emph{sound}, only its amplitude, as long as the shape of the pulse is correct. Therefore the relative error described in \eqref{eq:relerr} might not be the correct number to show the quality of the reconstruction, but it could rather be displayed by a number comparing the \emph{shapes} of the impulses. However, it turned out that this way of comparing the reconstruction with the original data yielded similar results to the relative error.
 
 \item The regularization parameters acquired with Morozov's discrepancy principle yielded good results. As can be seen from figure \ref{fig:alpha-iter}, the reconstruction with a regularization parameter acquired with Morozov's discrepancy principle gave almost as good a reconstruction as with the best possible value of the parameter, when using the relative error of the reconstructions as a reference point. Considering that the selection of the regularization parameter with Morozov's discrepancy principle works completely without the need of human interaction, the method selection can be regarded as a success for this particular problem.
 
-\item 
+\item As this study is about generating sounds it is not reasonable to concentrate solely on graphs and error values, but also on how the the reconstruction sounds to a human ear. Because this cannot be measured in any way, it is up to each person to decide if the result is acceptable or not. Please ask the authors to play some sound samples from the reconstructions!
 
 \end{itemize}
 

@@ -8,6 +8,7 @@
 \usepackage{graphicx, float}
 \usepackage{enumerate}
 \usepackage{bm}
+\usepackage[noabbrev]{cleveref}
 \DeclareMathOperator*{\argmin}{\arg\!\min}
 
 \newcommand{\R}{{\mathbb R}}
@@ -33,7 +34,8 @@
 \maketitle
 
 %---------------------Introduction--------------------
-\section{Introduction}\label{sec:intro}
+\section{Introduction}
+\label{sec:intro}
 
 A synthetic human vowel sound consists of a periodic signal to simulate the glottal excitation signal at the glottis and a filter to simulate the vocal tract, which the glottal signal is filtered through.\cite{touda} With a given vocal tract filter the direct problem is \emph{given a glottal excitation signal, create the vowel sound}. The inverse problem is \emph{given a (recorded) vowel sound, find the glottal excitation signal}. In this study we will be concentrating on the inverse problem using simulated vowel data.
 
@@ -41,7 +43,8 @@ The inversion from a vowel sound to the glottal signal is an important part of c
 
 
 %-----------------Materials & Methods-----------------
-\section{Materials and Methods}\label{sec:methods}
+\section{Materials and Methods}
+\label{sec:methods}
 
 \subsection{Glottal excitation signal}
 \label{sec:rk}
@@ -125,9 +128,11 @@ In this study we will assume an approximation of the filter $A$ to be known. Giv
 where $\vc{\eps} \in \R^n$ denotes the measurement noise.
 
 
-\subsection{The inversion method}\label{sec:invMethod}
+\subsection{The inversion method}
+\label{sec:invMethod}
 
-\subsubsection{Tikhonov reguralization}\label{sec:tikh}
+\subsubsection{Tikhonov reguralization}
+\label{sec:tikh}
 The classical Tikhonov regularized solution for $\vc{m} = A \vc{g} + \vc{\eps}$, defined in section \ref{sec:matrixModel}, is usually denoted by the vector $T_\alpha( \vc{m} ) \in \R^n$ that minimizes
 \begin{equation*}
 \lnorm AT_\alpha( \vc{m} ) - \vc{m} \rnorm^2 + \alpha \lnorm T_\alpha( \vc{m} ) \rnorm^2 \Leftrightarrow
@@ -212,6 +217,7 @@ and thus we can use the conjugate gradient method for the optimization.
 
 
 \subsubsection{Morozov's discrepancy principle}
+\label{sec:morozov}
 The problem of finding the optimal regularization parameter is, in general, considered to be unsolved. There are, however, methods that attempt to find an optimal choice of the regularization parameter, including the Morozov discrepancy principle, which is based on the noise level in the data.
 
 Assume that we know the size of the noise in our model defined by \eqref{eq:vowModel} to be $\delta > 0$. Now $T_\alpha( \vc{m} )$ is an acceptable reconstruction if 
@@ -231,7 +237,8 @@ where $d_j$ are the singular values of $A$ and $\vc{m'} = U^T \vc{m}$ where $U$ 
 As previously mentioned, we will use Morozov's discrepancy principle to choose the optimal regularization parameter.
 
 
-\subsection{The basis and materials}\label{sec:basis}
+\subsection{The basis and materials}
+\label{sec:basis}
 
 In this work we will use synthetic data as our basis. We first create a synthetic glottal excitation signal using the airflow function defined in \eqref{eq:RK-model}. To this signal we apply a previously calculated vocal tract filter, as described in section \ref{sec:filter} to create a simulated vowel sound. Finally we add some normally distributed noise to the data to simulate measurement noise. Different data is created by varying the sound frequency, the value of the Klatt-parameter $Q$ and the noise-level.
 
@@ -311,7 +318,8 @@ When we have acquired an estimation for the measurement noise the solution of eq
 
 
 %-----------------------Results-----------------------
-\section{Results}\label{sec:results}
+\section{Results}
+\label{sec:results}
 In this section we will present some of the results of our study. For obvious reasons we will not include sound data from our results in this paper. Note that in all the following graphs of the target glottal pressure and the reconstructed glottal pressure are represented by the colors green and blue, respectively. We will also denote the Klatt-parameter with $Q$. The relative errors of the reconstructions are calculated with the formula
 \begin{equation}
 \delta_{rel} = \frac{\left\| \vc{g} - T_{\alpha}(\vc{m}) \right\|_2}{\left\| \vc{g} \right\|_2} \cdot 100 \%,
@@ -386,8 +394,36 @@ Since the number of (a priori known) variables is quite high a large amount of d
 
 
 %----------------------Discussion---------------------
-\section{Discussion}\label{sec:discussion}
+\section{Discussion}
+\label{sec:discussion}
 
+\subsection{Ill-posedness}
+
+As it can be seen from figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime} the inverse problem to determine the glottal impulse is clearly \emph{ill-posed}. It can be seen that naïve inversion fails completely to achieve the shape of the glottal excitation signal, and thus a regularization method is required.
+
+In this work the Tikhonov regularization strategy was chosen for solving the inverse problem. It can further be seen from figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime} that when the same problem that failed with naïve inversion is solved with Tikhonov regularization the results are significantly better.
+
+It must be noted that the situation displayed in figure \ref{fig:naive-comparison_crime} is done with inverse crime, which means that the same filter was used both in creating the data and in solving the inverse problem. This is the reason why the error of the reconstruction is so low; such low values could not be achieved with real data. The situation in figure \ref{fig:naive-comparison_nocrime} is a much better example of how reconstructions with real data could look like.
+
+\subsection{Tikhonov regularization}
+
+Apart from the naïve inversions displayed in figures \cref{fig:naive-comparison_crime,fig:naive-comparison_nocrime} discussed above, all the reconstructions in the figures in \cref{sec:results} (\crefrange{fig:naive-comparison_crime}{fig:tik-5}) are done with the Tikhonov regularization strategy. For all reconstructions the relative error was well below $75 \%$, which is good for any ill-posed inverse problem.
+
+\subsection{Morozov's discrepancy principle}
+
+Morozov rulez!!
+
+\subsection{Reconstruction quality}
+
+\emph{Shape} error.
+
+\subsection{Further work}
+
+TV?
+
+
+
+%----------------------References---------------------
 \newpage
 \begin{thebibliography}{9}
 
