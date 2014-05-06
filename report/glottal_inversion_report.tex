@@ -25,7 +25,7 @@
 \newcommand{\vc}[1]{\ensuremath{\bm{#1}}}
 
 
-\title{Glottal inversion with an approximate vocal tract filter}
+\title{Glottal inversion with approximate vocal tract filter}
 \author{Lasse Lybeck, Robert Sirviö}
 
 
@@ -445,7 +445,9 @@ However, it turned out that this way of comparing the reconstruction with the or
 
 \subsection{Further work}
 
-TV?
+In this work the inversion was done solely with simulated data. The same method might however be succesfully applied even to real recorded data. The vocal tract filter used in the inversion with the synthetic data is selected to simulate only an approximation of the real vocal tract filter, as the inversion uses another filter for the same vowel as what the data was created with. The situation with real data is not far from this starting point.
+
+With the Tikhonov regularization strategy the reconstruction easily becomes oscillatory. As it was seen from the results in this work, to even out the oscillations the regularization parameter had to have a relatively high value. This in turn resulted in suppressed reconstructions. Also, the penalty matrix had to be heavily customized with Tikhonov regularization. Therefore, the inversion might work with the \emph{total variation} regularization strategy.\cite{samu} This could also be a good method of choise because it is planned to work well for piecewise constant functions, and a big part of the glottal excitation signal has the constant value zero.
 
 
 
