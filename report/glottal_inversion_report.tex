@@ -3,9 +3,9 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath,amsfonts}
+\usepackage{amsmath, amssymb, amsfonts}
 \usepackage{mathtools}
-\usepackage{graphicx, float}
+\usepackage{graphicx, float, epstopdf}
 \usepackage{enumerate}
 \usepackage{bm}
 \usepackage[noabbrev]{cleveref}
@@ -23,6 +23,11 @@
 \newcommand{\citeneeded}{\ensuremath{\vphantom{1}^{\text{[citation needed]}}\,}}
 \newcommand{\eps}{\ensuremath{\varepsilon}}
 \newcommand{\vc}[1]{\ensuremath{\bm{#1}}}
+\newcommand*{\bigCI}{%
+  \mathrel{\text{%
+    {\rotatebox[origin=c]{90}{\resizebox{2.25ex}{1.65ex}{$\vDash$}}}%
+  }}%
+}
 
 
 \title{Glottal inversion with an approximate vocal tract filter}
@@ -279,12 +284,17 @@ for a single period of the excitation signal. This procedure must of course be r
 
 As previously mentioned, we will use Morozov's discrepancy principle for optimization of the regularization parameter $\alpha$. We assume the noise to originate from a scaled standard multivariate normal distribution, i.e. if
 \begin{equation}
-\vc{\eps'} = \left(Z_1, \ldots, Z_n \right), \quad Z_i \sim N(0,1) \text{ for all }
+\vc{\eps'} = \left(Z_1, \ldots, Z_n \right), \quad Z_i \sim N(0,1) \bigCI \text{ for all }
 i \in \left\{1, \ldots, n\right\}
 \end{equation}
 then our assumed noise vector is a sample from $\vc{\eps}$, defined as
 \begin{equation}
 \vc{\eps} := c \vc{\eps'} = \left(cZ_1, \ldots, cZ_n \right), \quad c > 0.
+\end{equation}
+Note that
+\begin{equation}
+cZ_i \sim N\left(0,c^2\right) \text{ for all }
+i \in \left\{1, \ldots, n\right\}.
 \end{equation}
 The scaling is done to make the error relative to the data, which again is preferable in order to generate consistent data. We want to estimate the magnitude of the noise. Let $X \sim \chi_n^2$ and $Y \sim \chi_n$. We now see (\cite{handbook}, \cite{chi}) that
 \begin{align*}
