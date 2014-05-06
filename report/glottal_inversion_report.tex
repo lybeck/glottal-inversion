@@ -3,9 +3,9 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{amsmath,amsfonts}
 \usepackage{mathtools}
-\usepackage{graphicx, float, epstopdf}
+\usepackage{graphicx, float}
 \usepackage{enumerate}
 \usepackage{bm}
 \usepackage[noabbrev]{cleveref}
@@ -23,11 +23,6 @@
 \newcommand{\citeneeded}{\ensuremath{\vphantom{1}^{\text{[citation needed]}}\,}}
 \newcommand{\eps}{\ensuremath{\varepsilon}}
 \newcommand{\vc}[1]{\ensuremath{\bm{#1}}}
-\newcommand*{\bigCI}{%
-  \mathrel{\text{%
-    {\rotatebox[origin=c]{90}{\resizebox{2.25ex}{1.65ex}{$\vDash$}}}%
-  }}%
-}
 
 
 \title{Glottal inversion with approximate vocal tract filter}
@@ -281,23 +276,17 @@ L=
 for a single period of the excitation signal. This procedure must of course be repeated as many times as we have periods in our measurement data.
 
 \subsubsection{Noise estimation}
-\label{sec:noiseEst}
 
 As previously mentioned, we will use Morozov's discrepancy principle for optimization of the regularization parameter $\alpha$. We assume the noise to originate from a scaled standard multivariate normal distribution, i.e. if
 \begin{equation}
-\vc{\eps'} = \left(Z_1, \ldots, Z_n \right), \quad Z_i \sim N(0,1) \bigCI \text{ for all }
+\vc{\eps'} = \left(Z_1, \ldots, Z_n \right), \quad Z_i \sim N(0,1) \text{ for all }
 i \in \left\{1, \ldots, n\right\}
 \end{equation}
 then our assumed noise vector is a sample from $\vc{\eps}$, defined as
 \begin{equation}
 \vc{\eps} := c \vc{\eps'} = \left(cZ_1, \ldots, cZ_n \right), \quad c > 0.
 \end{equation}
-Note that
-\begin{equation}
-cZ_i \sim N\left(0,c^2\right) \text{ for all }
-i \in \left\{1, \ldots, n\right\}.
-\end{equation}
-The scaling is done to make the error relative to the data, which again is preferable in order to generate consistent data. We want to estimate the magnitude of the noise. Let $X \sim \chi_n^2$ and $Y \sim \chi_n$ where $\chi_n^2$ denotes the chi-squared distribution and $\chi_n$ the chi distribution with $n$ degrees of freedom respectively. We now see (\cite{handbook}, \cite{chi}) that
+The scaling is done to make the error relative to the data, which again is preferable in order to generate consistent data. We want to estimate the magnitude of the noise. Let $X \sim \chi_n^2$ and $Y \sim \chi_n$. We now see (\cite{handbook}, \cite{chi}) that
 \begin{align*}
 E\left(\lnorm \vc{\eps} \rnorm \right)   &= E\left(\lnorm c \vc{\eps'} \rnorm \right)   =
 E\left(c \lnorm \vc{\eps'} \rnorm \right) = c E\left(\lnorm \vc{\eps'} \rnorm \right) \\
@@ -438,12 +427,8 @@ Another way of tackling the problem of not knowing the Klatt-parameter exactly w
 \end{figure}
 
 \subsection{Morozov's discrepancy principle}
-\label{sec:morozow}
 
-The regularization parameters acquired with Morozov's discrepancy principle
-yielded good results. As can be seen from \cref{fig:iter_comparison}, the reconstruction with a regularization parameter acquired with Morozov's discrepancy principle gave almost as good a reconstruction as with the best possible value of the parameter (in the sense of the values in the iteration) when using the relative error of the reconstructions as a reference point. The difference in the audio data was indistinguishable to the human ear.
-
-Considering that the selection of the regularization parameter with Morozov's discrepancy principle works completely without the need of human interaction, the method selection can be regarded as a success for this particular problem. With an optimization of the noise estimation process (see \ref{sec:noiseEst}) potentially more accurate results can be acquired.
+Morozov rulez!!
 
 \subsection{Reconstruction quality}
 \label{sec:recQuality}
