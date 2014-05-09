@@ -22,6 +22,10 @@ poster/project-poster/*.log
 poster/project-poster/*.pdf
 poster/project-poster/*.synctex.gz
 poster/project-poster/figures/*.pdf
+expected-value-discussion/*.aux
+expected-value-discussion/*.log
+expected-value-discussion/*.pdf
+expected-value-discussion/*.synctex.gz
 
 
 # recordings
