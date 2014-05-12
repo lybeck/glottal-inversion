@@ -39,7 +39,7 @@
 
 \section{Introduction}
 
-In this work we will discuss the expected value of a sample of a standard multivariate normal distribution. More precisely, we will study the claim in \cite{samu}, section 5.4.1 (p. 72), which states, that if the elements of a noise vector $\eps \in \R^k$ satisfy $e_j \sim N(0, \sigma^2)$, then the expected value satisfies $E \left( \lnorm \eps \rnorm \right) = \sqrt{k} \sigma$. We will see that this claim is imprecise. It turns out however, that the statement is \emph{asymptotically} true, and that the convergence toward the precise result is very fast.
+In this work we will discuss the expected value of the norm of a random variable that follows a multivariate normal distribution with zero mean. More precisely, we will study the claim in \cite{samu}, section 5.4.1 (p. 72), which states, that if the noise vector is a sample of $\eps \in \R^k$ where $\eps_j \sim N(0, \sigma^2)$, then the expected value satisfies $E \left( \lnorm \eps \rnorm \right) = \sqrt{k} \sigma$. We will see that this claim is imprecise. It turns out however, that the statement is \emph{asymptotically} true, and that the convergence toward the precise result is very fast.
 
 \section{Calculations}
 \label{sec:calc}
@@ -69,7 +69,7 @@ E\left(\sigma \lnorm \vc{\eps'} \rnorm \right) = \sigma E\left(\lnorm \vc{\eps'}
 &= \sigma E\left(\sqrt{Z_1^2 + \ldots + Z_n^2} \right) = \sigma E\left(\sqrt{X} \right) \\
 &= \sigma E\left( Y \right) = 
 \sigma \sqrt{2}\frac{\Gamma\left(\frac{n+1}{2}\right)}{\Gamma\left(\frac{n}{2}\right)} \\
-&= \sigma \sqrt{2} \sqrt{\frac{n}{2}} \left( 1 - \frac{1}{8 n/2} + \frac{1}{128 (n/2)^2} + \frac{5}{1024 (n/2)^3} \right. \\ & \qquad \qquad \qquad \qquad \left. - \frac{21}{32768 (n/2)^4} + O\left( n^{-5} \right) \right) \\
+&= \sigma \sqrt{2} \sqrt{\frac{n}{2}} \left( 1 - \frac{1}{80 n/2} + \frac{1}{128 (n/2)^2} + \frac{5}{1024 (n/2)^3} \right. \\ & \qquad \qquad \qquad \qquad \left. - \frac{21}{32768 (n/2)^4} + O\left( n^{-5} \right) \right) \\
 &= \sigma \sqrt{n} \left( 1 - \frac{1}{4 n} + \frac{1}{32 n^2} + \frac{5}{128 n^3} - \frac{21}{2048 n^4} + O\left( n^{-5} \right) \right) .
 \end{alignedat}
 \end{equation}
