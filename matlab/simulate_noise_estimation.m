@@ -1,11 +1,11 @@
 
-function simulate_noise_estimation(iters)
+function simulate_noise_estimation(min_size, max_size, iters)
 
 errs = [];
 vals = [];
-for k = 1:iters
-    factor = k;
-    noise_size = 1e3;
+for k = linspace(min_size, max_size, iters);
+    factor = 50;
+    noise_size = k;
     noise_vec = randn(noise_size, 1) * factor;
     
     estim_chi = delta_fun(noise_size, factor);
@@ -22,13 +22,30 @@ for k = 1:iters
     print_results(estim_chi, estim_txtbook, target);
 end
 
-plot(errs(:,1), errs(:,2), errs(:,1), errs(:,3));
-legend('Chi', 'Textbook', 'Location', 'best');
+plot(vals(:,1), abs(vals(:,2) - vals(:,3)), 'k-', 'linewidth', 1.3);
+xlim([min_size max_size])
+xlabel('Vector length', 'fontsize', 12);
+ylabel('Error', 'fontsize', 12)
+
+yticks = get(gca, 'ytick');
+set(gca, 'xtick', linspace(min_size, max_size, 6));
+set(gca, 'ytick', linspace(min(yticks), max(yticks), 5));
+set(gca, 'fontsize', 10)
+grid on
 
 pause();
 
-plot(vals(:,1), vals(:,2), vals(:,1), vals(:,3));
-legend('Chi', 'Textbook', 'Location', 'best');
+plot(errs(:,1), errs(:,2), 'k-', 'linewidth', 1.3);
+xlim([min_size max_size])
+xlabel('Vector length', 'fontsize', 12);
+ylabel('Error', 'fontsize', 12)
+
+yticks = get(gca, 'ytick');
+set(gca, 'xtick', linspace(min_size, max_size, 6));
+set(gca, 'ytick', linspace(min(yticks), max(yticks), 5));
+set(gca, 'fontsize', 10)
+grid on
+
 end
 
 function print_results(estim_chi, estim_txtbook, target)
