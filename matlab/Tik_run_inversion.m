@@ -18,10 +18,10 @@ clear
 play_sound = 0;
 
 % save sound file from reconstruction?
-save_sound = 1;
+save_sound = 0;
 
 % save plot to results?
-save_plot = 1;
+save_plot = 0;
 
 load data/data m x y yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
 filt = load('data/filter_male_a');
@@ -35,7 +35,7 @@ male_filter = 1;
 % noise multiplier due to error in filter
 % if the data is created with inverse crime, noise_level and
 % noise_factor need to be sent to the funtion
-if data_male_filter
+if ~data_male_filter
     noise_est = estimate_noise(m, f, Q, periods);
 else
     noise_est = estimate_noise(m, f, Q, periods, noise_lvl, noise_factor);

@@ -12,26 +12,28 @@ ATmult = @(x) AT * x;
 % Lmult = @(x) [diff(x); x(end) - x(1)];
 % LTmult = @(x) [x(end) - x(1) ; -diff(x)];
 
-v_factor = .6;
+% constant used in penalty matrix for a suppressing effect for the part
+% where air pressure = 0;
+suppressing_constant = 80;
 
 p_len = n / periods;
 q = round(Q * p_len);
-v = ones(p_len, 1) * v_factor;
-v(q:end) = 50;
-v1 = -ones(p_len, 1) * v_factor;
+v = ones(p_len, 1);
+v(q:end) = suppressing_constant;
+v1 = -ones(p_len, 1);
 v1(q:end) = 0;
 
-% smoothen
-% c_len = round(length(v)/20);
-% c = ones(c_len, 1) / c_len;
-% v = conv(v, c);
-% v = v(c_len:end);
+% smoothien
+c_len = round(length(v)/20);
+c = ones(c_len, 1) / c_len;
+v = conv(v, c);
+v = v(c_len:end);
 
 % v = repmat(v, periods, 1);
 % Lmult = @(x) x .* v;
 % LTmult = @(x) x .* v;
 
-v = repmat(v, periods, 1);
+v = repmat(v, periods, 1)
 v1 = repmat(v1, periods, 1);
 v1 = v1(1:end-1);
 L = diag(v) + diag(v1,1);
