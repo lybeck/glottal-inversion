@@ -3,11 +3,12 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath,amsfonts}
+\usepackage{amsmath, amssymb, amsfonts}
 \usepackage{mathtools}
-\usepackage{graphicx, float}
+\usepackage{graphicx, float, epstopdf}
 \usepackage{enumerate}
 \usepackage{bm}
+\usepackage[noabbrev]{cleveref}
 \DeclareMathOperator*{\argmin}{\arg\!\min}
 
 \newcommand{\R}{{\mathbb R}}
@@ -22,9 +23,14 @@
 \newcommand{\citeneeded}{\ensuremath{\vphantom{1}^{\text{[citation needed]}}\,}}
 \newcommand{\eps}{\ensuremath{\varepsilon}}
 \newcommand{\vc}[1]{\ensuremath{\bm{#1}}}
+\newcommand*{\bigCI}{%
+  \mathrel{\text{%
+    {\rotatebox[origin=c]{90}{\resizebox{2.25ex}{1.65ex}{$\vDash$}}}%
+  }}%
+}
 
 
-\title{Glottal inversion with an approximate vocal tract filter}
+\title{Glottal inversion with approximate vocal tract filter}
 \author{Lasse Lybeck, Robert Sirviö}
 
 
@@ -33,7 +39,8 @@
 \maketitle
 
 %---------------------Introduction--------------------
-\section{Introduction}\label{sec:intro}
+\section{Introduction}
+\label{sec:intro}
 
 A synthetic human vowel sound consists of a periodic signal to simulate the glottal excitation signal at the glottis and a filter to simulate the vocal tract, which the glottal signal is filtered through.\cite{touda} With a given vocal tract filter the direct problem is \emph{given a glottal excitation signal, create the vowel sound}. The inverse problem is \emph{given a (recorded) vowel sound, find the glottal excitation signal}. In this study we will be concentrating on the inverse problem using simulated vowel data.
 
@@ -41,7 +48,8 @@ The inversion from a vowel sound to the glottal signal is an important part of c
 
 
 %-----------------Materials & Methods-----------------
-\section{Materials and Methods}\label{sec:methods}
+\section{Materials and Methods}
+\label{sec:methods}
 
 \subsection{Glottal excitation signal}
 \label{sec:rk}
@@ -125,9 +133,11 @@ In this study we will assume an approximation of the filter $A$ to be known. Giv
 where $\vc{\eps} \in \R^n$ denotes the measurement noise.
 
 
-\subsection{The inversion method}\label{sec:invMethod}
+\subsection{The inversion method}
+\label{sec:invMethod}
 
-\subsubsection{Tikhonov reguralization}\label{sec:tikh}
+\subsubsection{Tikhonov reguralization}
+\label{sec:tikh}
 The classical Tikhonov regularized solution for $\vc{m} = A \vc{g} + \vc{\eps}$, defined in section \ref{sec:matrixModel}, is usually denoted by the vector $T_\alpha( \vc{m} ) \in \R^n$ that minimizes
 \begin{equation*}
 \lnorm AT_\alpha( \vc{m} ) - \vc{m} \rnorm^2 + \alpha \lnorm T_\alpha( \vc{m} ) \rnorm^2 \Leftrightarrow
@@ -212,6 +222,7 @@ and thus we can use the conjugate gradient method for the optimization.
 
 
 \subsubsection{Morozov's discrepancy principle}
+\label{sec:morozov}
 The problem of finding the optimal regularization parameter is, in general, considered to be unsolved. There are, however, methods that attempt to find an optimal choice of the regularization parameter, including the Morozov discrepancy principle, which is based on the noise level in the data.
 
 Assume that we know the size of the noise in our model defined by \eqref{eq:vowModel} to be $\delta > 0$. Now $T_\alpha( \vc{m} )$ is an acceptable reconstruction if 
@@ -231,7 +242,8 @@ where $d_j$ are the singular values of $A$ and $\vc{m'} = U^T \vc{m}$ where $U$ 
 As previously mentioned, we will use Morozov's discrepancy principle to choose the optimal regularization parameter.
 
 
-\subsection{The basis and materials}\label{sec:basis}
+\subsection{The basis and materials}
+\label{sec:basis}
 
 In this work we will use synthetic data as our basis. We first create a synthetic glottal excitation signal using the airflow function defined in \eqref{eq:RK-model}. To this signal we apply a previously calculated vocal tract filter, as described in section \ref{sec:filter} to create a simulated vowel sound. Finally we add some normally distributed noise to the data to simulate measurement noise. Different data is created by varying the sound frequency, the value of the Klatt-parameter $Q$ and the noise-level.
 
@@ -269,17 +281,23 @@ L=
 for a single period of the excitation signal. This procedure must of course be repeated as many times as we have periods in our measurement data.
 
 \subsubsection{Noise estimation}
+\label{sec:noiseEst}
 
 As previously mentioned, we will use Morozov's discrepancy principle for optimization of the regularization parameter $\alpha$. We assume the noise to originate from a scaled standard multivariate normal distribution, i.e. if
 \begin{equation}
-\vc{\eps'} = \left(Z_1, \ldots, Z_n \right), \quad Z_i \sim N(0,1) \text{ for all }
+\vc{\eps'} = \left(Z_1, \ldots, Z_n \right), \quad Z_i \sim N(0,1) \bigCI \text{ for all }
 i \in \left\{1, \ldots, n\right\}
 \end{equation}
-then our assumed noise vector $\vc{\eps}$ has the form
+then our assumed noise vector is a sample from $\vc{\eps}$, defined as
 \begin{equation}
-\vc{\eps} = c \vc{\eps'} = \left(cZ_1, \ldots, cZ_n \right), \quad c > 0.
+\vc{\eps} := c \vc{\eps'} = \left(cZ_1, \ldots, cZ_n \right), \quad c > 0.
 \end{equation}
-The scaling is done to make the error relative to the data, which again is preferable in order to generate consistent data. We want to estimate the magnitude of the noise. Let $X \sim \chi_n^2$ and $Y \sim \chi_n$. We now see (\cite{handbook}, \cite{chi}) that
+Note that
+\begin{equation}
+cZ_i \sim N\left(0,c^2\right) \text{ for all }
+i \in \left\{1, \ldots, n\right\}.
+\end{equation}
+The scaling is done to make the error relative to the data, which again is preferable in order to generate consistent data. We want to estimate the magnitude of the noise. Let $X \sim \chi_n^2$ and $Y \sim \chi_n$ where $\chi_n^2$ denotes the chi-squared distribution and $\chi_n$ the chi distribution with $n$ degrees of freedom respectively. We now see (\cite{handbook}, \cite{chi}) that
 \begin{align*}
 E\left(\lnorm \vc{\eps} \rnorm \right)   &= E\left(\lnorm c \vc{\eps'} \rnorm \right)   =
 E\left(c \lnorm \vc{\eps'} \rnorm \right) = c E\left(\lnorm \vc{\eps'} \rnorm \right) \\
@@ -311,7 +329,8 @@ When we have acquired an estimation for the measurement noise the solution of eq
 
 
 %-----------------------Results-----------------------
-\section{Results}\label{sec:results}
+\section{Results}
+\label{sec:results}
 In this section we will present some of the results of our study. For obvious reasons we will not include sound data from our results in this paper. Note that in all the following graphs of the target glottal pressure and the reconstructed glottal pressure are represented by the colors green and blue, respectively. We will also denote the Klatt-parameter with $Q$. The relative errors of the reconstructions are calculated with the formula
 \begin{equation}
 \delta_{rel} = \frac{\left\| \vc{g} - T_{\alpha}(\vc{m}) \right\|_2}{\left\| \vc{g} \right\|_2} \cdot 100 \%,
@@ -386,10 +405,82 @@ Since the number of (a priori known) variables is quite high a large amount of d
 
 
 %----------------------Discussion---------------------
-\section{Discussion}\label{sec:discussion}
+\section{Discussion}
+\label{sec:discussion}
 
+\subsection{Ill-posedness}
+
+As it can be seen from figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime} the inverse problem to determine the glottal impulse is clearly \emph{ill-posed}. It can be seen that naïve inversion fails completely to achieve the shape of the glottal excitation signal, and thus a regularization method is required.
+
+In this work the Tikhonov regularization strategy was chosen for solving the inverse problem. It can further be seen from figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime} that when the same problem that failed with naïve inversion is solved with Tikhonov regularization the results are significantly better.
+
+It must be noted that the situation displayed in figure \ref{fig:naive-comparison_crime} is done with inverse crime, which means that the same filter was used both in creating the data and in solving the inverse problem. This is the reason why the error of the reconstruction is so low; such low values could not be achieved with real data. The situation in figure \ref{fig:naive-comparison_nocrime} is a much better example of how reconstructions with real data could look like.
+
+\subsection{Tikhonov regularization}
+\label{sec:tikDiscussion}
+
+Apart from the naïve inversions displayed in \cref{fig:naive-comparison_crime,fig:naive-comparison_nocrime} discussed above, all the reconstructions in \crefrange{fig:naive-comparison_crime}{fig:tik-5} are done with the Tikhonov regularization strategy. For all reconstructions the relative error was well below $75 \%$, which can be regarded as a good result.
+
+As seen from the figures, the shape of the reconstruction is in all the cases clearly the same as in the original data, although the reconstruction is somewhat flattened. This is due to the high values of the regularization parameter used to compensate for the noise. The problem here is that although the \emph{sound} generated by the reconstruction is close to the original data the relative error of the reconstruction can become quite high; as the reconstruction is flattened it only affects the \emph{amplitude} of the generated sound as long as the \emph{shape} is unaltered. This is further discussed in \cref{sec:recQuality}.
+
+Although the Tikhonov regularization strategy was found to work well for the glottal inversion problem, it relies heavily on many pieces of a-priori information. The information needed for the discussed method to work include the sound frequency and the Klatt-parameter of the glottal excitation signal used to generate the vowel sound. The sound frequency is an easy task to find from the measurement data, but the Klatt-parameter can be a harder task to find precisely.
+
+If the Klatt-parameter is approximated too low (a too large part of a period of the reconstruction is suppressed by the penalty matrix, see \cref{sec:basis}) the peaks of the excitation signal would also be suppressed, thus ruining the reconstruction. If the value of the Klatt-parameter is approximated too high (smaller part of a period suppressed) a part of the reconstruction that should have the value 0 will become oscillatory (see example in \cref{fig:tooBigQ}). The latter would probably yield a better sound, as the characteristic shape of the glottal excitation signal would be established, although with some added noise. From this reconstruction the parameter could however be approximated again, as it will probably show in the reconstruction if the parameter value is estimated wrong. However, this means that the inversion process cannot be automated, as the Klatt-parameter must be found by hand.
+
+Another way of tackling the problem of not knowing the Klatt-parameter exactly would be to alter the penalty matrix, for example by "smoothening" the transition from the discrete first derivative penalty to the suppressing part of the matrix. In this way the exact value would not be as important, but a good approximation would suffice. This is however beyond the scope of this study.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=.3]{img/tooBigQ.png}
+\end{center}
+\caption{Example of a reconstruction done with a too big Klatt-parameter value.}
+\label{fig:tooBigQ}
+\end{figure}
+
+\subsection{Morozov's discrepancy principle}
+\label{sec:morozow}
+
+The regularization parameters acquired with Morozov's discrepancy principle
+yielded good results. As can be seen from \cref{fig:iter_comparison}, the reconstruction with a regularization parameter acquired with Morozov's discrepancy principle gave almost as good a reconstruction as with the best possible value of the parameter (in the sense of the values in the iteration) when using the relative error of the reconstructions as a reference point. The difference in the audio data was indistinguishable to the human ear.
+
+Considering that the selection of the regularization parameter with Morozov's discrepancy principle works completely without the need of human interaction, the method selection can be regarded as a success for this particular problem. With an optimization of the noise estimation process (see \ref{sec:noiseEst}) potentially more accurate results can be acquired.
+
+\subsection{Reconstruction quality}
+\label{sec:recQuality}
+
+As mentioned earlier in \cref{sec:tikDiscussion}, the relative error of the reconstruction compared with the original data might not be the perfect quantity to measure the quality of the reconstructions. As the values of the reconstruction signal are flattened, only the amplitude of sound generated by the reconstruction is affected, as long as the \emph{shape} of the signal is the same as for the original data. Therefore another way of measuring the error might be used.
+
+The shape of the reconstruction signal could be compared by scaling the reconstruction and finding the smallest possible value for the relative error. This way only the shape, not the amplitude, of the reconstruction would matter. The shape error could thus be calculated as
+\begin{equation}
+\delta_{\text{shape}} = \min_{c \in \R} \left\{ \frac{\left\| \vc{g} - c T_{\alpha}(\vc{m}) \right\|_2}{\left\| \vc{g} \right\|_2} \right\} \cdot 100 \% ,
+\end{equation}
+where $\vc{g} \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(\vc{m})$ is the reconstruction calculated from the noisy data $m$ with the regularization parameter $\alpha$.
+
+However, it turned out that this way of comparing the reconstruction with the original data yielded similar results to the relative error. Therefore only the relative error was reported for the reconstructions.
+
+\subsection{Further work}
+
+In this work the inversion was done solely with simulated data. The same method might however be succesfully applied even to real recorded data. The vocal tract filter used in the inversion with the synthetic data is selected to simulate only an approximation of the real vocal tract filter, as the inversion uses another filter for the same vowel as what the data was created with. The situation with real data is not far from this starting point.
+
+With the Tikhonov regularization strategy the reconstruction easily becomes oscillatory. As it was seen from the results in this work, to even out the oscillations the regularization parameter had to have a relatively high value. This in turn resulted in suppressed reconstructions. Also, the penalty matrix had to be heavily customized with Tikhonov regularization. Therefore, the inversion might work with the \emph{total variation} regularization strategy.\cite{samu} This could also be a good method of choise because it is planned to work well for piecewise constant functions, and a big part of the glottal excitation signal has the constant value zero.
+
+
+
+%----------------------References---------------------
 \newpage
 \begin{thebibliography}{9}
+
+\begin{footnotesize}
+    
+\bibitem{handbook}
+    Abramowitz, M \& Stegun, I.A. (1965)
+    \emph{Handbook of mathematical functions with formulas, graphs and mathenatical tables}
+    New York, NY: Dover, p. 940
+    
+\bibitem{chi}
+    Evans, M., Hastings, N. \& Peacock, B. (2000)
+    \emph{Statistical distributions}.
+    New York: Wiley, p. 57
 
 \bibitem{fant}
     Fant, G., Liljencrants, J., Lin, Q., (1985).
@@ -405,12 +496,11 @@ Since the number of (a priori known) variables is quite high a large amount of d
 	Mueller, Jennifer L. \& Siltanen Samuli, (2012).
 	\emph{Linear and Nonlinear Inverse Problems with Practical Applications}.
 	SIAM, 1st edition.
-	
-\bibitem{touda}
-    Touda, K., (2007)
-    \emph{Study on numerical method for voice generation problem}.
-    PhD thesis.
-    The University of Electro-Communications.
+    
+\bibitem{NR}
+    Press, W.H., Teukolsky, S.A., Vetterling, W.T. \& Flannery, B.P. (2007)
+    \emph{Numerical Recipes: The Art of Scientific Computing}.
+    New York: Cambridge University Press, 3rd edition, p. 362
     
 \bibitem{digitalmodels}
     Rabiner, L. R., Schafer, R. W., (1987).
@@ -421,21 +511,15 @@ Since the number of (a priori known) variables is quite high a large amount of d
     Rosenberg, A., (1971).
     \emph{Effect of glottal pulse shape on the quality of natural vowels}.
     Journal of the Acoustical Society of America 49 (2B), p. 583–590.
-    
-\bibitem{chi}
-    Evans, M., Hastings, N. \& Peacock, B. (2000)
-    \emph{Statistical distributions}.
-    New York: Wiley, p. 57
-    
-\bibitem{NR}
-    Press, W.H., Teukolsky, S.A., Vetterling, W.T. \& Flannery, B.P. (2007)
-    \emph{Numerical Recipes: The Art of Scientific Computing}.
-    New York: Cambridge University Press, 3rd edition, p.362
-    
-\bibitem{handbook}
-    Abramowitz, M \& Stegun, I.A. (1965)
-    \emph{Handbook of mathematical functions with formulas, graphs and mathenatical tables}
-    New York, NY: Dover, p.940
+	
+\bibitem{touda}
+    Touda, K., (2007)
+    \emph{Study on numerical method for voice generation problem}.
+    PhD thesis.
+    The University of Electro-Communications.
+
+
+\end{footnotesize}
 
 \end{thebibliography}
 
