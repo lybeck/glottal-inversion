@@ -23,7 +23,7 @@ save_sound = 1;
 % save plot to results?
 save_plot = 1;
 
-load data/data m x y yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
+load data/data m x yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
 filt = load('data/filter_male_a');
 const = load('data/constants');
 

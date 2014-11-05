@@ -1,5 +1,5 @@
 
-function [xx, yy, yd] = glottal_triangle(f, Q)
+function [xx, yd] = glottal_triangle(f, Q)
 
 const = load('data/constants');
 
@@ -9,6 +9,8 @@ T0 = Q * T;
 xx = linspace(0, T, const.fs * T)';
 yy = tria(xx, T0);
 yd = [diff(yy); 0];
+
+yd = yd / max(abs(yd));
 
 end
 
