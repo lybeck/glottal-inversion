@@ -7,6 +7,11 @@ n = length(x0);
 
 AT = create_filter_matrix(filt, n)';
 
+% Estimate of the error used in creation of data (related to the
+% unperiodicity of the data). To be provided as an argument in teh
+% future...
+estimate_of_data_err = 0.2;
+
 Amult = @(x) filter(1, filt, x);
 ATmult = @(x) AT * x;
 % Lmult = @(x) [diff(x); x(end) - x(1)];
@@ -23,11 +28,14 @@ v(q:end) = suppressing_constant;
 v1 = -ones(p_len, 1);
 v1(q:end) = 0;
 
-% smoothien
-c_len = round(length(v)/20);
-c = ones(c_len, 1) / c_len;
-v = conv(v, c);
-v = v(c_len:end);
+% % smoothien
+% c_len = round(length(v)/20);
+% c = ones(c_len, 1) / c_len;
+% v = conv(v, c);
+% v = v(c_len:end);
+beginning_of_smooth = round((p_len * Q) - (.5 * estimate_of_data_err * p_len));
+end_of_smooth = round((p_len * Q) + (.5 * estimate_of_data_err * p_len));
+smooth = linspace(beginning_of_smooth, end_of_smooth);
 
 % v = repmat(v, periods, 1);
 % Lmult = @(x) x .* v;
