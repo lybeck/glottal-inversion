@@ -27,7 +27,7 @@ validate_data = 1;
 % parameters for the data
 f = 80;
 Q_data = .7;
-Q_guess = .7;
+Q_guess = .75;
 Q_delta = .1;
 noise_lvl = .05;
 periods = 10;

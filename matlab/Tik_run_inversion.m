@@ -65,11 +65,9 @@ fprintf('Relative error on vowel           : %g %%\n\n', relerrv)
 % plots
 if save_plot
     filename = 'Comparison-201';
-    plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q_data, Q_guess, Q_delta, noise_lvl, noise_factor, f, data_male_filter);
+    plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q_data, Q_guess, Q_delta, periods, noise_lvl, noise_factor, f, data_male_filter);
 else
-    figure(1)
-    plot(x, rec, x, yd)
-    xlim([0, x(end)])
+    plot_result(x, rec, yd, Q_guess, Q_delta, periods)
 end
 
 % sound

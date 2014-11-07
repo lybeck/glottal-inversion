@@ -1,7 +1,7 @@
-function plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_guess, Q_delta, noise_lvl, noise_factor, f, male_filter)
+function plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q_data, Q_guess, Q_delta, periods, noise_lvl, noise_factor, f, male_filter)
 
-plot(x, rec, x, yd);
-xlim([0, x(end)])
+plot_result(x, rec, yd, Q_guess, Q_delta, periods)
+
 scrsize=get(0,'Screensize');
 set(gcf,'Position',scrsize);
 set(gcf, 'PaperPositionMode','auto');
@@ -30,7 +30,7 @@ fprintf(fileID,...
      'Factor of the noise of the data   = %-5.5f \n',...
      'Frequency of the vowel sound      = %-7.2f \n',...
      'Inverse crime? (0 = no, 1 = yes)  : %-1d'],...
-     relerr, relerrv, alpha, Q, Q_guess, Q_delta, noise_lvl, noise_factor, f, male_filter); 
+     relerr, relerrv, alpha, Q_data, Q_guess, Q_delta, noise_lvl, noise_factor, f, male_filter); 
  fclose(fileID);
 
 end
