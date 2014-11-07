@@ -15,14 +15,14 @@ p_len = n / periods;
 
 % constant used in penalty matrix for a suppressing effect for the part
 % where air pressure = 0;
-suppressing_constant = 1;
+suppressing_constant = 3;
 
 % help vector for smoothening
 smooth_start = round((Q - Q_delta) * p_len);
 smooth_end = round((Q + Q_delta) * p_len);
 smooth_hlp = zeros(p_len, 1);
 smooth_hlp(smooth_end+1:end) = ones(size(smooth_hlp(smooth_end+1:end)));
-smooth_hlp(smooth_start:smooth_end) = linspace(0, 1, length(smooth_hlp(smooth_start:smooth_end))) .^ 2;
+smooth_hlp(smooth_start:smooth_end) = linspace(0, 1, length(smooth_hlp(smooth_start:smooth_end)));
 
 % create main diagonal
 val1 = 1;
