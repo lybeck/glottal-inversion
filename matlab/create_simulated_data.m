@@ -14,21 +14,24 @@ show_plot = 0;
 % which filter should be used?
 % 0: female
 % 1: male
-data_male_filter = 1;
+data_male_filter = 0;
 
 % which glottal model?
 % 0: triangle wave
 % 1: klatt model
 klatt_model = 1;
 
+% the amount of iterations to try and find the right klatt variable
+iterations = 8;
+
 % should data validation be used?
-validate_data = 1;
+validate_data = 0;
 
 % parameters for the data
-f = 80;
-Q_data = .7;
-Q_guess = .75;
-Q_delta = .1;
+f = 100;
+Q_data = .2;
+Q_guess = 1;
+Q_delta = .0;
 noise_lvl = .05;
 periods = 10;
 
@@ -77,7 +80,7 @@ x = linspace(0, periods * maxx, periods * len);
 yd = repmat(yyd, periods, 1);
 plotvow = vow(start * len : periods * len + start * len - 1);
 
-save data/data m x yd periods Q_data Q_guess Q_delta noise_lvl noise_factor f data_male_filter
+save data/data m x yd periods Q_data Q_guess Q_delta noise_lvl noise_factor f data_male_filter iterations
 
 
 

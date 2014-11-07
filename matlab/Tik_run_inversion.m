@@ -15,7 +15,7 @@
 clear
 
 % play sound from reconstruction?
-play_sound = 0;
+play_sound = 1;
 
 % save sound file from reconstruction?
 save_sound = 0;
@@ -23,7 +23,7 @@ save_sound = 0;
 % save plot to results?
 save_plot = 0;
 
-load data/data m x yd periods Q_data Q_guess Q_delta noise_lvl noise_factor f data_male_filter
+load data/data m x yd periods Q_data Q_guess Q_delta noise_lvl noise_factor f data_male_filter iterations
 filt = load('data/filter_male_a');
 const = load('data/constants');
 
@@ -32,22 +32,53 @@ const = load('data/constants');
 % 1: male filter
 male_filter = 1;
 
-% noise multiplier due to error in filter
-% if the data is created with inverse crime, noise_level and
-% noise_factor need to be sent to the funtion
-if xor(data_male_filter, male_filter)
-    noise_est = estimate_noise(m, f, Q_guess, periods);
-else
-    noise_est = estimate_noise(m, f, Q_guess, periods, noise_lvl, noise_factor);
+% the magic constant, and the least allowed magic value
+magic_constant = .2;
+least_magic = .05;
+
+samples_per_period = length(x) / periods;
+
+for ii=1:iterations
+    
+    fprintf('Starting iteration %d with Q_guess = %.3f...\n', ii, Q_guess)
+    
+    % noise multiplier due to error in filter
+    % if the data is created with inverse crime, noise_level and
+    % noise_factor need to be sent to the funtion
+    if xor(data_male_filter, male_filter)
+        noise_est = estimate_noise(m, f, Q_guess, periods);
+    else
+        noise_est = estimate_noise(m, f, Q_guess, periods, noise_lvl, noise_factor);
+    end
+    
+    % alpha-estimation
+    x0 = zeros(length(m), 1);
+    delta = delta_fun(length(m), noise_est);
+    alpha = morozov(create_filter_matrix(filt.alpha, length(m)), m, delta, 1);
+    
+    % creating the reconstruction with Tikhonov regularization strategy
+    rec = Tik_a_inv(m, alpha, x0, periods, Q_guess, Q_delta, male_filter);
+    
+    % get new guess for the klatt variable
+    if ii ~= iterations
+        
+        rec_period = rec(1:samples_per_period);
+        [~, ind] = min(rec_period);
+        Q_guess = ind / samples_per_period + magic_constant;
+        
+        % check that the guess is valid
+        if Q_guess > 1
+            Q_guess = 1;
+        end
+        
+        % decrease magic constant
+        magic_constant = 2/3 * magic_constant;
+        if magic_constant < least_magic
+            magic_constant = least_magic;
+        end
+    end
+    
 end
-
-% alpha-estimation
-x0 = zeros(length(m), 1);
-delta = delta_fun(length(m), noise_est);
-alpha = morozov(create_filter_matrix(filt.alpha, length(m)), m, delta, 1);
-
-% creating the reconstruction with Tikhonov regularization strategy
-rec = Tik_a_inv(m, alpha, x0, periods, Q_guess, Q_delta, male_filter);
 
 % relative error
 relerr = compute_relerr(rec, yd);

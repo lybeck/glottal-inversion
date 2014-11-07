@@ -14,7 +14,8 @@
 
 function [x, conv] = newton(f, df, init_guess, max_iter, tol)
 
-    old_x = init_guess;
+    x = init_guess;
+    old_x = x;
     if abs(f(old_x)) < tol
        x = old_x; 
        conv = 1;
