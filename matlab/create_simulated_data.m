@@ -30,9 +30,9 @@ periods = 10;
 Q1 = Q + 2*Q_rand*rand()-Q_rand;
 
 if klatt_model
-    [xx, yy, yyd] = klatt(f, Q1);
+    [xx, yyd] = klatt(f, Q1);
 else
-    [xx, yy, yyd] = glottal_triangle(f, Q1);
+    [xx, yyd] = glottal_triangle(f, Q1);
 end
 
 if data_male_filter
@@ -54,7 +54,7 @@ pres = repmat(yyd, rep, 1);
 
 vow = filter(1, filt.alpha, pres);
 
-noise_factor =  max(vow);
+noise_factor =  max(abs(vow));
 noise = noise_lvl * noise_factor;
 noisevow = vow + noise * randn(size(vow));
 
@@ -65,20 +65,14 @@ start = 4;
 
 m = noisevow(start * len : periods * len + start * len - 1);
 x = linspace(0, periods * maxx, periods * len);
-y = repmat(yy, periods, 1);
 yd = repmat(yyd, periods, 1);
 plotvow = vow(start * len : periods * len + start * len - 1);
 
-save data/data m x y yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
+save data/data m x yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
 
 
 
 if show_plot
-    
-    figure(1)
-    clf
-    plot(x, y)
-    xlim([0, periods * maxx])
     
     figure(2)
     clf

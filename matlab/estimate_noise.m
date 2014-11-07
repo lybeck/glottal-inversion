@@ -10,7 +10,7 @@ end
 tests = 100;
 
 filt = load('data/filter_male_a');
-[~, ~, yyd] = klatt(f, Q);
+[~, yyd] = klatt(f, Q);
 
 len = length(yyd);
 
