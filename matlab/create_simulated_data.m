@@ -14,25 +14,34 @@ show_plot = 0;
 % which filter should be used?
 % 0: female
 % 1: male
-data_male_filter = 0;
+data_male_filter = 1;
 
 % which glottal model?
 % 0: triangle wave
 % 1: klatt model
 klatt_model = 1;
 
+% should data validation be used?
+validate_data = 1;
+
 % parameters for the data
 f = 80;
-Q = .6;
-Q_rand = .0;
+Q_data = .7;
+Q_guess = .7;
+Q_delta = .1;
 noise_lvl = .05;
 periods = 10;
-Q1 = Q + 2*Q_rand*rand()-Q_rand;
+
+% check that the arguments are ok, if data validation is used
+if validate_data
+    assert(Q_data <= Q_guess + Q_delta && Q_data >= Q_guess - Q_delta, ...
+        'Invalid arguments in data creation! The Q for creating the glottal data must be inside the range [Q_guess-Q_delta, Q_guess+Q_delta]!')
+end
 
 if klatt_model
-    [xx, yyd] = klatt(f, Q1);
+    [xx, yyd] = klatt(f, Q_data);
 else
-    [xx, yyd] = glottal_triangle(f, Q1);
+    [xx, yyd] = glottal_triangle(f, Q_data);
 end
 
 if data_male_filter
@@ -68,7 +77,7 @@ x = linspace(0, periods * maxx, periods * len);
 yd = repmat(yyd, periods, 1);
 plotvow = vow(start * len : periods * len + start * len - 1);
 
-save data/data m x yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
+save data/data m x yd periods Q_data Q_guess Q_delta noise_lvl noise_factor f data_male_filter
 
 
 

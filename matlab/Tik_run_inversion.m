@@ -23,7 +23,7 @@ save_sound = 0;
 % save plot to results?
 save_plot = 0;
 
-load data/data m x yd periods Q Q_rand noise_lvl noise_factor f data_male_filter
+load data/data m x yd periods Q_data Q_guess Q_delta noise_lvl noise_factor f data_male_filter
 filt = load('data/filter_male_a');
 const = load('data/constants');
 
@@ -35,10 +35,10 @@ male_filter = 1;
 % noise multiplier due to error in filter
 % if the data is created with inverse crime, noise_level and
 % noise_factor need to be sent to the funtion
-if ~data_male_filter
-    noise_est = estimate_noise(m, f, Q, periods);
+if xor(data_male_filter, male_filter)
+    noise_est = estimate_noise(m, f, Q_guess, periods);
 else
-    noise_est = estimate_noise(m, f, Q, periods, noise_lvl, noise_factor);
+    noise_est = estimate_noise(m, f, Q_guess, periods, noise_lvl, noise_factor);
 end
 
 % alpha-estimation
@@ -47,7 +47,7 @@ delta = delta_fun(length(m), noise_est);
 alpha = morozov(create_filter_matrix(filt.alpha, length(m)), m, delta, 1);
 
 % creating the reconstruction with Tikhonov regularization strategy
-rec = Tik_a_inv(m, alpha, x0, periods, Q, male_filter);
+rec = Tik_a_inv(m, alpha, x0, periods, Q_guess, Q_delta, male_filter);
 
 % relative error
 relerr = compute_relerr(rec, yd);
@@ -65,7 +65,7 @@ fprintf('Relative error on vowel           : %g %%\n\n', relerrv)
 % plots
 if save_plot
     filename = 'Comparison-201';
-    plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q, Q_rand, noise_lvl, noise_factor, f, data_male_filter);
+    plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q_data, Q_guess, Q_delta, noise_lvl, noise_factor, f, data_male_filter);
 else
     figure(1)
     plot(x, rec, x, yd)

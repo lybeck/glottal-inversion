@@ -1,4 +1,4 @@
-function x = Tik_vowel_inv(filt, m, alpha, x0, periods, Q)
+function x = Tik_vowel_inv(filt, m, alpha, x0, periods, Q, Q_delta)
 
 max_iter = 5000;
 tol = sqrt(eps);
@@ -7,44 +7,38 @@ n = length(x0);
 
 AT = create_filter_matrix(filt, n)';
 
-% Estimate of the error used in creation of data (related to the
-% unperiodicity of the data). To be provided as an argument in teh
-% future...
-estimate_of_data_err = 0.2;
-
 Amult = @(x) filter(1, filt, x);
 ATmult = @(x) AT * x;
-% Lmult = @(x) [diff(x); x(end) - x(1)];
-% LTmult = @(x) [x(end) - x(1) ; -diff(x)];
+
+% length of the period (number of samples)
+p_len = n / periods;
 
 % constant used in penalty matrix for a suppressing effect for the part
 % where air pressure = 0;
-suppressing_constant = 80;
+suppressing_constant = 1;
 
-p_len = n / periods;
-q = round(Q * p_len);
-v = ones(p_len, 1);
-v(q:end) = suppressing_constant;
-v1 = -ones(p_len, 1);
-v1(q:end) = 0;
+% help vector for smoothening
+smooth_start = round((Q - Q_delta) * p_len);
+smooth_end = round((Q + Q_delta) * p_len);
+smooth_hlp = zeros(p_len, 1);
+smooth_hlp(smooth_end+1:end) = ones(size(smooth_hlp(smooth_end+1:end)));
+smooth_hlp(smooth_start:smooth_end) = linspace(0, 1, length(smooth_hlp(smooth_start:smooth_end))) .^ 2;
 
-% % smoothien
-% c_len = round(length(v)/20);
-% c = ones(c_len, 1) / c_len;
-% v = conv(v, c);
-% v = v(c_len:end);
-beginning_of_smooth = round((p_len * Q) - (.5 * estimate_of_data_err * p_len));
-end_of_smooth = round((p_len * Q) + (.5 * estimate_of_data_err * p_len));
-smooth = linspace(beginning_of_smooth, end_of_smooth);
+% create main diagonal
+val1 = 1;
+val2 = suppressing_constant;
+diag_main = val1 * (1 - smooth_hlp) + val2 * smooth_hlp;
 
-% v = repmat(v, periods, 1);
-% Lmult = @(x) x .* v;
-% LTmult = @(x) x .* v;
+% create the secondary diagonal
+val1 = -1;
+val2 = 0;
+diag_sec = val1 * (1 - smooth_hlp) + val2 * smooth_hlp;
 
-v = repmat(v, periods, 1)
-v1 = repmat(v1, periods, 1);
-v1 = v1(1:end-1);
-L = diag(v) + diag(v1,1);
+% create the L-matrix
+diag_main = repmat(diag_main, periods, 1);
+diag_sec = repmat(diag_sec, periods, 1);
+diag_sec = diag_sec(1:end-1);
+L = diag(diag_main) + diag(diag_sec,1);
 
 Lmult = @(x) L * x;
 LTmult = @(x) L' * x;
