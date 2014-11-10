@@ -241,7 +241,6 @@ where $d_j$ are the singular values of $A$ and $\vc{m'} = U^T \vc{m}$ where $U$ 
 
 As previously mentioned, we will use Morozov's discrepancy principle to choose the optimal regularization parameter.
 
-
 \subsection{The basis and materials}
 \label{sec:basis}
 
@@ -325,6 +324,22 @@ Let $\vc{m} \in \R^n$ be the given measurement data. As we know the sound freque
 However, we know our filter to be only an approximation of the filter used in generating the measurement data, not the exact same filter. Therefore it is reasonable to assume that the approximations done in the selection of the filter give rise to some differences in the vowel sound that cannot be regarded as measurement errors, but rather systematic errors attained by the approximations. Therefore we will use the estimation $\delta = \delta_{\text{max}} / 2$ for the noise level of the measurement data. This estimation of the measurement noise is not at all a trivial task, and should require more careful examination. This is however beyond the scope of this study.
  
 When we have acquired an estimation for the measurement noise the solution of equation \eqref{eq:morozov_root} is approximated with Newton's method \cite{NR}.
+
+
+\subsection{Approximation of the Klatt-parameter}
+
+
+The inversion of the glottal sound is always done with a fixed guess of the Klatt-parameter $Q$. However, the real value of $Q$ can be approximated as long as the inversion is done with an approximation of $Q$ that is no less than what the data is created with. This means that we can approximate the Klatt-parameter as long as we always \emph{over-estimate} it a little bit.
+
+The reason why we need to over-estimate the Klatt-parameter is the shape of the glottal excitation signal (see figure \ref{fig:klatt}). The negative peak in the glottal pressure is located at precisely the point $QT$ in time, where $T$ is the length of the period. The peak is quite sharp, and thus if the parameter is at all under-estimated the peak will almost completely vanish due to the inversion method suppressing the signal toward zero for all points after the time $QT$ (as explained in section \ref{sec:basis}).
+
+When the inversion is done with a too large value of the parameter the result in the range $[0, QT]$ will give a good approximation for the signal, but the range $[QT, Q_{guess} T]$ will be very oscillatory although it should consist of zero values. The negative peak will, however, be clearly visible.  We can thus select the value for the next guess for $Q$ to be the point in the period where the least value is reached, plus a small constant to ensure that we still over-estimate the value. This procedure is then repeated.
+
+As we always want to over-estimate the parameter we can start by selecting the initial guess $Q_1 = 1$. We then iterate for $i = 1, 2, \ldots, N$ the following. Solve the inverse problem as described in previous sections using $Q_i$ as the Klatt-parameter. Call the result $\vc{g}^{(i)} \in \R^n$. Next, find the index for the least value in $\vc{g}^{(i)}$, that is
+\begin{equation*}
+I_i = \argmin_{j \in \{1, \ldots, n\}} \vc{g}^{(i)}_j .
+\end{equation*}
+Then we get the new approximation for the Klatt-parameter simple by calculating $Q_{i+1} = I_i / n + c_i$, where $c_i > 0$ is a small constant with $c_{i+1} < c_i$ for all $i = 1, \ldots, N$.
 
 
 
