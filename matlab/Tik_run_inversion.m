@@ -15,15 +15,28 @@
 clear
 
 % play sound from reconstruction?
-play_sound = 1;
+play_sound = 0;
 
 % save sound file from reconstruction?
 save_sound = 0;
 
-% save plot to results?
-save_plot = 0;
+% plot and save results of reconstructions during the iterations Q
+% approximation? A check of existence of previous results will be made.
+plot_and_save = 0;
+filename = 'noCrime_Q-04_f-85';
+if plot_and_save
+    [folder, overwrite] = create_results_folder(filename);
+    if ~overwrite
+        return;
+    end
+    filename = [folder, '/', filename];
+end
 
-load data/data m x yd periods Q_data Q_guess Q_delta noise_lvl noise_factor f data_male_filter iterations
+% pause execution after single plot?
+pause_exec = 1;
+
+
+load data/data m x yd periods Q_data noise_lvl noise_factor f data_male_filter
 filt = load('data/filter_male_a');
 const = load('data/constants');
 
@@ -33,8 +46,16 @@ const = load('data/constants');
 male_filter = 1;
 
 % the magic constant, and the least allowed magic value
-magic_constant = .2;
-least_magic = .05;
+magic_constant = .04;
+least_magic = .04;
+
+% Initial guess of Q parameter. In the automatic approximation process,
+% Q_guess should equal 1.
+Q_guess = 1;
+
+% Max iteration count for the iterations in the automatic approximation
+% function of Q
+iterations = 4;
 
 samples_per_period = length(x) / periods;
 
@@ -57,7 +78,19 @@ for ii=1:iterations
     alpha = morozov(create_filter_matrix(filt.alpha, length(m)), m, delta, 1);
     
     % creating the reconstruction with Tikhonov regularization strategy
-    rec = Tik_a_inv(m, alpha, x0, periods, Q_guess, Q_delta, male_filter);
+    rec = Tik_a_inv(m, alpha, x0, periods, Q_guess, male_filter);
+
+    %plotting
+    [relerr, relerrv, shape_err, shape_err_fac] = calculate_statistic(filt, rec, yd);
+    
+    plot_results(filename, ii, x, rec, yd, relerr, relerrv, alpha, Q_data, Q_guess,...
+        periods, noise_lvl, noise_factor, f, data_male_filter, plot_and_save);
+    if pause_exec
+        pause;
+        close all;
+    else
+        pause(2);
+    end
     
     % get new guess for the klatt variable
     if ii ~= iterations
@@ -80,27 +113,11 @@ for ii=1:iterations
     
 end
 
-% relative error
-relerr = compute_relerr(rec, yd);
-recv = filter(1, filt.alpha, rec);
-v = filter(1, filt.alpha, yd);
-relerrv = compute_relerr(recv, v);
-[shape_err, shape_err_fac] = compute_shape_error(rec, yd);
-
 fprintf('\n')
 fprintf('Alpha used in calculations        : %.2f\n', alpha)
 fprintf('Relative error on glottal impulse : %g %%\n', relerr)
 fprintf('Shape error on glottal impulse    : %g %%\n', shape_err)
 fprintf('Relative error on vowel           : %g %%\n\n', relerrv)
-
-% plots
-if save_plot
-    filename = 'Comparison-201';
-    plot_and_save(filename, x, rec, yd, relerr, relerrv, alpha, Q_data, Q_guess, Q_delta, periods, noise_lvl, noise_factor, f, data_male_filter);
-else
-    plot_result(x, rec, yd, Q_guess, Q_delta, periods)
-end
-
 % sound
 if play_sound || save_sound
     

@@ -1,4 +1,4 @@
-function x = Tik_vowel_inv(filt, m, alpha, x0, periods, Q, Q_delta)
+function x = Tik_vowel_inv(filt, m, alpha, x0, periods, Q)
 
 max_iter = 5000;
 tol = sqrt(eps);
@@ -13,26 +13,21 @@ ATmult = @(x) AT * x;
 % length of the period (number of samples)
 p_len = n / periods;
 
+% Index from which onward air pressure = 0
+Q_end = round(p_len * Q);
+
 % constant used in penalty matrix for a suppressing effect for the part
 % where air pressure = 0;
 suppressing_constant = 3;
 
-% help vector for smoothening
-smooth_start = round((Q - Q_delta) * p_len);
-smooth_end = round((Q + Q_delta) * p_len);
-smooth_hlp = zeros(p_len, 1);
-smooth_hlp(smooth_end+1:end) = ones(size(smooth_hlp(smooth_end+1:end)));
-smooth_hlp(smooth_start:smooth_end) = linspace(0, 1, length(smooth_hlp(smooth_start:smooth_end)));
-
 % create main diagonal
-val1 = 1;
-val2 = suppressing_constant;
-diag_main = val1 * (1 - smooth_hlp) + val2 * smooth_hlp;
+diag_main = zeros(p_len, 1);
+diag_main(1 : Q_end) = 1;
+diag_main(Q_end : end) = suppressing_constant;
 
 % create the secondary diagonal
-val1 = -1;
-val2 = 0;
-diag_sec = val1 * (1 - smooth_hlp) + val2 * smooth_hlp;
+diag_sec = zeros(p_len, 1);
+diag_sec(1 : Q_end) = -1;
 
 % create the L-matrix
 diag_main = repmat(diag_main, periods, 1);
