@@ -14,16 +14,23 @@
 
 clear
 
+load data/data m x yd periods Q_data noise_lvl noise_factor f data_male_filter
+filt = load('data/filter_male_a');
+const = load('data/constants');
+
 % play sound from reconstruction?
 play_sound = 0;
 
 % save sound file from reconstruction?
-save_sound = 0;
+save_sound = 1;
 
 % plot and save results of reconstructions during the iterations Q
 % approximation? A check of existence of previous results will be made.
-plot_and_save = 0;
-filename = 'noCrime_Q-04_f-85';
+plot_and_save = 1;
+filename = ['crime-', num2str(data_male_filter), '_',...
+            'Q-', num2str(round(Q_data * 100)), '_',...
+            'f-', num2str(round(f)), '_',...
+            'noise-', num2str(round(noise_lvl * 100))];        
 if plot_and_save
     [folder, overwrite] = create_results_folder(filename);
     if ~overwrite
@@ -33,12 +40,7 @@ if plot_and_save
 end
 
 % pause execution after single plot?
-pause_exec = 1;
-
-
-load data/data m x yd periods Q_data noise_lvl noise_factor f data_male_filter
-filt = load('data/filter_male_a');
-const = load('data/constants');
+pause_exec = 0;
 
 % filter used for inversion
 % 0: female filter
@@ -55,7 +57,7 @@ Q_guess = 1;
 
 % Max iteration count for the iterations in the automatic approximation
 % function of Q
-iterations = 4;
+iterations = 5;
 
 samples_per_period = length(x) / periods;
 
@@ -135,7 +137,6 @@ if play_sound || save_sound
     recvow = recvow / max(recvow);
     syd = syd / max(syd);
     vow = vow / max(vow);
-    
     if play_sound
         
         sound(syd, const.fs)
@@ -146,21 +147,13 @@ if play_sound || save_sound
         sound(vow, const.fs)
         pause(2)
         sound(recvow, const.fs)
-    
     end
-    
+
     if save_sound
         
-        prefix = '';
-        
-        if save_plot
-            prefix = ['results/', filename];
-        end
-        
-        wavwrite(syd, const.fs, [prefix, 'glottal_impulse_data']);
-        wavwrite(recyd, const.fs, [prefix, 'glottal_impulse_rec']);
-        wavwrite(vow, const.fs, [prefix, 'vowel_data']);
-        wavwrite(recvow, const.fs, [prefix, 'vowel_rec']);
-    
+        wavwrite(syd, const.fs, [filename, 'glottal_impulse_data']);
+        wavwrite(recyd, const.fs, [filename, 'glottal_impulse_rec']);
+        wavwrite(vow, const.fs, [filename, 'vowel_data']);
+        wavwrite(recvow, const.fs, [filename, 'vowel_rec']);
     end
 end

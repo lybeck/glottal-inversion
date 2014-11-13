@@ -1,0 +1,11 @@
+File = results/noCrime_Q-015_f-90_result_folder/noCrime_Q-015_f-90
+
+Relative error of glottal impulse = 341.10% 
+Relative error of generated vowel = 91.14% 
+Alpha value                       = 0.0139   
+Klatt parameter in data           = 0.15000 
+Klatt parameter guess             = 1.00000 
+Level of noise in data            = 0.07000 
+Factor of the noise of the data   = 15816.90586 
+Frequency of the vowel sound      = 90.00   
+Inverse crime? (0 = no, 1 = yes)  : 0
