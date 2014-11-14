@@ -40,6 +40,8 @@ create_plot([filename, '_no_objective-light_', num2str(iter)], x(1:samples), rec
 
 create_plot([filename, '-_no-objective_one-period_', num2str(iter)], linspace(0, 1, samples_per_period), rec(1:samples_per_period), nan(samples_per_period, 1), samples_per_period, 1, Q_guess, save, 5)
 
+close;
+
 end
 
 function create_plot(filename, x, rec, yd, periods, x_per_length, x_q_guess, save, fig_num)

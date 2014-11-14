@@ -15,19 +15,33 @@
 clear
 
 load data/data m x yd periods Q_data noise_lvl noise_factor f data_male_filter
-filt = load('data/filter_male_a');
+
+if data_male_filter
+    filt = load('data/filter_male_a');
+else
+    filt = load('data/filter_female_a');
+end
+
 const = load('data/constants');
 
+% filter used for inversion
+% 0: female filter
+% 1: male filter
+male_filter = 1;
+
 % play sound from reconstruction?
-play_sound = 0;
+play_sound = 1;
 
 % save sound file from reconstruction?
 save_sound = 1;
 
+% is there an inverse crime?
+inverse_crime = ~xor(data_male_filter, male_filter);
+
 % plot and save results of reconstructions during the iterations Q
 % approximation? A check of existence of previous results will be made.
 plot_and_save = 1;
-filename = ['crime-', num2str(data_male_filter), '_',...
+filename = ['crime-', num2str(inverse_crime), '_',...
             'Q-', num2str(round(Q_data * 100)), '_',...
             'f-', num2str(round(f)), '_',...
             'noise-', num2str(round(noise_lvl * 100))];        
@@ -42,13 +56,8 @@ end
 % pause execution after single plot?
 pause_exec = 0;
 
-% filter used for inversion
-% 0: female filter
-% 1: male filter
-male_filter = 1;
-
 % the magic constant, and the least allowed magic value
-magic_constant = .04;
+magic_constant = .15;
 least_magic = .04;
 
 % Initial guess of Q parameter. In the automatic approximation process,
@@ -68,10 +77,10 @@ for ii=1:iterations
     % noise multiplier due to error in filter
     % if the data is created with inverse crime, noise_level and
     % noise_factor need to be sent to the funtion
-    if xor(data_male_filter, male_filter)
-        noise_est = estimate_noise(m, f, Q_guess, periods);
-    else
+    if inverse_crime
         noise_est = estimate_noise(m, f, Q_guess, periods, noise_lvl, noise_factor);
+    else
+        noise_est = estimate_noise(m, f, Q_guess, periods);
     end
     
     % alpha-estimation
@@ -99,7 +108,13 @@ for ii=1:iterations
         
         rec_period = rec(1:samples_per_period);
         [~, ind] = min(rec_period);
-        Q_guess = ind / samples_per_period + magic_constant;
+        Q_guess_new = ind / samples_per_period + magic_constant;
+        
+        if Q_guess_new >= Q_guess
+            break;
+        end
+        
+        Q_guess = Q_guess_new;
         
         % check that the guess is valid
         if Q_guess > 1
