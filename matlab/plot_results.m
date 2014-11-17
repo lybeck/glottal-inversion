@@ -61,8 +61,9 @@ end
 xlim([0, x(end)])
 hold off
 if save
-    scrsize=get(0,'Screensize');
-    set(gcf,'Position',scrsize);
+    
+    plotsize = [1 1 1366 768];
+    set(gcf,'Position', plotsize);
     set(gcf, 'PaperPositionMode','auto');
     
     saveas(gcf, [filename, '.eps'], 'epsc');
