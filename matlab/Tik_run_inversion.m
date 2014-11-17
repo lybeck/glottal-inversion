@@ -130,11 +130,17 @@ for ii=1:iterations
     
 end
 
+% calculate the relative error in the frequency domain
+yd_fft = abs(fft(yd));
+rec_fft = abs(fft(rec));
+x_fft = 1:length(rec_fft);
+relerr_fft = compute_relerr(rec_fft, yd_fft);
+
 fprintf('\n')
-fprintf('Alpha used in calculations        : %.2f\n', alpha)
-fprintf('Relative error on glottal impulse : %g %%\n', relerr)
-fprintf('Shape error on glottal impulse    : %g %%\n', shape_err)
-fprintf('Relative error on vowel           : %g %%\n\n', relerrv)
+fprintf('Alpha used in calculations         : %.2f\n', alpha)
+fprintf('Relative error on glottal impulse  : %g %%\n', relerr)
+fprintf('Relative error in frequency domain : %g %%\n', relerr_fft)
+fprintf('Relative error on vowel            : %g %%\n\n', relerrv)
 % sound
 if play_sound || save_sound
     
