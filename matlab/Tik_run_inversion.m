@@ -148,10 +148,10 @@ if play_sound || save_sound
     syd = repmat(yd, rep, 1);
     recvow = filter(1, filt.alpha, recyd);
     vow = filter(1, filt.alpha, syd);
-    recyd = recyd / max(recyd);
-    recvow = recvow / max(recvow);
-    syd = syd / max(syd);
-    vow = vow / max(vow);
+    recyd = recyd / max(abs(recyd));
+    recvow = recvow / max(abs(recvow));
+    syd = syd / max(abs(syd));
+    vow = vow / max(abs(vow));
     if play_sound
         
         sound(syd, const.fs)
@@ -166,9 +166,11 @@ if play_sound || save_sound
 
     if save_sound
         
-        wavwrite(syd, const.fs, [filename, 'glottal_impulse_data']);
-        wavwrite(recyd, const.fs, [filename, 'glottal_impulse_rec']);
-        wavwrite(vow, const.fs, [filename, 'vowel_data']);
-        wavwrite(recvow, const.fs, [filename, 'vowel_rec']);
+        extension = '.wav';
+        
+        audiowrite([filename, 'glottal_impulse_data', extension], syd, const.fs);
+        audiowrite([filename, 'glottal_impulse_rec', extension], recyd, const.fs);
+        audiowrite([filename, 'vowel_data', extension], vow, const.fs);
+        audiowrite([filename, 'vowel_rec', extension], recvow, const.fs);
     end
 end
