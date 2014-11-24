@@ -1,0 +1,10 @@
+Frequency domain error:
+
+fig 2: 34.9189 %
+fig 3: 59.001 %
+fig 5: 63.1935 %
+fig 6: 59.384 %
+fig 7: 57.9524 %
+fig 8: 60.1632 %
+fig 9: 57.5886 %
+
