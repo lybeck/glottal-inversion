@@ -9,6 +9,7 @@
 \usepackage{enumerate}
 \usepackage{bm}
 \usepackage[noabbrev]{cleveref}
+\usepackage{caption}
 \DeclareMathOperator*{\argmin}{\arg\!\min}
 
 \newcommand{\R}{{\mathbb R}}
@@ -327,7 +328,7 @@ When we have acquired an estimation for the measurement noise the solution of eq
 
 
 \subsection{Approximation of the Klatt-parameter}
-
+\label{sec:approxKlatt}
 
 The inversion of the glottal sound is always done with a fixed guess of the Klatt-parameter $Q$. However, the real value of $Q$ can be approximated as long as the inversion is done with an approximation of $Q$ that is no less than what the data is created with. This means that we can approximate the Klatt-parameter as long as we always \emph{over-estimate} it a little bit.
 
@@ -346,6 +347,7 @@ Then we get the new approximation for the Klatt-parameter simple by calculating 
 %-----------------------Results-----------------------
 \section{Results}
 \label{sec:results}
+\subsection{Results of the glottal inversion}
 In this section we will present some of the results of our study. For obvious reasons we will not include sound data from our results in this paper. Note that in all the following graphs of the target glottal pressure and the reconstructed glottal pressure are represented by the colors green and blue, respectively. We will also denote the Klatt-parameter with $Q$. The relative errors of the reconstructions are calculated with the formula
 \begin{equation}
 \delta_{rel} = \frac{\left\| \vc{g} - T_{\alpha}(\vc{m}) \right\|_2}{\left\| \vc{g} \right\|_2} \cdot 100 \%,
@@ -418,12 +420,93 @@ Since the number of (a priori known) variables is quite high a large amount of d
 \label{fig:tik-5}
 \end{figure}
 
+\subsection{Verification of the approximation method for \\approximating the Klatt-parameter}
+\label{sec:verifyKlattApprox}
+
+In this section we will present results obtained during the approximation of the Klatt-parameter (algorithm previously described in section \ref{sec:approxKlatt}). We will present the results as
+\begin{itemize}
+ \item plots of four periods of both the target and reconstructed glottal excitation signal
+ \item plots of only one period of the reconstructed glottal excitation signal.
+\end{itemize}
+The $Q_{guess}$ parameter acquired from the algorithm is visualized as a black dot in the plots mentioned above (anchored to the x-axis). The approximation routine was applied on both synthetic and actual data. \newpage
+
+In figures \ref{fig:app1-beginning} to \ref{fig:app1-end} the signal frequency is 120 Hz.
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[scale=.3]{img/Approx_iter_wRef-v2-1.eps}
+ \caption{Iteration no. 1}\label{fig:app1-beginning}
+ \includegraphics[scale=.3]{img/Approx_iter_wRef-v2-2.eps}
+ \caption{Iteration no. 2}
+ \includegraphics[scale=.3]{img/Approx_iter_wRef-v2-4.eps}
+ \caption{Iteration no. 5. $Q_{guess} = 0.165$, while the actual parameter $Q = 0.15$,
+ relative error of the reconstruction $\approx$ 64.6\%, $\alpha \approx 84.5$.}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[scale=.35]{img/Approx_iter_onePer-v2-1.eps}
+ \caption{Iteration no. 1}
+ \includegraphics[scale=.35]{img/Approx_iter_onePer-v2-2.eps}
+ \caption{Iteration no. 2}
+ \includegraphics[scale=.35]{img/Approx_iter_onePer-v2-4.eps}
+ \caption{Iteration no. 5}\label{fig:app1-end}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[scale=.2]{img/Approx_iter_wRef-1.eps}
+ \caption{Iteration no.1}
+ \includegraphics[scale=.2]{img/Approx_iter_wRef-2.eps}
+ \caption{Iteration no.2}
+ \includegraphics[scale=.2]{img/Approx_iter_wRef-4.eps}
+ \caption{Iteration no.5. $Q_{guess} = 0.391$, while the actual parameter $Q = 0.4$}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[scale=.2]{img/Approx_iter_onePer-1.eps}
+ \caption{Iteration no.1}
+ \includegraphics[scale=.2]{img/Approx_iter_onePer-2.eps}
+ \caption{Iteration no.2}
+ \includegraphics[scale=.2]{img/Approx_iter_onePer-4.eps}
+ \caption{Iteration no.5}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[scale=.35]{img/Approx_iter_wRef-v3-1.eps}
+ \caption{Iteration no.1}
+ \includegraphics[scale=.35]{img/Approx_iter_wRef-v3-2.eps}
+ \caption{Iteration no.2}
+ \includegraphics[scale=.35]{img/Approx_iter_wRef-v3-3.eps}
+ \caption{Iteration no.5. $Q_{guess} = 0.341$, while the actual parameter $Q = 0.15$}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[scale=.35]{img/Approx_iter_onePer-v3-1.eps}
+ \caption{Iteration no.1}
+ \includegraphics[scale=.35]{img/Approx_iter_onePer-v3-2.eps}
+ \caption{Iteration no.2}
+ \includegraphics[scale=.35]{img/Approx_iter_onePer-v3-3.eps}
+ \caption{Iteration no.5}
+\end{center}
+\end{figure}
 
 %----------------------Discussion---------------------
 \section{Discussion}
 \label{sec:discussion}
 
 \subsection{Ill-posedness}
+In this section we will evaluate the efficiency of the approximation method for approximating the Klatt-parameter (explained in section \ref{sec:approxKlatt}). The convergence of the method is, in general, quite fast; the characteristics of the glottal excitation signal almost surely guarantees that the negative peak will dominate the oscillatory behaviour of a reconstruction computed with a too large Klatt-parameter guess.
+This can be seen in figures \citeneeded. However, the algorithm will have no chance to recover from a situation where the oscillatory behaviour dominates over the negative peak (hence the previous "almost surely" formulation). This can be seen in figures \citeneeded. 
+
 
 As it can be seen from figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime} the inverse problem to determine the glottal impulse is clearly \emph{ill-posed}. It can be seen that naïve inversion fails completely to achieve the shape of the glottal excitation signal, and thus a regularization method is required.
 
