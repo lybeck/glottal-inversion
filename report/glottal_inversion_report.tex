@@ -245,7 +245,7 @@ As previously mentioned, we will use Morozov's discrepancy principle to choose t
 \subsection{The basis and materials}
 \label{sec:basis}
 
-In this work we will mainly use synthetic data as our basis. We first create a synthetic glottal excitation signal using the airflow function defined in \eqref{eq:RK-model}. To this signal we apply a previously calculated vocal tract filter, as described in section \ref{sec:filter} to create a simulated vowel sound. Finally we add some normally distributed noise to the data to simulate measurement noise. Different data is created by varying the sound frequency, the value of the Klatt-parameter $Q$ and the noise-level.
+In this work we will mainly use synthetic data as our basis (for real data, see section \ref{sec:realData}). We first create a synthetic glottal excitation signal using the airflow function defined in \eqref{eq:RK-model}. To this signal we apply a previously calculated vocal tract filter, as described in section \ref{sec:filter} to create a simulated vowel sound. Finally we add some normally distributed noise to the data to simulate measurement noise. Different data is created by varying the sound frequency, the value of the Klatt-parameter $Q$ and the noise-level.
 
 The inversion of the vowel sound is done using another filter similar to the one used in creating the synthetic data. For example we might have created the data with a filter for a male vowel /a/, and use a filter for a female vowel /a/ for the inversion. This way we avoid inverse crime. The idea is that we can assume two different filters for the same vowel to be approximately the same. That is, given two different filters $A_1$ and $A_2$ for the same vowel and a glottal excitation signal $\vc{g}$, we assume that $A_1 \vc{g} \approx A_2 \vc{g}$. This is based on the fact that a vowel is defined by its two or three first \emph{formant frequencies}, which can be assumed to be about the same for two different vowel sounds.\cite{digitalmodels}
 
@@ -279,6 +279,11 @@ L=
 \end{pmatrix*}
 \end{equation}
 for a single period of the excitation signal. This procedure must of course be repeated as many times as we have periods in our measurement data.
+
+\subsubsection{Real data}
+\label{sec:realData}
+
+Apart from the synthetic data the method of inversion was also tested with real recorded data. As real data we will use recordings of the vowel /a/ in different pitches by different male subjects.
 
 \subsubsection{Noise estimation}
 \label{sec:noiseEst}

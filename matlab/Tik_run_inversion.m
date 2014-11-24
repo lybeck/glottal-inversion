@@ -51,6 +51,7 @@ if plot_and_save
         return;
     end
     filename = [folder, '/', filename];
+    disp(['Saving results to directory: ' filename]);
 end
 
 % pause execution after single plot?
