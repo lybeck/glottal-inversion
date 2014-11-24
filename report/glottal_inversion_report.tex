@@ -420,8 +420,8 @@ Since the number of (a priori known) variables is quite high a large amount of d
 \label{fig:tik-5}
 \end{figure}
 
-\subsection{Verification of the approximation method for \\approximating the Klatt-parameter}
-\label{sec:verifyKlattApprox}
+\subsection{Results f the approoximation method for \\approximating the Klatt-parameter}
+\label{sec:KlattApprox}
 
 In this section we will present results obtained during the approximation of the Klatt-parameter (algorithm previously described in section \ref{sec:approxKlatt}). We will present the results as
 \begin{itemize}
@@ -430,17 +430,15 @@ In this section we will present results obtained during the approximation of the
 \end{itemize}
 The $Q_{guess}$ parameter acquired from the algorithm is visualized as a black dot in the plots mentioned above (anchored to the x-axis). The approximation routine was applied on both synthetic and actual data. \newpage
 
-In figures \ref{fig:app1-beginning} to \ref{fig:app1-end} the signal frequency is 120 Hz.
-
 \begin{figure}[H]
 \begin{center}
+ \caption*{In figures \ref{fig:app1-beginning} to \ref{fig:app1-end} the signal frequency is 120 Hz. The approximation algorithm acquired $Q_{guess} = 0.165$ at the end of the iterations, while the actual parameter $Q = 0.15$, relative error of the reconstruction $\approx$ 64.6\%, $\alpha \approx 84.5$. }
  \includegraphics[scale=.3]{img/Approx_iter_wRef-v2-1.eps}
  \caption{Iteration no. 1}\label{fig:app1-beginning}
  \includegraphics[scale=.3]{img/Approx_iter_wRef-v2-2.eps}
  \caption{Iteration no. 2}
  \includegraphics[scale=.3]{img/Approx_iter_wRef-v2-4.eps}
- \caption{Iteration no. 5. $Q_{guess} = 0.165$, while the actual parameter $Q = 0.15$,
- relative error of the reconstruction $\approx$ 64.6\%, $\alpha \approx 84.5$.}
+ \caption{Iteration no. 5.}
 \end{center}
 \end{figure}
 
@@ -455,14 +453,16 @@ In figures \ref{fig:app1-beginning} to \ref{fig:app1-end} the signal frequency i
 \end{center}
 \end{figure}
 
+
 \begin{figure}[H]
 \begin{center}
+ \caption*{In figures \ref{fig:app2-beginning} to \ref{fig:app2-end} the signal frequency is 123 Hz. The approximation algorithm acquired $Q_{guess} = 0.391$ at the end of the iterations, while the actual parameter $Q = 0.4$, relative error of the reconstruction $\approx$ 72.7\%, $\alpha \approx 167.5$. }
  \includegraphics[scale=.2]{img/Approx_iter_wRef-1.eps}
- \caption{Iteration no.1}
+ \caption{Iteration no.1}\label{fig:app2-beginning}
  \includegraphics[scale=.2]{img/Approx_iter_wRef-2.eps}
  \caption{Iteration no.2}
  \includegraphics[scale=.2]{img/Approx_iter_wRef-4.eps}
- \caption{Iteration no.5. $Q_{guess} = 0.391$, while the actual parameter $Q = 0.4$}
+ \caption{Iteration no.5.}
 \end{center}
 \end{figure}
 
@@ -473,18 +473,19 @@ In figures \ref{fig:app1-beginning} to \ref{fig:app1-end} the signal frequency i
  \includegraphics[scale=.2]{img/Approx_iter_onePer-2.eps}
  \caption{Iteration no.2}
  \includegraphics[scale=.2]{img/Approx_iter_onePer-4.eps}
- \caption{Iteration no.5}
+ \caption{Iteration no.5}\label{fig:app2-end}
 \end{center}
 \end{figure}
 
 \begin{figure}[H]
 \begin{center}
+ \caption*{In figures \ref{fig:app3-beginning} to \ref{fig:app3-end} the signal frequency is 123 Hz. The approximation algorithm acquired $Q_{guess} = 0.341$ at the end of the iterations, while the actual parameter $Q = 0.15$, relative error of the reconstruction $\approx$ 98.4\%, $\alpha \approx 8.3$. }
  \includegraphics[scale=.35]{img/Approx_iter_wRef-v3-1.eps}
- \caption{Iteration no.1}
+ \caption{Iteration no.1}\label{fig:app3-beginning}
  \includegraphics[scale=.35]{img/Approx_iter_wRef-v3-2.eps}
  \caption{Iteration no.2}
  \includegraphics[scale=.35]{img/Approx_iter_wRef-v3-3.eps}
- \caption{Iteration no.5. $Q_{guess} = 0.341$, while the actual parameter $Q = 0.15$}
+ \caption{Iteration no.5.}
 \end{center}
 \end{figure}
 
@@ -495,7 +496,7 @@ In figures \ref{fig:app1-beginning} to \ref{fig:app1-end} the signal frequency i
  \includegraphics[scale=.35]{img/Approx_iter_onePer-v3-2.eps}
  \caption{Iteration no.2}
  \includegraphics[scale=.35]{img/Approx_iter_onePer-v3-3.eps}
- \caption{Iteration no.5}
+ \caption{Iteration no.5}\label{fig:app3-end}
 \end{center}
 \end{figure}
 
@@ -503,10 +504,12 @@ In figures \ref{fig:app1-beginning} to \ref{fig:app1-end} the signal frequency i
 \section{Discussion}
 \label{sec:discussion}
 
-\subsection{Ill-posedness}
+\subsection{Verification of the approximation method for \\approximating the Klatt-parameter}
+
 In this section we will evaluate the efficiency of the approximation method for approximating the Klatt-parameter (explained in section \ref{sec:approxKlatt}). The convergence of the method is, in general, quite fast; the characteristics of the glottal excitation signal almost surely guarantees that the negative peak will dominate the oscillatory behaviour of a reconstruction computed with a too large Klatt-parameter guess.
 This can be seen in figures \citeneeded. However, the algorithm will have no chance to recover from a situation where the oscillatory behaviour dominates over the negative peak (hence the previous "almost surely" formulation). This can be seen in figures \citeneeded. 
 
+\subsection{Ill-posedness}'
 
 As it can be seen from figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime} the inverse problem to determine the glottal impulse is clearly \emph{ill-posed}. It can be seen that naïve inversion fails completely to achieve the shape of the glottal excitation signal, and thus a regularization method is required.
 
