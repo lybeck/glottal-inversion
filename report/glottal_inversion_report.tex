@@ -244,7 +244,7 @@ As previously mentioned, we will use Morozov's discrepancy principle to choose t
 \subsection{The basis and materials}
 \label{sec:basis}
 
-In this work we will mainly use synthetic data as our basis. We first create a synthetic glottal excitation signal using the airflow function defined in \eqref{eq:RK-model}. To this signal we apply a previously calculated vocal tract filter, as described in section \ref{sec:filter} to create a simulated vowel sound. Finally we add some normally distributed noise to the data to simulate measurement noise. Different data is created by varying the sound frequency, the value of the Klatt-parameter $Q$ and the noise-level.
+In this work we will mainly use synthetic data as our basis (for real data, see section \ref{sec:realData}). We first create a synthetic glottal excitation signal using the airflow function defined in \eqref{eq:RK-model}. To this signal we apply a previously calculated vocal tract filter, as described in section \ref{sec:filter} to create a simulated vowel sound. Finally we add some normally distributed noise to the data to simulate measurement noise. Different data is created by varying the sound frequency, the value of the Klatt-parameter $Q$ and the noise-level.
 
 The inversion of the vowel sound is done using another filter similar to the one used in creating the synthetic data. For example we might have created the data with a filter for a male vowel /a/, and use a filter for a female vowel /a/ for the inversion. This way we avoid inverse crime. The idea is that we can assume two different filters for the same vowel to be approximately the same. That is, given two different filters $A_1$ and $A_2$ for the same vowel and a glottal excitation signal $\vc{g}$, we assume that $A_1 \vc{g} \approx A_2 \vc{g}$. This is based on the fact that a vowel is defined by its two or three first \emph{formant frequencies}, which can be assumed to be about the same for two different vowel sounds.\cite{digitalmodels}
 
@@ -278,6 +278,19 @@ L=
 \end{pmatrix*}
 \end{equation}
 for a single period of the excitation signal. This procedure must of course be repeated as many times as we have periods in our measurement data.
+
+\subsubsection{Real data}
+\label{sec:realData}
+
+Apart from the synthetic data the method of inversion was also tested with real recorded data. As real data we used recordings of the vowel /a/ in different pitches by different male subjects. The recordings where cropped so that the signal would consist of ten periods. The fundamental frequency of the signal was determined by computing the fast Fourier transform of the signal and analyzing the resulting frequency spectrum (i.e. locating the peak, see figures \ref{fig:lasse1} and \ref{fig:lasse2})\citeneeded.
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[scale=.3]{img/lasse_signal.eps}
+ \caption{A cropped plot of a recorded audio signal.}\label{fig:lasse1}
+ \includegraphics[scale=.3]{img/lasse_spectrum.eps}
+ \caption{The frequency spectrum of the above signal. From this we can conclude that the fundamental frequency of the above signal is $\approx 91$ Hz.}\label{fig:lasse2}
+\end{center}
+\end{figure}
 
 \subsubsection{Noise estimation}
 \label{sec:noiseEst}
@@ -346,14 +359,14 @@ Then we get the new approximation for the Klatt-parameter simple by calculating 
 %-----------------------Results-----------------------
 \section{Results}
 \label{sec:results}
-\subsection{Results of the glottal inversion}
 In this section we will present some of the results of our study. For obvious reasons we will not include sound data from our results in this paper. Note that in all the following graphs of the target glottal pressure and the reconstructed glottal pressure are represented by the colors green and blue, respectively. We will also denote the Klatt-parameter with $Q$. The relative errors of the reconstructions are calculated with the formula
 \begin{equation}
 \delta_{rel} = \frac{\left\| \vc{g} - T_{\alpha}(\vc{m}) \right\|_2}{\left\| \vc{g} \right\|_2} \cdot 100 \%,
 \end{equation}
 where $\vc{g} \in \R^k$ is the original glottal excitation signal and $T_{\alpha}(\vc{m})$ is the reconstruction calculated from the noisy data $m$ with the regularization parameter $\alpha$.
 
-The inversion was done, in addition to the Tikhonov regularization strategy, also with the naïve inversion method in order to illustrate the ill-posedness of the inverse problem.
+\subsection{Results of the glottal inversion of synthetic data}
+In this section we will present our results of the inversion of synthetic data. The inversion was done, in addition to the Tikhonov regularization strategy, also with the naïve inversion method in order to illustrate the ill-posedness of the inverse problem.
 A comparison of the methods is presented below in figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime}.
 \begin{figure}[H]
 \begin{center}
@@ -508,7 +521,7 @@ The $Q_{guess}$ parameter acquired from the algorithm is visualized as a black d
 In this section we will evaluate the efficiency of the approximation method for approximating the Klatt-parameter (explained in section \ref{sec:approxKlatt}). The convergence of the method is, in general, quite fast; the characteristics of the glottal excitation signal almost surely guarantees that the negative peak will dominate the oscillatory behaviour of a reconstruction computed with a too large Klatt-parameter guess.
 This can be seen in figures \citeneeded. However, the algorithm will have no chance to recover from a situation where the oscillatory behaviour dominates over the negative peak (hence the previous "almost surely" formulation). This can be seen in figures \citeneeded. 
 
-\subsection{Ill-posedness}'
+\subsection{Ill-posedness}
 
 As it can be seen from figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime} the inverse problem to determine the glottal impulse is clearly \emph{ill-posed}. It can be seen that naïve inversion fails completely to achieve the shape of the glottal excitation signal, and thus a regularization method is required.
 
