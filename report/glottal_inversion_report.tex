@@ -282,7 +282,15 @@ for a single period of the excitation signal. This procedure must of course be r
 \subsubsection{Real data}
 \label{sec:realData}
 
-Apart from the synthetic data the method of inversion was also tested with real recorded data. As real data we used recordings of the vowel /a/ in different pitches by different male subjects. The recordings where cropped so that the signal would consist of ten periods. The fundamental frequency of the signal was determined by computing the fast Fourier transform of the signal and analyzing the resulting frequency spectrum (i.e. locating the peak)\citeneeded.
+Apart from the synthetic data the method of inversion was also tested with real recorded data. As real data we used recordings of the vowel /a/ in different pitches by different male subjects. The recordings where cropped so that the signal would consist of ten periods. The fundamental frequency of the signal was determined by computing the fast Fourier transform of the signal and analyzing the resulting frequency spectrum (i.e. locating the peak, see figures \ref{fig:lasse1} and \ref{fig:lasse2})\citeneeded.
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[scale=.3]{img/lasse_signal.eps}
+ \caption{A cropped plot of a recorded audio signal.}\label{fig:lasse1}
+ \includegraphics[scale=.3]{img/lasse_spectrum.eps}
+ \caption{The frequency spectrum of the above signal. From this we can conclude that the fundamental frequency of the above signal is $\approx 91$ Hz.}\label{fig:lasse2}
+\end{center}
+\end{figure}
 
 \subsubsection{Noise estimation}
 \label{sec:noiseEst}
@@ -513,7 +521,7 @@ The $Q_{guess}$ parameter acquired from the algorithm is visualized as a black d
 In this section we will evaluate the efficiency of the approximation method for approximating the Klatt-parameter (explained in section \ref{sec:approxKlatt}). The convergence of the method is, in general, quite fast; the characteristics of the glottal excitation signal almost surely guarantees that the negative peak will dominate the oscillatory behaviour of a reconstruction computed with a too large Klatt-parameter guess.
 This can be seen in figures \citeneeded. However, the algorithm will have no chance to recover from a situation where the oscillatory behaviour dominates over the negative peak (hence the previous "almost surely" formulation). This can be seen in figures \citeneeded. 
 
-\subsection{Ill-posedness}'
+\subsection{Ill-posedness}
 
 As it can be seen from figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime} the inverse problem to determine the glottal impulse is clearly \emph{ill-posed}. It can be seen that naïve inversion fails completely to achieve the shape of the glottal excitation signal, and thus a regularization method is required.
 
