@@ -9,8 +9,9 @@
 \usepackage{enumerate}
 \usepackage{bm}
 \usepackage[noabbrev]{cleveref}
-\usepackage{caption}
+\usepackage[justification=centering]{caption}
 \usepackage{subcaption}
+\usepackage{varwidth}
 \DeclareMathOperator*{\argmin}{\arg\!\min}
 
 \newcommand{\R}{{\mathbb R}}
@@ -289,7 +290,7 @@ Apart from the synthetic data the method of inversion was also tested with real 
  \includegraphics[scale=.3]{img/lasse_signal.eps}
  \caption{A cropped plot of a recorded audio signal.}\label{fig:lasse1}
  \includegraphics[scale=.3]{img/lasse_spectrum.eps}
- \caption{The frequency spectrum of the above signal. From this we can conclude that the fundamental frequency of the above signal is $\approx 91$ Hz.}\label{fig:lasse2}
+ \caption{The frequency spectrum of the above signal. From this we can conclude that the fundamental frequency of the above signal is $\approx 105$ Hz.}\label{fig:lasse2}
 \end{center}
 \end{figure}
 
@@ -517,22 +518,34 @@ The $Q_{guess}$ parameter acquired from the algorithm is visualized as a black d
 \label{sec:realResults}
 In the inversion of real data we used the the approximation method described in section \ref{sec:approxKlatt} in order to determine the Klatt parameter. Note that the curve of target glottal pressure in the figures of this section is only an approximation made according to values acquired from the Klatt parameter approximation and the frequency spectrum analysis (see section \ref{sec:realData}).
 
-The following version was made with an with approximation of 91 Hz for the fundamental frequency (see figure \ref{fig:lasse2}).
+The following version was made with an with approximation of 105 Hz for the fundamental frequency (see figure \ref{fig:lasse2}).
 
 \begin{figure}[H]
  \centering
  \begin{subfigure}{.5\textwidth}
   \includegraphics[scale=.2]{img/Roope-1.eps}
-  \caption{Iteration no.1}
+  \caption{Iteration no. 1}
  \end{subfigure}%
  \begin{subfigure}{.5\textwidth}
   \includegraphics[scale=.2]{img/Roope-2.eps}
-  \caption{Iteration no.2}
+  \caption{Iteration no. 2}
  \end{subfigure}
  \includegraphics[scale=.2]{img/Roope-5.eps}
- \caption{Iteration no.1}
+ \caption{
+ Iteration no. 5. The acquired parameters are\\
+ - $Q \approx 0.37$   \\
+ - $\delta_{time} \approx 93.8$ \\
+ - $\alpha \approx 312$ \\
+ }
+ \end{figure}
+ 
+The following version was made with an with approximation of 365 Hz for the fundamental frequency (see figure \ref{fig:roopeHigh}).
+\begin{figure}[H]
+\begin{center}
+ \includegraphics[scale=.3]{img/roope_high_spectrum.eps}
+ \caption{}\label{fig:roopeHigh}
+\end{center}
 \end{figure}
-
 
 %----------------------Discussion---------------------
 \section{Discussion}
