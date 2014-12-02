@@ -10,6 +10,7 @@
 \usepackage{bm}
 \usepackage[noabbrev]{cleveref}
 \usepackage{caption}
+\usepackage{subcaption}
 \DeclareMathOperator*{\argmin}{\arg\!\min}
 
 \newcommand{\R}{{\mathbb R}}
@@ -31,7 +32,7 @@
 }
 
 
-\title{Glottal inversion with an approximate vocal tract filter}
+\title{Glottal inversion with approximate vocal tract filter}
 \author{Lasse Lybeck, Robert Sirviö}
 
 
@@ -511,6 +512,27 @@ The $Q_{guess}$ parameter acquired from the algorithm is visualized as a black d
  \caption{Iteration no.5}\label{fig:app3-end}
 \end{center}
 \end{figure}
+
+\subsection{Results of the glottal inversion of real data}
+\label{sec:realResults}
+In the inversion of real data we used the the approximation method described in section \ref{sec:approxKlatt} in order to determine the Klatt parameter. Note that the curve of target glottal pressure in the figures of this section is only an approximation made according to values acquired from the Klatt parameter approximation and the frequency spectrum analysis (see section \ref{sec:realData}).
+
+The following version was made with an with approximation of 91 Hz for the fundamental frequency (see figure \ref{fig:lasse2}).
+
+\begin{figure}[H]
+ \centering
+ \begin{subfigure}{.5\textwidth}
+  \includegraphics[scale=.2]{img/Roope-1.eps}
+  \caption{Iteration no.1}
+ \end{subfigure}%
+ \begin{subfigure}{.5\textwidth}
+  \includegraphics[scale=.2]{img/Roope-2.eps}
+  \caption{Iteration no.2}
+ \end{subfigure}
+ \includegraphics[scale=.2]{img/Roope-5.eps}
+ \caption{Iteration no.1}
+\end{figure}
+
 
 %----------------------Discussion---------------------
 \section{Discussion}
