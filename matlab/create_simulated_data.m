@@ -25,10 +25,10 @@ klatt_model = 1;
 validate_data = 0;
 
 % parameters for the data
-f = 81;
-Q_data = .789;
+f = 61;
+Q_data = .5;
 noise_lvl = .05;
-periods = 10;
+periods = 12;
 
 % check that the arguments are ok, if data validation is used
 if validate_data
