@@ -547,13 +547,9 @@ The following inversion was made with an with approximation of 336 Hz for the fu
   \includegraphics[scale=.22]{img/Roope-5.eps}
   \caption{Iteration no. 5}
  \end{subfigure}
+ \caption{}\label{fig:realData1}
  \end{figure}
- The acquired parameters are
- \begin{itemize}
-  \item $Q \approx 0.57$  
-  \item $\delta_{time} \approx 74.3\%$
-  \item $\alpha \approx 82.2$ 
- \end{itemize}
+ The acquired parameters are $Q \approx 0.57$, $\delta_{time} \approx 74.3\%$ and $\alpha \approx 82.2$ 
   
 
 The following version was made with an with approximation of 98.7 Hz for the fundamental frequency (see figure \ref{fig:lasse2}).
@@ -567,13 +563,9 @@ The following version was made with an with approximation of 98.7 Hz for the fun
   \includegraphics[scale=.22]{img/Lasse-5.eps}
   \caption{Iteration no. 5}
  \end{subfigure}
+ \caption{}\label{fig:realData2}
  \end{figure}
- The acquired parameters are
- \begin{itemize}
-  \item $Q \approx 0.37$  
-  \item $\delta_{time} \approx 93.8\%$
-  \item $\alpha \approx 312$ 
- \end{itemize}
+ The acquired parameters are $Q \approx 0.37$, $\delta_{time} \approx 93.8\%$ and $\alpha \approx 312$.
 
 %----------------------Discussion---------------------
 \section{Discussion}
@@ -626,15 +618,9 @@ There are, however, some problems with the algorithm. One possible problem situa
 
 \subsection{Inversion on real data}
 
-asdasd
+The approximation algorithm of the Klatt-parameter plays a significant role in the inversion of real data; in the absence of the algorithm one would still be forced to make some assumptions on the parameter or, in the worst case, approximate it manually (i.e. trial and error). This is, especially in the case of real data where there is no real target to compare to, a very tedious and time consuming job. 
 
-
-\subsection{Further work}
-
-In this work the inversion was done solely with simulated data. The same method might however be succesfully applied even to real recorded data. The vocal tract filter used in the inversion with the synthetic data is selected to simulate only an approximation of the real vocal tract filter, as the inversion uses another filter for the same vowel as what the data was created with. The situation with real data is not far from this starting point.
-
-With the Tikhonov regularization strategy the reconstruction easily becomes oscillatory. As it was seen from the results in this work, to even out the oscillations the regularization parameter had to have a relatively high value. This in turn resulted in suppressed reconstructions. Also, the penalty matrix had to be heavily customized with Tikhonov regularization. Therefore, the inversion might work with the \emph{total variation} regularization strategy.\cite{samu} This could also be a good method of choise because it is planned to work well for piecewise constant functions, and a big part of the glottal excitation signal has the constant value zero.
-
+It is important to note that the target functions of the reconstructions (see figures \ref{fig:realData1} and \ref{fig:realData2}) are only approximative as both the pitch and the Klatt-parameter value of the original signal are unknown. But even though the reconstruction targets in the case of real data can be considered of less significance than the ones in synthetic data, they provide insight to how the shape corresponds to the actual glottal excitation signal.
 
 
 %----------------------References---------------------
