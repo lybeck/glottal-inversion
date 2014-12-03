@@ -1,0 +1,7 @@
+100 tests
+
+1 failed (70 %)
+
+mean =   2.9259 %
+median = 2.7009 %
+
