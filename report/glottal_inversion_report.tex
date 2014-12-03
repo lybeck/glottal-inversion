@@ -562,11 +562,6 @@ The following version was made with an with approximation of 365 Hz for the fund
 \section{Discussion}
 \label{sec:discussion}
 
-\subsection{Verification of the approximation method for \\approximating the Klatt-parameter}
-
-In this section we will evaluate the efficiency of the approximation method for approximating the Klatt-parameter (explained in section \ref{sec:approxKlatt}). The convergence of the method is, in general, quite fast; the characteristics of the glottal excitation signal almost surely guarantees that the negative peak will dominate the oscillatory behaviour of a reconstruction computed with a too large Klatt-parameter guess.
-This can be seen in figures \citeneeded. However, the algorithm will have no chance to recover from a situation where the oscillatory behaviour dominates over the negative peak (hence the previous "almost surely" formulation). This can be seen in figures \citeneeded. 
-
 \subsection{Ill-posedness}
 
 As it can be seen from figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime} the inverse problem to determine the glottal impulse is clearly \emph{ill-posed}. It can be seen that naïve inversion fails completely to achieve the shape of the glottal excitation signal, and thus a regularization method is required.
@@ -603,6 +598,18 @@ The regularization parameters acquired with Morozov's discrepancy principle
 yielded good results. As can be seen from \cref{fig:iter_comparison}, the reconstruction with a regularization parameter acquired with Morozov's discrepancy principle gave almost as good a reconstruction as with the best possible value of the parameter (in the sense of the values in the iteration) when using the relative error of the reconstructions as a reference point. The difference in the audio data was indistinguishable to the human ear.
 
 Considering that the selection of the regularization parameter with Morozov's discrepancy principle works completely without the need of human interaction, the method selection can be regarded as a success for this particular problem. With an optimization of the noise estimation process (see \ref{sec:noiseEst}) potentially more accurate results can be acquired.
+
+\subsection{Verification of the approximation method for \\approximating the Klatt-parameter}
+
+In this section we will evaluate the efficiency of the approximation method for approximating the Klatt-parameter explained in section \ref{sec:approxKlatt}. The convergence of the method is, in general, quite fast; the characteristics of the glottal excitation signal almost surely guarantee that the negative peak will dominate the oscillatory behaviour of a reconstruction computed with a too large Klatt-parameter guess.
+One example of the reconstructions after different numbers of iterations of the algorithm can be seen in figures \ref{fig:app1-beginning} to \ref{fig:app1-end} and another in figures \ref{fig:app2-beginning} to \ref{fig:app2-end}. As can be seen in the figures the 
+
+There are, however, some problems with the algorithm. One possible problem situation is when a negative peak, which is not the negative peak for the glottal excitation signal but rather a peak resulting from the random oscillation caused by the inversion, dominates the recovered signal. In this case the algorithm will have no chance to recover and a false result for the Klatt-parameter is reached. An example of this can be seen in figures \citeneeded.
+
+
+\subsection{Inversion on real data}
+
+asdasd
 
 
 \subsection{Further work}
