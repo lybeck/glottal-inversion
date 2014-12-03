@@ -1,7 +1,4 @@
--Intro complete makeover
--Real data results to the finishline
 -Discussion
 	-Verification of approximation of klatt-param
 	-real data results
-	(-frequency spectrum bamboleyo)
--Fix plot of lasse voice spectrum
+-Further work update
