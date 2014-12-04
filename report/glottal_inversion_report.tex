@@ -539,7 +539,7 @@ The following inversion was made with an with approximation of 336 Hz for the fu
 
 \begin{figure}[H]
  \centering
- \begin{subfigure}{.55\textwidth}
+ \begin{subfigure}{.5\textwidth}
   \includegraphics[scale=.22]{img/Roope-1.eps}
   \caption{Iteration no. 1}
  \end{subfigure}%
@@ -613,19 +613,16 @@ Considering that the selection of the regularization parameter with Morozov's di
 In this section we will evaluate the efficiency of the approximation method for approximating the Klatt-parameter explained in section \ref{sec:approxKlatt}. The convergence of the method is, in general, quite fast; the characteristics of the glottal excitation signal almost surely guarantee that the negative peak will dominate the oscillatory behaviour of a reconstruction computed with a too large Klatt-parameter guess.
 One example of the reconstructions after different numbers of iterations of the algorithm can be seen in figures \ref{fig:app1-beginning} to \ref{fig:app1-end} and another in figures \ref{fig:app2-beginning} to \ref{fig:app2-end}. As can be seen in the figures the 
 
-There are, however, some problems with the algorithm. One possible problem situation is when a negative peak, which is not the negative peak for the glottal excitation signal but rather a peak resulting from the random oscillation caused by the inversion, dominates the recovered signal. In this case the algorithm will have no chance to recover and a false result for the Klatt-parameter is reached. An example of this can be seen in figures \ref{fig:app3-beginning} to \ref{fig:app3-end}.
-
-The previously mentioned problem could be averted by improving the Klatt-parameter approximation algorithm. One idea could be to try to identify the ''first negative peak'' in the time domain reconstruction, which, due to the characteristics of the glottal excitation signal, always seems to be located near the (in practice just before) the point described by the Klatt-parameter. This is, however, not an easy problem, as can be understood from the description of the idea; there are many vaguely defined steps in the algorithm, such as defining which local minima should be included in ''negative peaks''.
-
-Even though the approximation algorithm still could be improved it works very well in practice even as it is defined now; in most cases the algorithm reaches a Klatt-parameter with a relative error [insert things here]\citeneeded.
+There are, however, some problems with the algorithm. One possible problem situation is when a negative peak, which is not the negative peak for the glottal excitation signal but rather a peak resulting from the random oscillation caused by the inversion, dominates the recovered signal. In this case the algorithm will have no chance to recover and a false result for the Klatt-parameter is reached. An example of this can be seen in figures \citeneeded.
 
 
 \subsection{Inversion on real data}
 
 The approximation algorithm of the Klatt-parameter plays a significant role in the inversion of real data; in the absence of the algorithm one would still be forced to make some assumptions on the parameter or, in the worst case, approximate it manually (i.e. trial and error). This is, especially in the case of real data where there is no real target to compare to, a very tedious and time consuming job. 
 
-It is important to note that the target functions of the reconstructions (see figures \ref{fig:realData1} and \ref{fig:realData2}) are only approximative as both the pitch and the Klatt-parameter value of the original signal are unknown. But even though the reconstruction targets in the case of real data can be considered of less significance than the ones in synthetic data, they provide insight to how the shape corresponds to the actual glottal excitation signal.
+It is important to note that the target functions of the reconstructions (see figures \ref{fig:realData1} and \ref{fig:realData2}) are only approximative as both the pitch and the Klatt-parameter value of the original signal are unknown. But with mean and median of the error of the approximation algorithm below 3\% (see \citeneeded), we can conclude that the algorithm approximates the Klatt-parameter very accurately. And as the pitch detection method is also generally considered accurate \citeneeded , we can use the approximative target glottal excitation signal for qualitative analysis of the actual reconstruction as long as we are aware of the approximative dimension in the system.
 
+In the first case (signal fundamental frequency $\approx 336$) we get an relative error of 74.3\% compared to the target signal. This can be considered a very good result as the error is within the error range of the inversions on synthetic data. The characteristics of a glottal excitation signal are also recognizable in the reconstruction; the negative peak is clearly distinctive from the positive part of the signal.
 
 %----------------------References---------------------
 \newpage
