@@ -50,10 +50,11 @@
 \section{Introduction}
 \label{sec:intro}
 
-A human vowel sound consists of a periodic sound signal created at the vocal folds (called the \emph{glottal excitation signal}) and the vocal tract, through which the glottal signal is filtered. A synthetic vowel sound consists of a periodic signal to simulate the glottal excitation signal and a filter (i.e.\ a digital frequency filter) to simulate the vocal tract's effect on the glottal excitation signal.\cite{touda} With a given vocal tract filter the direct problem is \emph{given a glottal excitation signal, create the vowel sound}. The inverse problem is \emph{given a (recorded) vowel sound, find the glottal excitation signal}. In this study we will be concentrating on the inverse problem using simulated vowel data and real recorded data.
+A human vowel sound consists of a periodic sound signal created at the vocal folds (called the \emph{glottal excitation signal}) and the vocal tract, through which the glottal signal is filtered. A synthetic vowel sound consists of a periodic signal to simulate the glottal excitation signal and a filter (i.e.\ a digital frequency filter) to simulate the vocal tract's effect on the glottal excitation signal.\cite{touda} With a given vocal tract filter the direct problem is \emph{given a glottal excitation signal, create the vowel sound}. The inverse problem is \emph{given a (recorded) vowel sound, find the glottal excitation signal}. In this study we will be concentrating on the inverse problem using both simulated vowel data and real recorded data.
 
 The inversion from a vowel sound to the glottal signal is an important part of creating synthetic human voices and speech generators. To create a synthetic vowel both the glottal signal and the vocal tract filter are needed. However, the glottal signal cannot be directly measured, but it can be approximated with inversion of a recorded vowel. With this data models for simulating the glottal excitation signal can be created.
 
+\newpage
 
 %-----------------Materials & Methods-----------------
 \section{Materials and Methods}
@@ -255,7 +256,7 @@ In this work we will mainly use synthetic data as our basis (for real data, see 
 
 The inversion of the vowel sound is done using another filter similar to the one used in creating the synthetic data. For example we might have created the data with a filter for a male vowel /a/, and use a filter for a female vowel /a/ for the inversion. This way we avoid inverse crime. The idea is that we can assume two different filters for the same vowel to be approximately the same. That is, given two different filters $A_1$ and $A_2$ for the same vowel and a glottal excitation signal $\vc{g}$, we assume that $A_1 \vc{g} \approx A_2 \vc{g}$. This is based on the fact that a vowel is defined by its two or three first \emph{formant frequencies}, which can be assumed to be about the same for two different vowel sounds.\cite{digitalmodels}
 
-We then attempt to solve the inverse problem by using the generalized Tikhonov regularization with a customized penalty matrix. We will assume the Klatt-parameter $Q$ of the glottal excitation signal to be known (at least approximately), and as explained in section \ref{sec:rk} we know the pressure function to be zero in the interval $]QT, T]$. This will be incorporated in the model by assigning large values to the diagonal entries $l_i \in L$ for the values of $i$ that correspond to the previously mentioned interval, namely $i \in \left\{ j \in \N : Qn < j \leq n \right\}$ where $n$ is the length of our data. We also know the pressure function to be smooth in the interval $[0, Q]$. This can be incorporated by adding differential operator properties to the penalty matrix.
+We then attempt to solve the inverse problem by using the generalized Tikhonov regularization with a customized penalty matrix. We will assume the Klatt-parameter $Q$ of the glottal excitation signal to be known (when dealing with synthetic data), and as explained in section \ref{sec:rk} we know the pressure function to be zero in the interval $]QT, T]$. This will be incorporated in the model by assigning large values to the diagonal entries $l_i \in L$ for the values of $i$ that correspond to the previously mentioned interval, namely $i \in \left\{ j \in \N : Qn < j \leq n \right\}$ where $n$ is the length of our data. We also know the pressure function to be smooth in the interval $[0, Q]$. This can be incorporated by adding differential operator properties to the penalty matrix.
 
 We can thus assign the differential operator properties
 \begin{equation*}
@@ -347,7 +348,7 @@ When we have acquired an estimation for the measurement noise the solution of eq
 \subsection{Approximation of the Klatt-parameter}
 \label{sec:approxKlatt}
 
-The inversion of the glottal sound is always done with a fixed guess of the Klatt-parameter $Q$. However, the real value of $Q$ can be approximated as long as the inversion is done with an approximation of $Q$ that is no less than what the data is created with. This means that we can approximate the Klatt-parameter as long as we always \emph{over-estimate} it a little bit.
+The inversion of the glottal sound is always done with a fixed guess of the Klatt-parameter $Q$ when using synthetic data. However, the real value of $Q$ can be approximated as long as the inversion is done with an approximation of $Q$ that is no less than what the data is created with. This means that we can approximate the Klatt-parameter as long as we always \emph{over-estimate} it a little bit.
 
 The reason why we need to over-estimate the Klatt-parameter is the shape of the glottal excitation signal (see figure \ref{fig:klatt}). The negative peak in the glottal pressure is located at precisely the point $QT$ in time, where $T$ is the length of the period. The peak is quite sharp, and thus if the parameter is at all under-estimated the peak will almost completely vanish due to the inversion method suppressing the signal toward zero for all points after the time $QT$ (as explained in section \ref{sec:basis}).
 
@@ -360,6 +361,7 @@ I_i = \argmin_{j \in \{1, \ldots, n\}} \vc{g}^{(i)}_j .
 Then we get the new approximation for the Klatt-parameter simple by calculating $Q_{i+1} = I_i / n + c$, where $c > 0$ is a small constant.
 
 
+\newpage
 
 %-----------------------Results-----------------------
 \section{Results}
@@ -377,8 +379,11 @@ and the relative error in the frequency domain with the formula
 where $\vc{g} \in \R^k$ is the original glottal excitation signal, $T_{\alpha}(\vc{m})$ is the reconstruction calculated from the noisy data $m$ with the regularization parameter $\alpha$ and FFT is the fast Fourier transform.
 
 \subsection{Results of the glottal inversion of synthetic data}
-In this section we will present our results of the inversion of synthetic data. The inversion was done, in addition to the Tikhonov regularization strategy, also with the naïve inversion method in order to illustrate the ill-posedness of the inverse problem.
-A comparison of the methods is presented below in figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime}.
+We will now present our results of the inversion of synthetic data. The inversion was done, in addition to the Tikhonov regularization strategy, also with the naïve inversion method in order to illustrate the ill-posedness of the inverse problem.
+A comparison of the methods is presented in figures \ref{fig:naive-comparison_crime} and \ref{fig:naive-comparison_nocrime}.
+
+In order to evaluate the accuracy and correctness of the $\alpha$-value chosen according to Morozov's discrepancy principle the relative errors were calculated with different values of the parameters $\alpha$. This was then compared with corresponding reconstruction with an $\alpha$-value chosen according to Morozov's discrepancy principle. The results can be seen in figure \ref{fig:iter_comparison}. The comparison was done solely with the relative error in the time domain, as the errors in the time domain and the frequency domain are strongly correlated.
+
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=.3]{img/naive_test_naive.eps}
@@ -396,7 +401,7 @@ A comparison of the methods is presented below in figures \ref{fig:naive-compari
 \caption{Comparison between the naïve inversion method and the Tikhonov regularization strategy without inverse crime. \inversionresult{90}{0.7}{63.2}{63.1}{59.0}}
 \label{fig:naive-comparison_nocrime}
 \end{figure}
-In order to evaluate the accuracy and correctness (in the sense of the relative error of the glottal impulse) of the $\alpha$-value chosen according to Morozov's discrepancy principle the relative errors were calculated with different values of the parameters $\alpha$. This was then compared with corresponding reconstruction with an $\alpha$-value chosen according to Morozov's discrepancy principle. The results can be seen in figure \ref{fig:iter_comparison}.
+
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=.3]{img/alpha_errs_iter.eps}
@@ -476,38 +481,14 @@ The $Q_{guess}$ parameter acquired from the algorithm is visualized as a black d
 \end{center}
 \end{figure}
 
-
-\begin{figure}[H]
-\begin{center}
- \caption*{In figures \ref{fig:app2-beginning} to \ref{fig:app2-end} the signal frequency is 123 Hz. The approximation algorithm acquired $Q_{guess} = 0.391$ at the end of the iterations, while the actual parameter $Q = 0.4$, relative error of the reconstruction $\approx$ 72.7\%, $\alpha \approx 167.5$. }
- \includegraphics[scale=.2]{img/Approx_iter_wRef-1.eps}
- \caption{Iteration no.1}\label{fig:app2-beginning}
- \includegraphics[scale=.2]{img/Approx_iter_wRef-2.eps}
- \caption{Iteration no.2}
- \includegraphics[scale=.2]{img/Approx_iter_wRef-4.eps}
- \caption{Iteration no.5.}
-\end{center}
-\end{figure}
-
-\begin{figure}[H]
-\begin{center}
- \includegraphics[scale=.2]{img/Approx_iter_onePer-1.eps}
- \caption{Iteration no.1}
- \includegraphics[scale=.2]{img/Approx_iter_onePer-2.eps}
- \caption{Iteration no.2}
- \includegraphics[scale=.2]{img/Approx_iter_onePer-4.eps}
- \caption{Iteration no.5}\label{fig:app2-end}
-\end{center}
-\end{figure}
-
 \begin{figure}[H]
 \begin{center}
  \caption*{In figures \ref{fig:app3-beginning} to \ref{fig:app3-end} the signal frequency is 123 Hz. The approximation algorithm acquired $Q_{guess} = 0.341$ at the end of the iterations, while the actual parameter $Q = 0.15$, relative error of the reconstruction $\approx$ 98.4\%, $\alpha \approx 8.3$. }
- \includegraphics[scale=.35]{img/Approx_iter_wRef-v3-1.eps}
+ \includegraphics[width=.68\textwidth]{img/Approx_iter_wRef-v3-1.eps}
  \caption{Iteration no.1}\label{fig:app3-beginning}
- \includegraphics[scale=.35]{img/Approx_iter_wRef-v3-2.eps}
+ \includegraphics[width=.68\textwidth]{img/Approx_iter_wRef-v3-2.eps}
  \caption{Iteration no.2}
- \includegraphics[scale=.35]{img/Approx_iter_wRef-v3-3.eps}
+ \includegraphics[width=.68\textwidth]{img/Approx_iter_wRef-v3-3.eps}
  \caption{Iteration no.5.}
 \end{center}
 \end{figure}
@@ -538,13 +519,13 @@ The following inversion was made with an with approximation of 336 Hz for the fu
 \end{figure}
 
 \begin{figure}[H]
- \centering
- \begin{subfigure}{.5\textwidth}
-  \includegraphics[scale=.22]{img/Roope-1.eps}
+ \begin{subfigure}{.47\textwidth}
+  \includegraphics[width=\textwidth]{img/Roope-1.eps}
   \caption{Iteration no. 1}
  \end{subfigure}%
- \begin{subfigure}{.5\textwidth}
-  \includegraphics[scale=.22]{img/Roope-5.eps}
+ \hspace{.05\textwidth}
+ \begin{subfigure}{.47\textwidth}
+  \includegraphics[width=\textwidth]{img/Roope-5.eps}
   \caption{Iteration no. 5}
  \end{subfigure}
  \caption{}\label{fig:realData1}
@@ -552,15 +533,18 @@ The following inversion was made with an with approximation of 336 Hz for the fu
  The acquired parameters are $Q \approx 0.57$, $\delta_{time} \approx 74.3\%$ and $\alpha \approx 82.2$ 
   
 
-The following version was made with an with approximation of 98.7 Hz for the fundamental frequency (see figure \ref{fig:lasse2}).
+\null
+
+The following version was made with an with approximation of 98.7 Hz for the fundamental frequency.
 \begin{figure}[H]
  \centering
- \begin{subfigure}{.55\textwidth}
-  \includegraphics[scale=.22]{img/Lasse-1.eps}
+ \begin{subfigure}{.47\textwidth}
+  \includegraphics[width=\textwidth]{img/Lasse-1.eps}
   \caption{Iteration no. 1}
  \end{subfigure}%
- \begin{subfigure}{.5\textwidth}
-  \includegraphics[scale=.22]{img/Lasse-5.eps}
+ \hspace{.05\textwidth}
+ \begin{subfigure}{.47\textwidth}
+  \includegraphics[width=\textwidth]{img/Lasse-5.eps}
   \caption{Iteration no. 5}
  \end{subfigure}
  \caption{}\label{fig:realData2}
@@ -601,7 +585,7 @@ Considering that the selection of the regularization parameter with Morozov's di
 \subsection{Verification of the approximation method for \\approximating the Klatt-parameter}
 
 In this section we will evaluate the efficiency of the approximation method for approximating the Klatt-parameter explained in section \ref{sec:approxKlatt}. The convergence of the method is, in general, quite fast; the characteristics of the glottal excitation signal almost surely guarantee that the negative peak will dominate the oscillatory behaviour of a reconstruction computed with a too large Klatt-parameter guess.
-One example of the reconstructions after different numbers of iterations of the algorithm can be seen in figures \ref{fig:app1-beginning} to \ref{fig:app1-end} and another in figures \ref{fig:app2-beginning} to \ref{fig:app2-end}.
+One example of the reconstructions after different numbers of iterations of the algorithm can be seen in figures \ref{fig:app1-beginning} to \ref{fig:app1-end}.
 
 There are, however, some problems with the algorithm. One possible problem situation is when a negative peak, which is not the negative peak for the glottal excitation signal but rather a peak resulting from the random oscillation caused by the inversion, dominates the recovered signal. In this case the algorithm will have no chance to recover and a false result for the Klatt-parameter is reached. An example of this can be seen in figures \ref{fig:app3-beginning} to \ref{fig:app3-end}.
 
@@ -614,7 +598,7 @@ Even though the approximation algorithm still could be improved it works very we
 
 The approximation algorithm of the Klatt-parameter plays a significant role in the inversion of real data; in the absence of the algorithm one would still be forced to make some assumptions on the parameter or, in the worst case, approximate it manually (i.e. trial and error). This is, especially in the case of real data where there is no real target to compare to, a very tedious and time consuming job. 
 
-It is important to note that the target functions of the reconstructions (see figures \ref{fig:realData1} and \ref{fig:realData2}) are only approximative as both the pitch and the Klatt-parameter value of the original signal are unknown. But with mean and median of the error of the approximation algorithm below 3\% (see section \ref{sec:KlattApprox}), we can conclude that the algorithm approximates the Klatt-parameter very accurately. And as the pitch detection method can in our case be considered sufficient, we can use the approximative target glottal excitation signal for qualitative analysis of the actual reconstruction as long as we are aware of the approximative dimension in the system.
+It is important to note that the target functions of the reconstructions (see figures \ref{fig:realData1} and \ref{fig:realData2}) are only approximative as both the pitch and the Klatt-parameter value of the original signal are unknown. But with mean and median of the error of the approximation algorithm below 3\% (see section \ref{sec:KlattApprox}), we can conclude that the algorithm approximates the Klatt-parameter very accurately. As the pitch detection method can in our case be considered sufficient, we can use the approximative target glottal excitation signal for qualitative analysis of the actual reconstruction as long as we are aware of the approximative dimension in the system.
 
 In the first case (signal fundamental frequency about 336 Hz) we get an relative error of 74.3\% compared to the target signal. This can be considered a very good result as the error is within the error range of the inversions on synthetic data. The characteristics of a glottal excitation signal are also recognizable in the reconstruction; the negative peak is clearly distinctive from the positive part of the signal. In the second case we get an relative error of 93.8\% compared to the target signal, which also quite good. The shape of the reconstruction is however suppressed as the noise-estimation generates a quite high reguralization parameter.
 
