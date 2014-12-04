@@ -289,11 +289,11 @@ for a single period of the excitation signal. This procedure must of course be r
 \subsubsection{Real data}
 \label{sec:realData}
 
-Apart from the synthetic data the method of inversion was also tested with real recorded data. As real data we used recordings of the vowel /a/ in different pitches by different male subjects. The recordings where cropped so that the signal would consist of ten periods. The fundamental frequency of the signal was determined by computing the fast Fourier transform of the signal and analyzing the resulting frequency spectrum (i.e. locating the peak, see figure \ref{fig:lasse})\citeneeded.
+Apart from the synthetic data the method of inversion was also tested with real recorded data. As real data we used recordings of the vowel /a/ in different pitches by different male subjects. The recordings where cropped so that the signal would consist of ten periods and fundamental frequency of the signal was determined with pitch detection software. The frequency can also be seen in the frequency spectrum of the signal, as long as it doesn't overlap with a formant frequency. An example of this can be seen in figure \ref{fig:lasse}.
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=.65\textwidth]{img/lasse_spectrum_cropped.eps}
-	\caption{The frequency spectrum of a vowel /a/ attained by a fast Fourier transform of the sound signal. We can conclude that the fundamental frequency of the signal is $f \approx 98.7$ Hz.}\label{fig:lasse}
+	\caption{The frequency spectrum of a vowel /a/ attained by a fast Fourier transform. It can be seen that the fundamental frequency is $f \approx 98.7$ Hz.}\label{fig:lasse}
 \end{center}
 \end{figure}
 
@@ -601,7 +601,7 @@ Considering that the selection of the regularization parameter with Morozov's di
 \subsection{Verification of the approximation method for \\approximating the Klatt-parameter}
 
 In this section we will evaluate the efficiency of the approximation method for approximating the Klatt-parameter explained in section \ref{sec:approxKlatt}. The convergence of the method is, in general, quite fast; the characteristics of the glottal excitation signal almost surely guarantee that the negative peak will dominate the oscillatory behaviour of a reconstruction computed with a too large Klatt-parameter guess.
-One example of the reconstructions after different numbers of iterations of the algorithm can be seen in figures \ref{fig:app1-beginning} to \ref{fig:app1-end} and another in figures \ref{fig:app2-beginning} to \ref{fig:app2-end}. As can be seen in the figures the 
+One example of the reconstructions after different numbers of iterations of the algorithm can be seen in figures \ref{fig:app1-beginning} to \ref{fig:app1-end} and another in figures \ref{fig:app2-beginning} to \ref{fig:app2-end}.
 
 There are, however, some problems with the algorithm. One possible problem situation is when a negative peak, which is not the negative peak for the glottal excitation signal but rather a peak resulting from the random oscillation caused by the inversion, dominates the recovered signal. In this case the algorithm will have no chance to recover and a false result for the Klatt-parameter is reached. An example of this can be seen in figures \ref{fig:app3-beginning} to \ref{fig:app3-end}.
 
