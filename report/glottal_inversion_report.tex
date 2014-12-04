@@ -289,13 +289,11 @@ for a single period of the excitation signal. This procedure must of course be r
 \subsubsection{Real data}
 \label{sec:realData}
 
-Apart from the synthetic data the method of inversion was also tested with real recorded data. As real data we used recordings of the vowel /a/ in different pitches by different male subjects. The recordings where cropped so that the signal would consist of ten periods. The fundamental frequency of the signal was determined by computing the fast Fourier transform of the signal and analyzing the resulting frequency spectrum (i.e. locating the peak, see figures \ref{fig:lasse1} and \ref{fig:lasse2})\citeneeded.
+Apart from the synthetic data the method of inversion was also tested with real recorded data. As real data we used recordings of the vowel /a/ in different pitches by different male subjects. The recordings where cropped so that the signal would consist of ten periods. The fundamental frequency of the signal was determined by computing the fast Fourier transform of the signal and analyzing the resulting frequency spectrum (i.e. locating the peak, see figure \ref{fig:lasse})\citeneeded.
 \begin{figure}[H]
 \begin{center}
- \includegraphics[scale=.3]{img/lasse_signal.eps}
- \caption{A cropped plot of a recorded audio signal.}\label{fig:lasse1}
- \includegraphics[scale=.3]{img/lasse_spectrum.eps}
- \caption{The frequency spectrum of the above signal. From this we can conclude that the fundamental frequency of the above signal is $\approx 98.7$ Hz.}\label{fig:lasse2}
+	\includegraphics[width=.65\textwidth]{img/lasse_spectrum_cropped.eps}
+	\caption{The frequency spectrum of a vowel /a/ attained by a fast Fourier transform of the sound signal. We can conclude that the fundamental frequency of the signal is $f \approx 98.7$ Hz.}\label{fig:lasse}
 \end{center}
 \end{figure}
 
@@ -619,7 +617,7 @@ There are, however, some problems with the algorithm. One possible problem situa
 
 The previously mentioned problem could be averted by improving the Klatt-parameter approximation algorithm. One idea could be to try to identify the ''first negative peak'' in the time domain reconstruction, which, due to the characteristics of the glottal excitation signal, always seems to be located near the (in practice just before) the point described by the Klatt-parameter. This is, however, not an easy problem, as can be understood from the description of the idea; there are many vaguely defined steps in the algorithm, such as defining which local minima should be included in ''negative peaks''.
 
-Even though the approximation algorithm still could be improved it works very well in practice even as it is defined now; in most cases the algorithm reaches a Klatt-parameter with a relative error [insert things here]\citeneeded.
+Even though the approximation algorithm still could be improved it works very well in practice even as it is defined now; in most cases the algorithm reaches a Klatt-parameter with a relative error below 10 \% with a mean and median below 3 \% (see section \ref{sec:KlattApprox}).
 
 
 \subsection{Inversion on real data}
