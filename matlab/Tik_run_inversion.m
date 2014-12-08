@@ -12,7 +12,7 @@
 
 
 
-clear
+%clear
 
 load data/data m x yd periods Q_data noise_lvl noise_factor f data_male_filter
 
@@ -30,10 +30,10 @@ const = load('data/constants');
 male_filter = 1;
 
 % play sound from reconstruction?
-play_sound = 1;
+play_sound = 0;
 
 % save sound file from reconstruction?
-save_sound = 1;
+save_sound = 0;
 
 % is there an inverse crime?
 inverse_crime = ~xor(data_male_filter, male_filter);
@@ -41,6 +41,10 @@ inverse_crime = ~xor(data_male_filter, male_filter);
 % plot and save results of reconstructions during the iterations Q
 % approximation? A check of existence of previous results will be made.
 plot_and_save = 1;
+
+% show plots?
+show_plots = 1;
+
 filename = ['crime-', num2str(inverse_crime), '_',...
             'Q-', num2str(round(Q_data * 100)), '_',...
             'f-', num2str(round(f)), '_',...
@@ -95,13 +99,17 @@ for ii=1:iterations
     %plotting
     [relerr, relerrv, shape_err, shape_err_fac] = calculate_statistic(filt, rec, yd);
     
-    plot_results(filename, ii, x, rec, yd, relerr, relerrv, alpha, Q_data, Q_guess,...
-        periods, noise_lvl, noise_factor, f, data_male_filter, plot_and_save);
-    if pause_exec
-        pause;
-        close all;
-    else
-        pause(2);
+    if show_plots
+
+        plot_results(filename, ii, x, rec, yd, relerr, relerrv, alpha, Q_data, Q_guess,...
+            periods, noise_lvl, noise_factor, f, data_male_filter, plot_and_save);
+        if pause_exec
+            pause;
+            close all;
+        else
+            pause(2);
+        end
+
     end
     
     % get new guess for the klatt variable

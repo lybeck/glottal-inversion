@@ -1,7 +1,7 @@
 % asdasd
 
 
-clear
+%clear
 
 const = load('data/constants');
 
@@ -25,10 +25,13 @@ klatt_model = 1;
 validate_data = 0;
 
 % parameters for the data
-f = 61;
-Q_data = .5;
+f = 100 + rand()*100;
+Q_data = .3 + rand()*.5;
 noise_lvl = .05;
 periods = 12;
+
+fprintf('f = %f\n', f)
+fprintf('Q = %.3f\n', Q_data)
 
 % check that the arguments are ok, if data validation is used
 if validate_data
