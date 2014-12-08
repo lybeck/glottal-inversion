@@ -53,7 +53,9 @@ for ii = 1:periods_in_simple_plot
     flow(ind) = flow(ind) - mean(flow(ind));
     rec_flow(start:stop) = flow;
 end
-create_plot([filename, '-_flow_', num2str(iter)], x(1:samples), rec_flow/max(rec_flow), yd_flow/max(yd_flow), samples_per_period, 1, Q_guess, save, 6)
+rec_flow = rec_flow/max(rec_flow);
+yd_flow = yd_flow/max(yd_flow);
+create_plot([filename, '-_flow_', num2str(iter)], x(1:samples), rec_flow, yd_flow, samples_per_period, 1, Q_guess, save, 6)
 
 close;
 
