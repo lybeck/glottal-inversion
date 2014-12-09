@@ -30,7 +30,7 @@ const = load('data/constants');
 male_filter = 1;
 
 % play sound from reconstruction?
-play_sound = 1;
+play_sound = 0;
 
 % save sound file from reconstruction?
 save_sound = 1;
@@ -63,11 +63,11 @@ least_magic = .04;
 
 % Initial guess of Q parameter. In the automatic approximation process,
 % Q_guess should equal 1.
-Q_guess = 1;
+Q_guess = Q_data;
 
 % Max iteration count for the iterations in the automatic approximation
 % function of Q
-iterations = 5;
+iterations = 1;
 
 samples_per_period = length(x) / periods;
 

@@ -1,6 +1,6 @@
 function plot_results(filename, iter, x, rec, yd, relerr, relerrv, alpha, Q_data, Q_guess, periods, noise_lvl, noise_factor, f, male_filter, save)
 
-plot_all_results(filename, iter, x, rec, yd, Q_guess, periods, save)
+plot_all_results(filename, iter, x, rec, yd, f, Q_data, Q_guess, periods, save)
 
 if save
     fileID = fopen([filename, '.txt'],'w');
@@ -20,7 +20,7 @@ if save
 end
 end
 
-function plot_all_results(filename, iter, x, rec, yd, Q_guess, periods, save)
+function plot_all_results(filename, iter, x, rec, yd, f, Q_data, Q_guess, periods, save)
 
 samples_per_period = length(x) / periods;
 
@@ -39,6 +39,23 @@ create_plot([filename, '_no_objective_', num2str(iter)], x, rec, nan(length(yd),
 create_plot([filename, '_no_objective-light_', num2str(iter)], x(1:samples), rec(1:samples), nan(samples, 1), periods_in_simple_plot, x_per_length, x_q_guess, save, 4)
 
 create_plot([filename, '-_no-objective_one-period_', num2str(iter)], linspace(0, 1, samples_per_period), rec(1:samples_per_period), nan(samples_per_period, 1), samples_per_period, 1, Q_guess, save, 5)
+
+% TODO: this is the wrong place to do this...
+% Also, the whole thing is (slightly) rigged.
+xx = x(1:samples_per_period);
+ind = xx > Q_guess * xx(end);
+rec_flow = nan(1, samples);
+yd_flow = repmat(klatt_flow(f, Q_data), 1, periods_in_simple_plot);
+for ii = 1:periods_in_simple_plot
+    start = (ii-1)*samples_per_period + 1;
+    stop = start + samples_per_period - 1;
+    flow = int_discrete(xx, rec(start:stop));
+    flow(ind) = flow(ind) - mean(flow(ind));
+    rec_flow(start:stop) = flow;
+end
+rec_flow = rec_flow/max(rec_flow);
+yd_flow = yd_flow/max(yd_flow);
+create_plot([filename, '-_flow_', num2str(iter)], x(1:samples), rec_flow, yd_flow, samples_per_period, 1, Q_guess, save, 6)
 
 close;
 
