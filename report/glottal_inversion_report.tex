@@ -44,7 +44,14 @@
 
 \begin{document}
 
+\thispagestyle{empty}
 \maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
 
 %---------------------Introduction--------------------
 \section{Introduction}
@@ -290,10 +297,13 @@ for a single period of the excitation signal. This procedure must of course be r
 \subsubsection{Real data}
 \label{sec:realData}
 
-Apart from the synthetic data the method of inversion was also tested with real recorded data. As real data we used recordings of the vowel /a/ in different pitches by different male subjects. The recordings where cropped so that the signal would consist of ten periods and fundamental frequency of the signal was determined with pitch detection software. The frequency can also be seen in the frequency spectrum of the signal, as long as it doesn't overlap with a formant frequency. An example of this can be seen in figure \ref{fig:lasse}.
+Apart from the synthetic data the method of inversion was also tested with real recorded data. As real data we used recordings of the vowel /a/ in different pitches by different male subjects. The recordings where cropped so that the signal would consist of ten periods and fundamental frequency of the signal was determined with pitch detection software. The frequency can also be seen in the frequency spectrum of the signal, if it doesn't overlap with a formant frequency. An example of this can be seen in figure \ref{fig:lasse}.
+
+The airflow of the reconstruction is also presented in the case of real data. The airflow can be acquired as the integral of the glottal pressure.
+
 \begin{figure}[H]
 \begin{center}
-	\includegraphics[width=.65\textwidth]{img/lasse_spectrum_cropped.eps}
+	\includegraphics[width=.6\textwidth]{img/lasse_spectrum_cropped.eps}
 	\caption{The frequency spectrum of a vowel /a/ attained by a fast Fourier transform. It can be seen that the fundamental frequency is $f \approx 98.7$ Hz.}\label{fig:lasse}
 \end{center}
 \end{figure}
@@ -508,48 +518,63 @@ The Klatt-parameter approximation algorithm was run 100 times to see how well th
 
 \subsection{Results of the glottal inversion of real data}
 \label{sec:realResults}
-In the inversion of real data we used the the approximation method described in section \ref{sec:approxKlatt} in order to determine the Klatt parameter. Note that the curve of target glottal pressure in the figures of this section is only an approximation made according to values acquired from the Klatt parameter approximation and the frequency spectrum analysis (see section \ref{sec:realData}).
+In the inversion of real data we used the Klatt-parameter approximation method described in section \ref{sec:approxKlatt} in order to determine the length of the open phase of the vocal folds for the data. The results of the inversion of real data is presented in the graphs on the following pages. In the case of real data also the glottal flow resulting from the inversion is presented. Both the approximated target airflow and the reconstruction of the airflow are normalized, as the scaling of the flow only affects the amplitude of the resulting sound.
+
+Note that the curves of target glottal pressure and flow in the figures of this section are only assumed target curves made according to values acquired from the Klatt-parameter approximation and the frequency spectrum analysis (see section \ref{sec:realData}). The target curves are not actual targets for the inversion but rather illustrations for the accuracy of the inversion.
+
+\newpage
 
 The following inversion was made with an with approximation of 336 Hz for the fundamental frequency (see figure \ref{fig:roopeHigh}) of the signal.
 \begin{figure}[H]
-\begin{center}
- \includegraphics[scale=.3]{img/roope_high_spectrum.eps}
- \caption{Cropped caption of the frequency spectrum of the signal.}\label{fig:roopeHigh}
-\end{center}
+	\begin{center}
+		\includegraphics[width=.6\textwidth]{img/roope_high_spectrum.eps}
+		\caption{Cropped caption of the frequency spectrum of the signal.}\label{fig:roopeHigh}
+	\end{center}
 \end{figure}
 
 \begin{figure}[H]
- \begin{subfigure}{.47\textwidth}
-  \includegraphics[width=\textwidth]{img/Roope-1.eps}
-  \caption{Iteration no. 1}
- \end{subfigure}%
- \hspace{.05\textwidth}
- \begin{subfigure}{.47\textwidth}
-  \includegraphics[width=\textwidth]{img/Roope-5.eps}
-  \caption{Iteration no. 5}
- \end{subfigure}
- \caption{}\label{fig:realData1}
- \end{figure}
- The acquired parameters are $Q \approx 0.57$, $\delta_{time} \approx 74.3\%$ and $\alpha \approx 82.2$ 
+	\begin{subfigure}{.47\textwidth}
+		\includegraphics[width=\textwidth]{img/Roope-1.eps}
+		\caption{Iteration no. 1}
+	\end{subfigure}%
+	\hspace{.05\textwidth}
+	\begin{subfigure}{.47\textwidth}
+		\includegraphics[width=\textwidth]{img/Roope-5.eps}
+		\caption{Iteration no. 5}
+	\end{subfigure}\\
+	\begin{center}
+		\begin{subfigure}{.47\textwidth}
+			\includegraphics[width=\textwidth]{img/roope_high_flow.eps}
+			\caption{Glottal airflow after iteration no. 5}
+		\end{subfigure}
+	\end{center}
+	\caption{The glottal pressure and airflow. The acquired parameters are $Q \approx 0.57$ and $\alpha \approx 82.2$. The approximated relative errors are $\delta_{time} \approx 74.3\%$ and $\delta_{flow} \approx 28.2\%$.}\label{fig:realData1}
+\end{figure}
+
   
 
-\null
+\newpage
 
-The following version was made with an with approximation of 98.7 Hz for the fundamental frequency.
+The following inversion was made with an with approximation of 98.7 Hz for the fundamental frequency.
 \begin{figure}[H]
- \centering
- \begin{subfigure}{.47\textwidth}
-  \includegraphics[width=\textwidth]{img/Lasse-1.eps}
-  \caption{Iteration no. 1}
- \end{subfigure}%
- \hspace{.05\textwidth}
- \begin{subfigure}{.47\textwidth}
-  \includegraphics[width=\textwidth]{img/Lasse-5.eps}
-  \caption{Iteration no. 5}
- \end{subfigure}
- \caption{}\label{fig:realData2}
- \end{figure}
- The acquired parameters are $Q \approx 0.37$, $\delta_{time} \approx 93.8\%$ and $\alpha \approx 312$.
+	\centering
+	\begin{subfigure}{.47\textwidth}
+		\includegraphics[width=\textwidth]{img/Lasse-1.eps}
+		\caption{Iteration no. 1}
+	\end{subfigure}%
+	\hspace{.05\textwidth}
+	\begin{subfigure}{.47\textwidth}
+		\includegraphics[width=\textwidth]{img/Lasse-5.eps}
+		\caption{Iteration no. 5}
+	\end{subfigure}\\
+	\begin{center}
+		\begin{subfigure}{.47\textwidth}
+			\includegraphics[width=\textwidth]{img/lasse_flow.eps}
+			\caption{Glottal airflow after iteration no. 5}
+		\end{subfigure}
+	\end{center}
+	\caption{The glottal pressure and airflow. The acquired parameters are $Q \approx 0.37$ and $\alpha \approx 312$. The approximated relative errors are $\delta_{time} \approx 93.8\%$ and $\delta_{flow} \approx 28.6\%$.}\label{fig:realData2}
+\end{figure}
 
 \newpage
 
@@ -596,11 +621,16 @@ Even though the approximation algorithm still could be improved it works very we
 
 \subsection{Inversion on real data}
 
-The approximation algorithm of the Klatt-parameter plays a significant role in the inversion of real data; in the absence of the algorithm one would still be forced to make some assumptions on the parameter or, in the worst case, approximate it manually (i.e. trial and error). This is, especially in the case of real data where there is no real target to compare to, a very tedious and time consuming job. 
+The approximation algorithm of the Klatt-parameter plays a significant role in the inversion of real data; in the absence of the algorithm one would still be forced to make some assumptions on the length of the vocal folds' open phase or, in the worst case, approximate it manually (i.e. trial and error). This is, especially in the case of real data where there is no real target to compare to, a very tedious and time consuming job. 
 
-It is important to note that the target functions of the reconstructions (see figures \ref{fig:realData1} and \ref{fig:realData2}) are only approximative as both the pitch and the Klatt-parameter value of the original signal are unknown. But with mean and median of the error of the approximation algorithm below 3\% (see section \ref{sec:KlattApprox}), we can conclude that the algorithm approximates the Klatt-parameter very accurately. As the pitch detection method can in our case be considered sufficient, we can use the approximative target glottal excitation signal for qualitative analysis of the actual reconstruction as long as we are aware of the approximative dimension in the system.
+It is important to note that the target functions of the reconstructions (see figures \ref{fig:realData1} and \ref{fig:realData2}) are only approximative as both the pitch and the length of the vocal folds' open phase of the original signal are unknown. But with mean and median of the error of the approximation algorithm below 3\% (see section \ref{sec:KlattApprox}), we can conclude that the algorithm approximates the Klatt-parameter very accurately. As the pitch detection method can in our case be considered sufficient, we can use the approximative target glottal excitation signal for qualitative analysis of the actual reconstruction as long as we are aware of the approximative dimension in the system.
 
-In the first case (signal fundamental frequency about 336 Hz) we get an relative error of 74.3\% compared to the target signal. This can be considered a very good result as the error is within the error range of the inversions on synthetic data. The characteristics of a glottal excitation signal are also recognizable in the reconstruction; the negative peak is clearly distinctive from the positive part of the signal. In the second case we get an relative error of 93.8\% compared to the target signal, which also quite good. The shape of the reconstruction is however suppressed as the noise-estimation generates a quite high reguralization parameter.
+In the first case (signal fundamental frequency about 336 Hz) we get an relative error of 74.3\% compared to the target signal. This can be considered a very good result as the error is within the error range of the inversions on synthetic data. The characteristics of a glottal excitation signal are also recognizable in the reconstruction; the negative peak is clearly distinctive from the positive part of the signal.
+
+In the second case we get an relative error of 93.8\% compared to the target signal, which also quite good. The shape of the reconstruction is however suppressed as the noise-estimation generates a quite high reguralization parameter.
+
+In both the cases the normalized airflow approximates quite nicely the assumed target airflow. As the relative errors of the airflows are under $30\%$ it can be concluded that in both cases the inversion was a success.
+
 
 %----------------------References---------------------
 \newpage
