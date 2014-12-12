@@ -47,15 +47,17 @@ ind = xx > Q_guess * xx(end);
 rec_flow = nan(1, samples);
 yd_flow = repmat(klatt_flow(f, Q_data), 1, periods_in_simple_plot);
 for ii = 1:periods_in_simple_plot
-    start = (ii-1)*samples_per_period + 1;
+    start = ii*samples_per_period + 1;
     stop = start + samples_per_period - 1;
     flow = int_discrete(xx, rec(start:stop));
     flow(ind) = flow(ind) - mean(flow(ind));
-    rec_flow(start:stop) = flow;
+    rec_flow(start-samples_per_period:stop-samples_per_period) = flow;
 end
 rec_flow = rec_flow/max(rec_flow);
 yd_flow = yd_flow/max(yd_flow);
 create_plot([filename, '-_flow_', num2str(iter)], x(1:samples), rec_flow, yd_flow, samples_per_period, 1, Q_guess, save, 6)
+
+flow_relerr = compute_relerr(rec_flow, yd_flow)
 
 close;
 
@@ -68,6 +70,7 @@ if ~save
 end
 
 hold on
+
 plot(x, rec, x, yd);
 
 for ii=1:periods
